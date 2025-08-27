@@ -6,13 +6,35 @@ const prisma = new PrismaClient();
 // GET - 모든 에이전트 조회
 export async function GET(request: NextRequest) {
   try {
+    const { searchParams } = new URL(request.url);
+    const includeDetails = searchParams.get('includeDetails') === 'true';
+
     const agents = await prisma.agent.findMany({
-      orderBy: { createdAt: 'desc' }
+      orderBy: { createdAt: 'desc' },
+      include: includeDetails ? {
+        patterns: {
+          orderBy: [{ priority: 'asc' }, { createdAt: 'desc' }]
+        },
+        watchlistItems: {
+          where: { isActive: true },
+          orderBy: { addedAt: 'desc' }
+        }
+      } : undefined
     });
+
+    // Parse strategy field and pattern examples if details are included
+    const processedAgents = agents.map(agent => ({
+      ...agent,
+      strategy: typeof agent.strategy === 'string' ? JSON.parse(agent.strategy) : agent.strategy,
+      patterns: includeDetails && agent.patterns ? agent.patterns.map(pattern => ({
+        ...pattern,
+        examples: JSON.parse(pattern.examples)
+      })) : agent.patterns
+    }));
 
     return NextResponse.json({
       success: true,
-      data: agents
+      agents: processedAgents
     });
   } catch (error) {
     console.error('Get agents API error:', error);
@@ -60,7 +82,7 @@ export async function POST(request: NextRequest) {
 
     return NextResponse.json({
       success: true,
-      data: agent,
+      agent: agent,
       message: 'Agent created successfully'
     });
   } catch (error) {

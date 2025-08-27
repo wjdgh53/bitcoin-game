@@ -65,7 +65,119 @@ model Agent {
   createdAt         DateTime @default(now())
   updatedAt         DateTime @updatedAt
   
+  // Relations
+  patterns          Pattern[]
+  watchlistItems    AgentWatchlistItem[]
+  chatMessages      ChatMessage[]
+  
   @@map("agents")
+}
+
+// Trading patterns for AI agents
+model Pattern {
+  id             String   @id @default(cuid())
+  agentId        String
+  name           String
+  description    String
+  priority       Int      @default(1) // 1 = highest priority, 10 = lowest
+  confidenceRate Float    @default(0.0) // 0-100%
+  examples       String   @default("[]") // JSON array of examples
+  isActive       Boolean  @default(true)
+  createdAt      DateTime @default(now())
+  updatedAt      DateTime @updatedAt
+  
+  // Relations
+  agent Agent @relation(fields: [agentId], references: [id], onDelete: Cascade)
+  
+  @@index([agentId])
+  @@index([priority])
+  @@map("patterns")
+}
+
+// Agent-specific watchlist for monitoring specific cryptocurrencies
+model AgentWatchlistItem {
+  id             String   @id @default(cuid())
+  agentId        String
+  symbol         String   // e.g., 'BTC', 'ETH'
+  name           String   // e.g., 'Bitcoin', 'Ethereum'
+  category       String   // '장기투자', '단기트레이딩', '모멘텀' etc.
+  reason         String   // Why the agent is interested in this asset
+  agentView      String   // Agent's perspective/prediction on the asset
+  alertPrice     Float?   // Price threshold for alerts
+  alertType      String?  // 'above', 'below', 'both'
+  isActive       Boolean  @default(true)
+  addedAt        DateTime @default(now())
+  lastReviewedAt DateTime @default(now())
+  updatedAt      DateTime @updatedAt
+  
+  // Relations
+  agent Agent @relation(fields: [agentId], references: [id], onDelete: Cascade)
+  
+  @@index([agentId])
+  @@index([symbol])
+  @@index([category])
+  @@map("agent_watchlist_items")
+}
+
+// User model
+model User {
+  id        String   @id @default(cuid())
+  email     String   @unique
+  password  String?
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+  
+  // Relations
+  tradingNotes TradingNote[]
+  watchlistItems WatchlistItem[]
+  
+  @@map("users")
+}
+
+// Trading Notes model
+model TradingNote {
+  id             String   @id @default(cuid())
+  userId         String
+  title          String
+  content        String
+  tags           String   @default("") // JSON array as string
+  bitcoinPrice   Float?
+  priceChange24h Float?
+  sentiment      String?  // 'bullish', 'bearish', 'neutral'
+  isPublic       Boolean  @default(false)
+  createdAt      DateTime @default(now())
+  updatedAt      DateTime @updatedAt
+  
+  // Relations
+  user User @relation(fields: [userId], references: [id], onDelete: Cascade)
+  
+  @@index([userId])
+  @@index([createdAt])
+  @@index([sentiment])
+  @@map("trading_notes")
+}
+
+// Watchlist model for tracking cryptocurrency interests
+model WatchlistItem {
+  id             String   @id @default(cuid())
+  userId         String
+  symbol         String   // e.g., 'BTC', 'ETH'
+  name           String   // e.g., 'Bitcoin', 'Ethereum'
+  alertPrice     Float?   // Price threshold for alerts
+  alertType      String?  // 'above', 'below', 'both'
+  notes          String?  // User notes about the asset
+  tags           String   @default("") // JSON array as string
+  alertTriggered Boolean  @default(false)
+  lastAlertAt    DateTime?
+  createdAt      DateTime @default(now())
+  updatedAt      DateTime @updatedAt
+  
+  user User @relation(fields: [userId], references: [id], onDelete: Cascade)
+  
+  @@index([userId])
+  @@index([symbol])
+  @@index([alertPrice])
+  @@map("watchlist_items")
 }
 
 // AI Analysis Reports model
@@ -91,4 +203,26 @@ model AnalysisReport {
   resistance        Float
   
   @@map("analysis_reports")
+}
+
+// Chat Messages model for agent conversations
+model ChatMessage {
+  id        String   @id @default(cuid())
+  agentId   String
+  userId    String   @default("demo-user")
+  content   String
+  type      String   // 'user', 'agent', 'system'
+  metadata  String   @default("{}") // JSON for attachments, modifications, etc.
+  isRead    Boolean  @default(false)
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+  
+  // Relations
+  agent Agent @relation(fields: [agentId], references: [id], onDelete: Cascade)
+  
+  @@index([agentId])
+  @@index([userId])
+  @@index([createdAt])
+  @@index([type])
+  @@map("chat_messages")
 }

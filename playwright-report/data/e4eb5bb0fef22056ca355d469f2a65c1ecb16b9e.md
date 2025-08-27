@@ -1,0 +1,79 @@
+# Page snapshot
+
+```yaml
+- generic [ref=e2]:
+  - navigation [ref=e3]:
+    - generic [ref=e5]:
+      - link "₿ Bitcoin Game" [ref=e6] [cursor=pointer]:
+        - /url: /
+        - generic [ref=e8] [cursor=pointer]: ₿
+        - generic [ref=e9] [cursor=pointer]: Bitcoin Game
+      - generic [ref=e10]:
+        - link "홈" [ref=e11] [cursor=pointer]:
+          - /url: /
+          - img [ref=e12] [cursor=pointer]
+          - text: 홈
+        - link "대시보드" [ref=e15] [cursor=pointer]:
+          - /url: /dashboard
+          - img [ref=e16] [cursor=pointer]
+          - text: 대시보드
+        - link "리포트" [ref=e18] [cursor=pointer]:
+          - /url: /reports
+          - img [ref=e19] [cursor=pointer]
+          - text: 리포트
+        - link "에이전트" [ref=e22] [cursor=pointer]:
+          - /url: /agents
+          - img [ref=e23] [cursor=pointer]
+          - text: 에이전트
+        - link "채팅" [ref=e26] [cursor=pointer]:
+          - /url: /chat
+          - img [ref=e27] [cursor=pointer]
+          - text: 채팅
+  - generic [ref=e30]:
+    - generic [ref=e31]:
+      - generic [ref=e34]: ₿
+      - heading "Bitcoin Trading Game" [level=1] [ref=e35]
+      - paragraph [ref=e36]: ChromaDB로 구동되는 실전 비트코인 트레이딩 시뮬레이터. 실시간 데이터와 AI 분석으로 트레이딩 스킬을 마스터하세요!
+      - generic [ref=e37]:
+        - link "게임 시작하기" [ref=e38] [cursor=pointer]:
+          - /url: /dashboard
+          - img [ref=e39] [cursor=pointer]
+          - text: 게임 시작하기
+        - link "AI 리포트 보기" [ref=e41] [cursor=pointer]:
+          - /url: /reports
+          - img [ref=e42] [cursor=pointer]
+          - text: AI 리포트 보기
+    - generic [ref=e44]:
+      - generic [ref=e45]:
+        - img [ref=e47]
+        - heading "실시간 트레이딩" [level=3] [ref=e50]
+        - paragraph [ref=e51]: 실제 비트코인 가격 데이터로 실시간 매매를 체험하고 포트폴리오를 관리하세요
+      - generic [ref=e52]:
+        - img [ref=e54]
+        - heading "성취 시스템" [level=3] [ref=e60]
+        - paragraph [ref=e61]: 트레이딩 목표를 달성하고 레벨을 올리며 다양한 뱃지를 수집하세요
+      - generic [ref=e62]:
+        - img [ref=e64]
+        - heading "AI 교육 콘텐츠" [level=3] [ref=e66]
+        - paragraph [ref=e67]: ChromaDB 시맨틱 검색으로 개인화된 트레이딩 교육 자료를 제공받으세요
+    - generic [ref=e68]:
+      - heading "게임 통계" [level=2] [ref=e69]
+      - generic [ref=e70]:
+        - generic [ref=e71]:
+          - generic [ref=e72]: 실시간
+          - generic [ref=e73]: 비트코인 가격 데이터
+        - generic [ref=e74]:
+          - generic [ref=e75]: 5개
+          - generic [ref=e76]: ChromaDB 컬렉션
+        - generic [ref=e77]:
+          - generic [ref=e78]: 무제한
+          - generic [ref=e79]: 트레이딩 기회
+        - generic [ref=e80]:
+          - generic [ref=e81]: AI 기반
+          - generic [ref=e82]: 시맨틱 검색
+    - generic [ref=e83]:
+      - heading "지금 바로 시작하세요!" [level=2] [ref=e84]
+      - paragraph [ref=e85]: 가상 자금 $10,000으로 시작해서 비트코인 트레이딩 전문가가 되어보세요
+      - link "무료로 플레이하기" [ref=e86] [cursor=pointer]:
+        - /url: /dashboard
+```

@@ -182,3 +182,109 @@ export interface GameSession {
   difficulty: 'easy' | 'medium' | 'hard';
   mode: 'tutorial' | 'practice' | 'competitive';
 }
+
+// Agent-specific types
+export interface Agent {
+  id: string;
+  name: string;
+  type: string;
+  personality: AgentPersonality;
+  strategy: string[]; // Trading strategies
+  description: string;
+  isActive: boolean;
+  createdAt: Date;
+  updatedAt: Date;
+  patterns: Pattern[];
+  watchlistItems: AgentWatchlistItem[];
+}
+
+export type AgentPersonality = 
+  | 'conservative' 
+  | 'aggressive' 
+  | 'balanced' 
+  | 'quantitative' 
+  | 'contrarian';
+
+export interface Pattern {
+  id: string;
+  agentId: string;
+  name: string;
+  description: string;
+  priority: number; // 1 = highest priority, 10 = lowest
+  confidenceRate: number; // 0-100%
+  examples: string[]; // Array of pattern examples
+  isActive: boolean;
+  createdAt: Date;
+  updatedAt: Date;
+}
+
+export interface AgentWatchlistItem {
+  id: string;
+  agentId: string;
+  symbol: string; // e.g., 'BTC', 'ETH'
+  name: string; // e.g., 'Bitcoin', 'Ethereum'
+  category: WatchlistCategory;
+  reason: string; // Why the agent is interested in this asset
+  agentView: string; // Agent's perspective/prediction on the asset
+  alertPrice?: number; // Price threshold for alerts
+  alertType?: 'above' | 'below' | 'both';
+  isActive: boolean;
+  addedAt: Date;
+  lastReviewedAt: Date;
+  updatedAt: Date;
+}
+
+export type WatchlistCategory = 
+  | '장기투자' 
+  | '단기트레이딩' 
+  | '모멘텀' 
+  | '가치투자' 
+  | '성장주' 
+  | '배당주' 
+  | '투기적투자' 
+  | '안전자산'
+  | '대체투자';
+
+export interface PatternPerformance {
+  patternId: string;
+  successCount: number;
+  failureCount: number;
+  totalTrades: number;
+  averageReturn: number;
+  winRate: number;
+  lastUpdated: Date;
+}
+
+export interface AgentInteraction {
+  id: string;
+  agentId: string;
+  userId: string;
+  type: 'question' | 'feedback' | 'suggestion';
+  content: string;
+  response?: string;
+  relatedPatternId?: string;
+  relatedWatchlistItemId?: string;
+  createdAt: Date;
+  responseAt?: Date;
+}
+
+export interface ChatMessage {
+  id: string;
+  agentId: string;
+  userId: string;
+  content: string;
+  type: 'user' | 'agent' | 'system';
+  metadata: string; // JSON string
+  isRead: boolean;
+  createdAt: Date;
+  updatedAt: Date;
+  agent?: Agent;
+}
+
+export interface ParsedCommand {
+  type: 'strategy' | 'pattern' | 'watchlist' | 'info' | 'general';
+  action: 'add' | 'remove' | 'update' | 'list' | 'help' | 'none';
+  parameters: Record<string, any>;
+  confidence: number;
+  originalMessage: string;
+}

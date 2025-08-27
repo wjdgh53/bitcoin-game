@@ -203,6 +203,38 @@ export const UpdateUserInputSchema = z.object({
   preferences: UserPreferencesSchema.optional()
 });
 
+// Trading Notes validation schemas
+export const TradingNoteInputSchema = z.object({
+  title: z.string().min(1, 'Title is required').max(200, 'Title too long'),
+  content: z.string().min(1, 'Content is required').max(5000, 'Content too long'),
+  tags: z.array(z.string().min(1)).max(10, 'Maximum 10 tags allowed').optional().default([]),
+  sentiment: z.enum(['bullish', 'bearish', 'neutral']).optional(),
+  isPublic: z.boolean().optional().default(false)
+});
+
+export const TradingNoteUpdateInputSchema = z.object({
+  title: z.string().min(1).max(200).optional(),
+  content: z.string().min(1).max(5000).optional(),
+  tags: z.array(z.string().min(1)).max(10).optional(),
+  sentiment: z.enum(['bullish', 'bearish', 'neutral']).optional(),
+  isPublic: z.boolean().optional()
+});
+
+export const TradingNoteOutputSchema = z.object({
+  id: z.string(),
+  userId: z.string(),
+  title: z.string(),
+  content: z.string(),
+  tags: z.array(z.string()),
+  bitcoinPrice: z.number().optional(),
+  priceChange24h: z.number().optional(),
+  sentiment: z.string().optional(),
+  isPublic: z.boolean(),
+  createdAt: z.date(),
+  updatedAt: z.date(),
+  userEmail: z.string().optional()
+});
+
 // Validation utility functions
 export class ValidationUtils {
   static validateUser(data: unknown) {
@@ -269,6 +301,19 @@ export class ValidationUtils {
 
   static validateUpdatePortfolioInput(data: unknown) {
     return UpdatePortfolioInputSchema.parse(data);
+  }
+
+  // Trading Notes validation
+  static validateTradingNoteInput(data: unknown) {
+    return TradingNoteInputSchema.parse(data);
+  }
+
+  static validateTradingNoteUpdateInput(data: unknown) {
+    return TradingNoteUpdateInputSchema.parse(data);
+  }
+
+  static validateTradingNoteOutput(data: unknown) {
+    return TradingNoteOutputSchema.parse(data);
   }
 }
 

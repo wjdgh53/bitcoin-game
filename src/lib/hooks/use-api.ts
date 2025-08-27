@@ -120,6 +120,47 @@ class ApiClient {
 
 export const apiClient = new ApiClient();
 
+// Simple HTTP methods for direct API usage (used by custom hooks like watchlist)
+export function useApi() {
+  const makeRequest = async (url: string, options?: RequestInit) => {
+    try {
+      const response = await fetch(url, {
+        credentials: 'include',
+        headers: {
+          'Content-Type': 'application/json',
+          'Authorization': 'Bearer demo-token', // Mock auth for demo
+          ...options?.headers,
+        },
+        ...options,
+      });
+
+      const data = await response.json();
+      
+      if (!response.ok) {
+        throw new Error(data.error || data.message || `HTTP ${response.status}`);
+      }
+
+      return data;
+    } catch (error) {
+      console.error('API request failed:', error);
+      throw error;
+    }
+  };
+
+  return {
+    get: (url: string) => makeRequest(url, { method: 'GET' }),
+    post: (url: string, body?: any) => makeRequest(url, {
+      method: 'POST',
+      body: body ? JSON.stringify(body) : undefined,
+    }),
+    put: (url: string, body?: any) => makeRequest(url, {
+      method: 'PUT',
+      body: body ? JSON.stringify(body) : undefined,
+    }),
+    del: (url: string) => makeRequest(url, { method: 'DELETE' }),
+  };
+}
+
 // React Query hooks with optimized caching
 
 // Auth hooks
