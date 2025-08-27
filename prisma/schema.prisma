@@ -1,0 +1,94 @@
+// This is your Prisma schema file,
+// learn more about it in the docs: https://pris.ly/d/prisma-schema
+
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider = "sqlite"
+  url      = env("DATABASE_URL")
+}
+
+// Bitcoin price data model
+model BitcoinPrice {
+  id                    Int      @id @default(autoincrement())
+  timestamp            DateTime @default(now())
+  price                Float
+  volume               Float?
+  marketCap            Float?
+  change24h            Float?
+  changePercentage24h  Float?
+  high24h              Float?
+  low24h               Float?
+  source               String   @default("coingecko")
+  
+  @@map("bitcoin_prices")
+}
+
+// User portfolio model (simplified)
+model Portfolio {
+  id              Int      @id @default(autoincrement())
+  userId          String   @unique @default("demo-user")
+  balance         Float    @default(10000.0)
+  bitcoinHoldings Float    @default(0.0)
+  totalValue      Float    @default(10000.0)
+  profit          Float    @default(0.0)
+  profitPercentage Float   @default(0.0)
+  lastUpdated     DateTime @default(now())
+  
+  @@map("portfolios")
+}
+
+// Trade history model
+model Trade {
+  id        Int       @id @default(autoincrement())
+  userId    String    @default("demo-user")
+  type      String    // 'buy' or 'sell'
+  amount    Float     // Amount of BTC
+  price     Float     // Price per BTC at time of trade
+  total     Float     // Total USD amount
+  timestamp DateTime  @default(now())
+  
+  @@map("trades")
+}
+
+// AI Agent model
+model Agent {
+  id                String   @id @default(cuid())
+  name              String   @unique
+  type              String   @unique
+  personality       String   // conservative, aggressive, balanced, quantitative, contrarian
+  strategy          String   // JSON array of strategies (keeping column name for compatibility)
+  description       String
+  isActive          Boolean  @default(true)
+  createdAt         DateTime @default(now())
+  updatedAt         DateTime @updatedAt
+  
+  @@map("agents")
+}
+
+// AI Analysis Reports model
+model AnalysisReport {
+  id                String    @id
+  agentName         String
+  agentType         String
+  timestamp         DateTime  @default(now())
+  recommendation    String    // 'buy', 'sell', 'hold'
+  confidence        Float
+  title             String
+  executiveSummary  String
+  marketAnalysis    String
+  technicalAnalysis String
+  riskAssessment    String
+  strategyRationale String
+  nextSteps         String
+  currentPrice      Float
+  priceChange24h    Float
+  trend             String
+  momentum          Float
+  support           Float
+  resistance        Float
+  
+  @@map("analysis_reports")
+}

@@ -39,3 +39,14 @@ yarn-error.log*
 # typescript
 *.tsbuildinfo
 next-env.d.ts
+
+/src/generated/prisma
+
+# database
+*.db
+*.db-journal
+/prisma/dev.db*
+
+# chromadb data
+/chroma_data/
+chroma_collections_info.json
