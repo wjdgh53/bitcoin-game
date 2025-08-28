@@ -15,10 +15,10 @@ const patternUpdateSchema = z.object({
 // GET: Get a specific pattern
 export async function GET(
   request: NextRequest,
-  { params }: { params: { id: string; patternId: string } }
+  { params }: { params: Promise<{ id: string; patternId: string }> }
 ) {
   try {
-    const { id: agentId, patternId } = params;
+    const { id: agentId, patternId } = await params;
 
     // Find the pattern
     const pattern = await prisma.pattern.findFirst({
@@ -67,10 +67,10 @@ export async function GET(
 // PUT: Update a pattern
 export async function PUT(
   request: NextRequest,
-  { params }: { params: { id: string; patternId: string } }
+  { params }: { params: Promise<{ id: string; patternId: string }> }
 ) {
   try {
-    const { id: agentId, patternId } = params;
+    const { id: agentId, patternId } = await params;
     const body = await request.json();
 
     // Validate request body
@@ -137,10 +137,10 @@ export async function PUT(
 // DELETE: Delete a pattern
 export async function DELETE(
   request: NextRequest,
-  { params }: { params: { id: string; patternId: string } }
+  { params }: { params: Promise<{ id: string; patternId: string }> }
 ) {
   try {
-    const { id: agentId, patternId } = params;
+    const { id: agentId, patternId } = await params;
 
     // Check if pattern exists and belongs to the agent
     const existingPattern = await prisma.pattern.findFirst({

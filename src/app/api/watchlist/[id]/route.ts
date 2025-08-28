@@ -29,7 +29,7 @@ const UpdateWatchlistItemSchema = z.object({
 
 export async function GET(
   request: NextRequest,
-  { params }: { params: { id: string } }
+  { params }: { params: Promise<{ id: string }> }
 ) {
   try {
     const user = validateAuth(request);
@@ -37,7 +37,8 @@ export async function GET(
       return NextResponse.json({ error: 'Unauthorized' }, { status: 401 });
     }
 
-    const item = await watchlistService.getWatchlistItemById(params.id, user.id);
+    const { id } = await params;
+    const item = await watchlistService.getWatchlistItemById(id, user.id);
     
     if (!item) {
       return NextResponse.json({ error: 'Watchlist item not found' }, { status: 404 });
@@ -58,7 +59,7 @@ export async function GET(
 
 export async function PUT(
   request: NextRequest,
-  { params }: { params: { id: string } }
+  { params }: { params: Promise<{ id: string }> }
 ) {
   try {
     const user = validateAuth(request);
@@ -69,8 +70,9 @@ export async function PUT(
     const body = await request.json();
     const validatedData = UpdateWatchlistItemSchema.parse(body);
 
+    const { id } = await params;
     const updatedItem = await watchlistService.updateWatchlistItem(
-      params.id,
+      id,
       user.id,
       validatedData
     );
@@ -102,7 +104,7 @@ export async function PUT(
 
 export async function DELETE(
   request: NextRequest,
-  { params }: { params: { id: string } }
+  { params }: { params: Promise<{ id: string }> }
 ) {
   try {
     const user = validateAuth(request);
@@ -110,7 +112,8 @@ export async function DELETE(
       return NextResponse.json({ error: 'Unauthorized' }, { status: 401 });
     }
 
-    const deleted = await watchlistService.deleteWatchlistItem(params.id, user.id);
+    const { id } = await params;
+    const deleted = await watchlistService.deleteWatchlistItem(id, user.id);
 
     if (!deleted) {
       return NextResponse.json({ error: 'Watchlist item not found or deletion failed' }, { status: 404 });

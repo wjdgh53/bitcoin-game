@@ -22,7 +22,7 @@ function validateAuth(request: NextRequest) {
 
 export async function GET(
   request: NextRequest,
-  { params }: { params: { id: string } }
+  { params }: { params: Promise<{ id: string }> }
 ) {
   try {
     const user = validateAuth(request);
@@ -30,7 +30,8 @@ export async function GET(
       return NextResponse.json({ error: 'Unauthorized' }, { status: 401 });
     }
 
-    const note = await tradingNotesService.getNoteById(params.id, user.id);
+    const { id } = await params;
+    const note = await tradingNotesService.getNoteById(id, user.id);
     
     if (!note) {
       return NextResponse.json({ error: 'Note not found' }, { status: 404 });
@@ -51,7 +52,7 @@ export async function GET(
 
 export async function PUT(
   request: NextRequest,
-  { params }: { params: { id: string } }
+  { params }: { params: Promise<{ id: string }> }
 ) {
   try {
     const user = validateAuth(request);
@@ -62,8 +63,9 @@ export async function PUT(
     const body = await request.json();
     const validatedData = TradingNoteUpdateInputSchema.parse(body);
 
+    const { id } = await params;
     const updatedNote = await tradingNotesService.updateNote(
-      params.id,
+      id,
       user.id,
       validatedData
     );
@@ -95,7 +97,7 @@ export async function PUT(
 
 export async function DELETE(
   request: NextRequest,
-  { params }: { params: { id: string } }
+  { params }: { params: Promise<{ id: string }> }
 ) {
   try {
     const user = validateAuth(request);
@@ -103,7 +105,8 @@ export async function DELETE(
       return NextResponse.json({ error: 'Unauthorized' }, { status: 401 });
     }
 
-    const deleted = await tradingNotesService.deleteNote(params.id, user.id);
+    const { id } = await params;
+    const deleted = await tradingNotesService.deleteNote(id, user.id);
 
     if (!deleted) {
       return NextResponse.json({ error: 'Note not found or deletion failed' }, { status: 404 });

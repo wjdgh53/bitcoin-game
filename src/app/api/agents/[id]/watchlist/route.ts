@@ -17,10 +17,10 @@ const watchlistItemSchema = z.object({
 // GET: Get all watchlist items for an agent
 export async function GET(
   request: NextRequest,
-  { params }: { params: { id: string } }
+  { params }: { params: Promise<{ id: string }> }
 ) {
   try {
-    const agentId = params.id;
+    const { id: agentId } = await params;
     const { searchParams } = new URL(request.url);
     const category = searchParams.get('category');
     const isActive = searchParams.get('isActive');
@@ -71,10 +71,10 @@ export async function GET(
 // POST: Create a new watchlist item for an agent
 export async function POST(
   request: NextRequest,
-  { params }: { params: { id: string } }
+  { params }: { params: Promise<{ id: string }> }
 ) {
   try {
-    const agentId = params.id;
+    const { id: agentId } = await params;
     const body = await request.json();
 
     // Validate request body

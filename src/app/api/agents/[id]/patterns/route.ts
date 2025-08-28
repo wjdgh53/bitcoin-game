@@ -15,10 +15,10 @@ const patternSchema = z.object({
 // GET: Get all patterns for an agent
 export async function GET(
   request: NextRequest,
-  { params }: { params: { id: string } }
+  { params }: { params: Promise<{ id: string }> }
 ) {
   try {
-    const agentId = params.id;
+    const { id: agentId } = await params;
 
     // Verify agent exists
     const agent = await prisma.agent.findUnique({
@@ -64,10 +64,10 @@ export async function GET(
 // POST: Create a new pattern for an agent
 export async function POST(
   request: NextRequest,
-  { params }: { params: { id: string } }
+  { params }: { params: Promise<{ id: string }> }
 ) {
   try {
-    const agentId = params.id;
+    const { id: agentId } = await params;
     const body = await request.json();
 
     // Validate request body

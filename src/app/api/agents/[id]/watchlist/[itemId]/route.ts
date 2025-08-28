@@ -17,10 +17,10 @@ const watchlistItemUpdateSchema = z.object({
 // GET: Get a specific watchlist item
 export async function GET(
   request: NextRequest,
-  { params }: { params: { id: string; itemId: string } }
+  { params }: { params: Promise<{ id: string; itemId: string }> }
 ) {
   try {
-    const { id: agentId, itemId } = params;
+    const { id: agentId, itemId } = await params;
 
     // Find the watchlist item
     const watchlistItem = await prisma.agentWatchlistItem.findFirst({
@@ -63,10 +63,10 @@ export async function GET(
 // PUT: Update a watchlist item
 export async function PUT(
   request: NextRequest,
-  { params }: { params: { id: string; itemId: string } }
+  { params }: { params: Promise<{ id: string; itemId: string }> }
 ) {
   try {
-    const { id: agentId, itemId } = params;
+    const { id: agentId, itemId } = await params;
     const body = await request.json();
 
     // Validate request body
@@ -142,10 +142,10 @@ export async function PUT(
 // DELETE: Delete a watchlist item
 export async function DELETE(
   request: NextRequest,
-  { params }: { params: { id: string; itemId: string } }
+  { params }: { params: Promise<{ id: string; itemId: string }> }
 ) {
   try {
-    const { id: agentId, itemId } = params;
+    const { id: agentId, itemId } = await params;
 
     // Check if watchlist item exists and belongs to the agent
     const existingItem = await prisma.agentWatchlistItem.findFirst({

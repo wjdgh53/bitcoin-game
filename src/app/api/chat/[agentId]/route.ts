@@ -15,10 +15,10 @@ const createMessageSchema = z.object({
 // GET /api/chat/[agentId] - Get conversation history
 export async function GET(
   request: NextRequest,
-  { params }: { params: { agentId: string } }
+  { params }: { params: Promise<{ agentId: string }> }
 ) {
   try {
-    const { agentId } = params;
+    const { agentId } = await params;
 
     // Verify agent exists
     const agent = await prisma.agent.findUnique({
@@ -59,10 +59,10 @@ export async function GET(
 // POST /api/chat/[agentId] - Send a message
 export async function POST(
   request: NextRequest,
-  { params }: { params: { agentId: string } }
+  { params }: { params: Promise<{ agentId: string }> }
 ) {
   try {
-    const { agentId } = params;
+    const { agentId } = await params;
     const body = await request.json();
     
     // Validate request body
