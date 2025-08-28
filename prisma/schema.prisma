@@ -226,3 +226,45 @@ model ChatMessage {
   @@index([type])
   @@map("chat_messages")
 }
+
+// News Article model
+model NewsArticle {
+  id              String   @id @default(cuid())
+  title           String
+  content         String
+  source          String
+  url             String?
+  publishedAt     DateTime
+  sentimentScore  Float    @default(0.0) // -1 to 1
+  importanceScore Int      @default(5)   // 1 to 10
+  category        String   // 'technical', 'regulatory', 'market', 'corporate'
+  relatedSymbols  String   @default("[]") // JSON array of symbols
+  summary         String?
+  aiAnalysis      String?
+  createdAt       DateTime @default(now())
+  updatedAt       DateTime @updatedAt
+  
+  @@index([category])
+  @@index([publishedAt])
+  @@index([sentimentScore])
+  @@index([importanceScore])
+  @@map("news_articles")
+}
+
+// News Report model for daily/weekly summaries
+model NewsReport {
+  id               String        @id @default(cuid())
+  type             String        // 'daily' or 'weekly'
+  date             DateTime
+  overallSentiment Float         @default(0.0) // -1 to 1
+  marketTrend      String        // 'bullish', 'bearish', 'neutral'
+  keyEvents        String        @default("[]") // JSON array of key events
+  summary          String
+  topStoriesIds    String        @default("[]") // JSON array of NewsArticle IDs
+  createdAt        DateTime      @default(now())
+  updatedAt        DateTime      @updatedAt
+  
+  @@index([type])
+  @@index([date])
+  @@map("news_reports")
+}

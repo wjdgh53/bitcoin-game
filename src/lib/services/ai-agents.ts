@@ -1,6 +1,7 @@
 // AI Trading Agents with Different Personalities and Strategies
 
 import { bitcoinPriceService } from './bitcoin-price-service';
+import { NewsContextService } from './news-context';
 
 export interface AnalysisReport {
   id: string;
@@ -50,6 +51,36 @@ export abstract class BaseAIAgent {
     return { sma5, sma10, momentum, support, resistance };
   }
 
+  protected async getNewsContext(): Promise<string> {
+    try {
+      const newsService = NewsContextService.getInstance();
+      return await newsService.getSimpleContext();
+    } catch (error) {
+      console.error('Error getting news context:', error);
+      return "뉴스 분석 데이터를 가져올 수 없습니다.";
+    }
+  }
+
+  protected async enhanceAnalysisWithNews(baseAnalysis: string): Promise<string> {
+    try {
+      const newsService = NewsContextService.getInstance();
+      const newsContext = await newsService.getNewsContext();
+      
+      if (!newsContext || newsContext.latestNews.length === 0) {
+        return baseAnalysis;
+      }
+
+      // 뉴스 감정과 시장 분석 연결
+      const sentimentText = newsContext.currentSentiment > 0.2 ? '긍정적인' :
+                           newsContext.currentSentiment < -0.2 ? '부정적인' : '중립적인';
+      
+      return `${baseAnalysis} 최근 암호화폐 시장 뉴스 분석 결과 ${sentimentText} 분위기가 감지되고 있으며, 이는 현재 분석과 ${newsContext.marketTrend === 'bullish' ? '상승' : newsContext.marketTrend === 'bearish' ? '하락' : '중립'} 방향으로 일치하고 있습니다.`;
+    } catch (error) {
+      console.error('Error enhancing analysis with news:', error);
+      return baseAnalysis;
+    }
+  }
+
   private calculateSMA(prices: number[]): number {
     return prices.reduce((sum, price) => sum + price, 0) / prices.length;
   }
@@ -83,8 +114,9 @@ export class ConservativeValueAgent extends BaseAIAgent {
     const prices = priceHistory.map(h => h.price);
     const priceChange24h = ((currentPrice.price - prices[0]) / prices[0]) * 100;
     const indicators = this.calculateTechnicalIndicators(prices);
+    const newsContext = await this.getNewsContext();
 
-    // 보수적 분석
+    // 보수적 분석 (뉴스 컨텍스트 포함)
     let recommendation: 'buy' | 'sell' | 'hold' = 'hold';
     let confidence = 50;
 
@@ -105,7 +137,7 @@ export class ConservativeValueAgent extends BaseAIAgent {
       confidence,
       title: `${this.name}의 보수적 시장 분석 리포트`,
       executive_summary: `현재 비트코인 가격은 $${currentPrice.price.toLocaleString()}로, 24시간 ${priceChange24h.toFixed(2)}% 변동을 보이고 있습니다. ${recommendation === 'buy' ? '저점 매수 기회로 판단' : recommendation === 'sell' ? '수익 실현 시점으로 판단' : '추가 관찰이 필요한 상황'}됩니다.`,
-      market_analysis: `전체적인 시장 상황을 종합적으로 분석한 결과, ${priceChange24h > 0 ? '상승' : '하락'} 모멘텀이 감지되고 있습니다. 하지만 제가 추구하는 가치투자 관점에서는 단기적 변동보다는 장기적 트렌드와 펀더멘털이 더 중요합니다. 현재 포트폴리오 수익률이 ${portfolio.profitPercentage.toFixed(2)}%인 점을 고려할 때, ${recommendation === 'hold' ? '성급한 결정보다는 인내심을 가지고 기다리는 것' : recommendation === 'buy' ? '이번 하락은 좋은 매수 기회' : '적절한 수익 실현 시점'}으로 보입니다.`,
+      market_analysis: await this.enhanceAnalysisWithNews(`전체적인 시장 상황을 종합적으로 분석한 결과, ${priceChange24h > 0 ? '상승' : '하락'} 모멘텀이 감지되고 있습니다. 하지만 제가 추구하는 가치투자 관점에서는 단기적 변동보다는 장기적 트렌드와 펀더멘털이 더 중요합니다. 현재 포트폴리오 수익률이 ${portfolio.profitPercentage.toFixed(2)}%인 점을 고려할 때, ${recommendation === 'hold' ? '성급한 결정보다는 인내심을 가지고 기다리는 것' : recommendation === 'buy' ? '이번 하락은 좋은 매수 기회' : '적절한 수익 실현 시점'}으로 보입니다. ${newsContext}`),
       technical_analysis: `기술적 지표를 보면 5일 이동평균이 ${indicators.sma5.toFixed(0)}달러, 10일 이동평균이 ${indicators.sma10.toFixed(0)}달러입니다. 현재가가 ${currentPrice.price > indicators.sma10 ? '10일선 위에 위치' : '10일선 아래에 위치'}해 있어 ${currentPrice.price > indicators.sma10 ? '상대적으로 안정적' : '조정 국면'}인 상황입니다. 지지선은 $${indicators.support.toFixed(0)}, 저항선은 $${indicators.resistance.toFixed(0)}로 분석됩니다.`,
       risk_assessment: `위험 관리 측면에서 현재 현금 비율이 ${((portfolio.balance / portfolio.totalValue) * 100).toFixed(1)}%로, 적절한 유동성을 확보하고 있습니다. 다만 암호화폐의 높은 변동성을 고려할 때, 무리한 레버리지나 단기 투기는 지양해야 합니다. ${recommendation === 'buy' ? '매수 시에도 분할 매수를 통해 평균 단가를 낮추는 전략' : recommendation === 'sell' ? '일부 물량만 매도하여 상승 여력은 남겨두는 전략' : '현재 포지션을 유지하면서 명확한 신호를 기다리는 전략'}을 권장합니다.`,
       strategy_rationale: `제가 추구하는 가치투자 철학은 "시장이 단기적으로는 투표기계이지만, 장기적으로는 저울이다"라는 벤저민 그레이엄의 말씀에 기반합니다. 비트코인 역시 혁신적인 기술과 제한된 공급량이라는 펀더멘털적 가치를 가지고 있기 때문에, 단기적 변동에 일희일비하기보다는 장기적 관점에서 접근해야 합니다. ${recommendation === 'buy' ? '현재 수준은 장기 투자자에게 매력적인 진입점' : recommendation === 'sell' ? '적절한 수익을 확보하여 다음 기회를 기다리는 것이 현명' : '시장의 방향성이 명확해질 때까지 기다리는 인내'}가 필요합니다.`,

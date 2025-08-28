@@ -2,7 +2,7 @@
 
 import Link from 'next/link';
 import { usePathname } from 'next/navigation';
-import { Home, BarChart3, FileText, Settings, Heart, MessageCircle } from 'lucide-react';
+import { Home, BarChart3, FileText, Settings, Heart, MessageCircle, Newspaper } from 'lucide-react';
 
 export default function Navbar() {
   const pathname = usePathname();
@@ -10,6 +10,7 @@ export default function Navbar() {
   const navItems = [
     { href: '/', label: '홈', icon: Home },
     { href: '/dashboard', label: '대시보드', icon: BarChart3 },
+    { href: '/news', label: '뉴스', icon: Newspaper },
     { href: '/reports', label: '리포트', icon: FileText },
     { href: '/agents', label: '에이전트', icon: Settings },
     { href: '/chat', label: '채팅', icon: MessageCircle },
