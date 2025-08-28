@@ -3,6 +3,7 @@
 
 import cron from 'node-cron';
 import { bitcoinPriceService } from '../services/bitcoin-price-service';
+import { technicalIndicatorsService } from '../services/technical-indicators-service';
 
 class PriceScheduler {
   private isRunning = false;
@@ -18,10 +19,10 @@ class PriceScheduler {
       return;
     }
 
-    console.log('🚀 Starting Bitcoin price scheduler (every 15 minutes)...');
+    console.log('🚀 Starting Bitcoin price scheduler (every 10 minutes) - REALISTIC SIMULATION MODE...');
 
-    // Schedule task every 15 minutes
-    this.job = cron.schedule('0 */15 * * * *', async () => {
+    // Schedule task every 10 minutes
+    this.job = cron.schedule('0 */10 * * * *', async () => {
       await this.updatePrice();
     }, {
       scheduled: true,
@@ -54,10 +55,10 @@ class PriceScheduler {
    */
   private async updatePrice(): Promise<void> {
     try {
-      console.log('📈 Running scheduled Bitcoin price update...');
+      console.log('📈 Running scheduled Bitcoin price update (REALISTIC SIMULATION)...');
       const startTime = Date.now();
 
-      // Update Bitcoin price from CoinGecko
+      // Update Bitcoin price with realistic simulation
       const priceData = await bitcoinPriceService.updateCurrentPrice();
       
       // Update portfolio value based on new price
@@ -66,20 +67,31 @@ class PriceScheduler {
       // Initialize demo portfolio if needed
       await bitcoinPriceService.initializeDemoPortfolio();
       
-      // Clean up old price data (keep last 7 days)
+      // Update technical indicators and generate analysis
+      await technicalIndicatorsService.updateTechnicalIndicators('1d');
+      await technicalIndicatorsService.generateAnalysisReport('1d');
+      
+      // Clean up old data (keep last 7 days)
       await bitcoinPriceService.cleanupOldPrices();
+      await technicalIndicatorsService.cleanupOldData();
 
       const endTime = Date.now();
       const duration = endTime - startTime;
       
-      console.log(`✅ Price update completed in ${duration}ms`);
-      console.log(`💰 Bitcoin Price: $${priceData.price.toLocaleString()}`);
+      console.log(`✅ Realistic price update completed in ${duration}ms`);
+      console.log(`💰 Bitcoin Price: $${priceData.price.toLocaleString()} (${priceData.source})`);
       console.log(`📊 24h Change: ${priceData.changePercentage24h?.toFixed(2)}%`);
-      console.log(`⏰ Next update in 15 minutes`);
+      console.log(`📈 Volume: ${priceData.volume?.toLocaleString()}`);
+      console.log(`⏰ Next update in 10 minutes`);
       
     } catch (error) {
       console.error('❌ Failed to update Bitcoin price:', error);
-      console.log('🔄 Will retry in 15 minutes');
+      console.log('🔄 Will retry update in 10 minutes');
+      
+      // In simulation mode, errors are less critical - log but continue
+      if (error instanceof Error) {
+        console.warn(`Simulation error details: ${error.message}`);
+      }
     }
   }
 
@@ -87,7 +99,7 @@ class PriceScheduler {
    * Manually trigger a price update (for testing)
    */
   async triggerUpdate(): Promise<void> {
-    console.log('🔄 Manually triggering price update...');
+    console.log('🔄 Manually triggering realistic price update...');
     await this.updatePrice();
   }
 
@@ -97,7 +109,7 @@ class PriceScheduler {
   getStatus(): { isRunning: boolean; nextRun: string | null } {
     return {
       isRunning: this.isRunning,
-      nextRun: this.job ? 'Every 15 minutes' : null
+      nextRun: this.job ? 'Every 10 minutes' : null
     };
   }
 }

@@ -4,6 +4,8 @@ import Link from 'next/link';
 import { useState, useEffect } from 'react';
 import { TrendingUp, TrendingDown, Bitcoin, DollarSign, BarChart3, Trophy, Brain } from 'lucide-react';
 import Navbar from '@/components/Navbar';
+import BitcoinChart from '@/components/charts/BitcoinChart';
+import PortfolioTable from '@/components/portfolio/PortfolioTable';
 
 interface BitcoinPrice {
   id: number;
@@ -267,26 +269,8 @@ export default function DashboardPage() {
 
         {/* Trading Panel */}
         <div className="grid grid-cols-1 lg:grid-cols-2 gap-8 mb-8">
-          {/* Chart Placeholder */}
-          <div className="bg-white rounded-lg shadow p-6">
-            <div className="flex items-center mb-4">
-              <BarChart3 className="h-5 w-5 text-gray-500 mr-2" />
-              <h3 className="text-lg font-semibold">BTC/USD 차트</h3>
-            </div>
-            <div className="h-64 bg-gray-100 rounded-lg flex items-center justify-center">
-              <div className="text-center text-gray-500">
-                <BarChart3 className="h-12 w-12 mx-auto mb-2 opacity-50" />
-                <p>차트 데이터 로딩 중...</p>
-                <p className="text-sm mt-1">실시간 비트코인 가격: ${currentPrice.toLocaleString()}</p>
-                {priceData && (
-                  <div className="text-xs mt-2">
-                    <p><span className="font-bold">거래량:</span> ${priceData.volume?.toLocaleString()}</p>
-                    <p><span className="font-bold">시가총액:</span> ${priceData.marketCap?.toLocaleString()}</p>
-                  </div>
-                )}
-              </div>
-            </div>
-          </div>
+          {/* Live Bitcoin Chart */}
+          <BitcoinChart height={280} timeRange={24} />
 
           {/* AI Analysis */}
           <div className="bg-white rounded-lg shadow p-6">
@@ -447,6 +431,7 @@ export default function DashboardPage() {
           </div>
         </div>
 
+
         {/* System Info */}
         <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
           {/* Price Update Info */}
@@ -456,9 +441,9 @@ export default function DashboardPage() {
               <div>
                 <h4 className="text-green-900 font-medium">실시간 가격 업데이트</h4>
                 <p className="text-green-800 text-sm mt-1">
-                  CoinGecko API에서 <strong>15분마다</strong> 실제 비트코인 가격을 자동 업데이트합니다.
+                  리얼리스틱 시뮬레이션으로 <strong>10분마다</strong> 비트코인 가격을 자동 업데이트합니다.
                   <br />
-                  업데이트 시간: 정시, 15분, 30분, 45분
+                  업데이트 간격: 10분 (실시간 시장 움직임 시뮬레이션)
                 </p>
                 {priceData && (
                   <p className="text-xs text-green-700 mt-2">
@@ -474,10 +459,10 @@ export default function DashboardPage() {
             <div className="flex items-start">
               <div className="text-blue-600 mr-3">ℹ️</div>
               <div>
-                <h4 className="text-blue-900 font-medium">데모 모드</h4>
+                <h4 className="text-blue-900 font-medium">시뮬레이션 모드</h4>
                 <p className="text-blue-800 text-sm mt-1">
-                  이것은 학습용 데모입니다. 실제 비트코인 거래는 이루어지지 않으며, 
-                  모든 데이터는 실제 시장 데이터를 기반으로 한 시뮬레이션입니다.
+                  이것은 학습용 시뮬레이션입니다. 실제 비트코인 거래는 이루어지지 않으며, 
+                  리얼리스틱한 가격 움직임과 히스토리가 실시간으로 생성됩니다.
                 </p>
               </div>
             </div>

@@ -1,10 +1,10 @@
-// Bitcoin API service with CoinGecko integration
+// Bitcoin API service - Mock data implementation (temporarily replacing CoinGecko API)
 
-import axios, { AxiosInstance, AxiosResponse } from 'axios';
 import { BitcoinData } from '@/types/game';
 import { ValidationUtils } from '@/lib/validation/schemas';
+import mockBitcoinData from '@/lib/utils/mock-bitcoin-data';
 
-// CoinGecko API response interfaces
+// Mock interfaces (kept for compatibility)
 interface CoinGeckoSimplePrice {
   bitcoin: {
     usd: number;
@@ -37,47 +37,15 @@ interface CoinGeckoCoinData {
 }
 
 export class BitcoinAPIService {
-  private api: AxiosInstance;
   private readonly coinId = 'bitcoin';
   private readonly currency = 'usd';
-  private readonly baseURL = 'https://api.coingecko.com/api/v3';
+  private readonly baseURL = 'https://api.coingecko.com/api/v3'; // Kept for reference
   private lastRequestTime: number = 0;
   private readonly rateLimitDelay = 1000; // 1 second between requests
 
   constructor() {
-    this.api = axios.create({
-      baseURL: this.baseURL,
-      timeout: 10000,
-      headers: {
-        'Accept': 'application/json',
-        'Content-Type': 'application/json'
-      }
-    });
-
-    // Add rate limiting interceptor
-    this.api.interceptors.request.use(async (config) => {
-      const now = Date.now();
-      const timeSinceLastRequest = now - this.lastRequestTime;
-      
-      if (timeSinceLastRequest < this.rateLimitDelay) {
-        await this.sleep(this.rateLimitDelay - timeSinceLastRequest);
-      }
-      
-      this.lastRequestTime = Date.now();
-      return config;
-    });
-
-    // Add response error handling
-    this.api.interceptors.response.use(
-      (response) => response,
-      (error) => {
-        console.error('Bitcoin API Error:', error.message);
-        if (error.response?.status === 429) {
-          throw new Error('Rate limit exceeded. Please try again later.');
-        }
-        throw error;
-      }
-    );
+    // No axios setup needed for mock implementation
+    console.log('🔧 BitcoinAPIService initialized with MOCK DATA (external API calls disabled)');
   }
 
   private sleep(ms: number): Promise<void> {
@@ -85,201 +53,158 @@ export class BitcoinAPIService {
   }
 
   /**
-   * Get current Bitcoin price and basic market data
+   * Get current Bitcoin price and basic market data (MOCK IMPLEMENTATION)
    */
   async getCurrentPrice(): Promise<BitcoinData> {
     try {
-      const response: AxiosResponse<CoinGeckoSimplePrice> = await this.api.get(
-        `/simple/price?ids=${this.coinId}&vs_currencies=${this.currency}&include_market_cap=true&include_24hr_vol=true&include_24hr_change=true`
-      );
-
-      const data = response.data.bitcoin;
-      const now = new Date();
+      console.log('📊 Fetching Bitcoin price from MOCK DATA...');
       
-      const bitcoinData: BitcoinData = {
-        id: `bitcoin-${now.getTime()}`,
-        timestamp: now,
-        price: data.usd,
-        volume: data.usd_24h_vol,
-        marketCap: data.usd_market_cap,
-        change24h: data.usd_24h_change,
-        changePercentage24h: data.usd_24h_change,
-        high24h: data.usd, // CoinGecko simple API doesn't include high/low
-        low24h: data.usd,  // We'll get these from detailed endpoint
-        source: 'coingecko',
-        volatility: Math.abs(data.usd_24h_change / data.usd) * 100
-      };
-
+      // Simulate API delay for realistic behavior
+      await this.sleep(200 + Math.random() * 300); // 200-500ms delay
+      
+      // Generate mock data using time-based variation
+      const bitcoinData = mockBitcoinData.getCurrentMockPrice();
+      
+      // Override source to indicate mock data
+      bitcoinData.source = 'mock-data';
+      
+      console.log(`💰 Mock Bitcoin price: $${bitcoinData.price.toLocaleString()}`);
+      
       // Validate the data before returning
       return ValidationUtils.validateBitcoinData(bitcoinData);
     } catch (error) {
-      console.error('Error fetching current Bitcoin price:', error);
-      throw new Error(`Failed to fetch current Bitcoin price: ${error instanceof Error ? error.message : 'Unknown error'}`);
+      console.error('Error generating mock Bitcoin price:', error);
+      throw new Error(`Failed to generate mock Bitcoin price: ${error instanceof Error ? error.message : 'Unknown error'}`);
     }
   }
 
   /**
-   * Get detailed Bitcoin data with high/low values
+   * Get detailed Bitcoin data with high/low values (MOCK IMPLEMENTATION)
    */
   async getDetailedData(): Promise<BitcoinData> {
     try {
-      const response: AxiosResponse<CoinGeckoCoinData> = await this.api.get(`/coins/${this.coinId}`);
+      console.log('📈 Fetching detailed Bitcoin data from MOCK DATA...');
       
-      const coin = response.data;
-      const marketData = coin.market_data;
-      const now = new Date();
-
-      const bitcoinData: BitcoinData = {
-        id: `bitcoin-detailed-${now.getTime()}`,
-        timestamp: now,
-        price: marketData.current_price.usd,
-        volume: marketData.total_volume.usd,
-        marketCap: marketData.market_cap.usd,
-        change24h: marketData.price_change_24h,
-        changePercentage24h: marketData.price_change_percentage_24h,
-        high24h: marketData.high_24h.usd,
-        low24h: marketData.low_24h.usd,
-        source: 'coingecko',
-        volatility: Math.abs(marketData.price_change_percentage_24h)
-      };
-
+      // Simulate API delay
+      await this.sleep(300 + Math.random() * 400);
+      
+      // Generate detailed mock data with proper high/low values
+      const bitcoinData = mockBitcoinData.generateMockBitcoinData();
+      bitcoinData.source = 'mock-data';
+      bitcoinData.id = `bitcoin-detailed-${Date.now()}`;
+      
+      console.log(`📊 Mock detailed data generated: $${bitcoinData.price.toLocaleString()}`);
+      
       return ValidationUtils.validateBitcoinData(bitcoinData);
     } catch (error) {
-      console.error('Error fetching detailed Bitcoin data:', error);
-      throw new Error(`Failed to fetch detailed Bitcoin data: ${error instanceof Error ? error.message : 'Unknown error'}`);
+      console.error('Error generating mock detailed Bitcoin data:', error);
+      throw new Error(`Failed to generate mock detailed Bitcoin data: ${error instanceof Error ? error.message : 'Unknown error'}`);
     }
   }
 
   /**
-   * Get historical Bitcoin data for a specific time range
+   * Get historical Bitcoin data for a specific time range (MOCK IMPLEMENTATION)
    */
   async getHistoricalData(days: number = 7): Promise<BitcoinData[]> {
     try {
-      const response: AxiosResponse<CoinGeckoHistoricalData> = await this.api.get(
-        `/coins/${this.coinId}/market_chart?vs_currency=${this.currency}&days=${days}&interval=hourly`
-      );
+      console.log(`📚 Generating mock historical Bitcoin data for ${days} days...`);
+      
+      // Simulate API delay proportional to data amount
+      await this.sleep(400 + Math.random() * 600);
+      
+      // Generate mock historical data
+      const hours = days * 24;
+      const bitcoinDataArray = mockBitcoinData.generateMockHistoricalData(hours);
+      
+      // Override source for all data points
+      bitcoinDataArray.forEach(data => {
+        data.source = 'mock-data';
+      });
 
-      const { prices, market_caps, total_volumes } = response.data;
-      const bitcoinDataArray: BitcoinData[] = [];
-
-      for (let i = 0; i < prices.length; i++) {
-        const [timestamp, price] = prices[i];
-        const [, marketCap] = market_caps[i] || [timestamp, 0];
-        const [, volume] = total_volumes[i] || [timestamp, 0];
-
-        // Calculate 24h change (compare with price from 24 hours ago)
-        const previousIndex = Math.max(0, i - 24); // 24 hours ago (hourly data)
-        const previousPrice = prices[previousIndex]?.[1] || price;
-        const change24h = price - previousPrice;
-        const changePercentage24h = previousPrice > 0 ? (change24h / previousPrice) * 100 : 0;
-
-        // Calculate high/low for the day (use surrounding 24 hours)
-        const dayStart = Math.max(0, i - 12);
-        const dayEnd = Math.min(prices.length - 1, i + 12);
-        const dayPrices = prices.slice(dayStart, dayEnd + 1).map(([, p]) => p);
-        const high24h = Math.max(...dayPrices);
-        const low24h = Math.min(...dayPrices);
-
-        const bitcoinData: BitcoinData = {
-          id: `bitcoin-historical-${timestamp}`,
-          timestamp: new Date(timestamp),
-          price,
-          volume,
-          marketCap,
-          change24h,
-          changePercentage24h,
-          high24h,
-          low24h,
-          source: 'coingecko',
-          volatility: Math.abs(changePercentage24h)
-        };
-
+      console.log(`📈 Generated ${bitcoinDataArray.length} mock historical data points`);
+      
+      // Validate all data points
+      const validatedData: BitcoinData[] = [];
+      for (const data of bitcoinDataArray) {
         try {
-          bitcoinDataArray.push(ValidationUtils.validateBitcoinData(bitcoinData));
+          validatedData.push(ValidationUtils.validateBitcoinData(data));
         } catch (validationError) {
-          console.warn(`Skipping invalid historical data point at ${timestamp}:`, validationError);
+          console.warn(`Skipping invalid mock historical data point at ${data.timestamp}:`, validationError);
         }
       }
 
-      return bitcoinDataArray;
+      return validatedData;
     } catch (error) {
-      console.error('Error fetching historical Bitcoin data:', error);
-      throw new Error(`Failed to fetch historical Bitcoin data: ${error instanceof Error ? error.message : 'Unknown error'}`);
+      console.error('Error generating mock historical Bitcoin data:', error);
+      throw new Error(`Failed to generate mock historical Bitcoin data: ${error instanceof Error ? error.message : 'Unknown error'}`);
     }
   }
 
   /**
-   * Get Bitcoin data for the last N hours
+   * Get Bitcoin data for the last N hours (MOCK IMPLEMENTATION)
    */
   async getRecentData(hours: number = 24): Promise<BitcoinData[]> {
     try {
-      // For recent data, use 1-day history with hourly intervals
-      const days = Math.max(1, Math.ceil(hours / 24));
-      const response: AxiosResponse<CoinGeckoHistoricalData> = await this.api.get(
-        `/coins/${this.coinId}/market_chart?vs_currency=${this.currency}&days=${days}&interval=hourly`
-      );
-
-      const { prices, market_caps, total_volumes } = response.data;
+      console.log(`🕐 Generating mock recent Bitcoin data for last ${hours} hours...`);
+      
+      // Simulate API delay
+      await this.sleep(300 + Math.random() * 400);
+      
+      // Generate recent mock data
+      const bitcoinDataArray = mockBitcoinData.generateMockHistoricalData(hours);
+      
+      // Filter to only include data within the requested time range
       const cutoffTime = Date.now() - (hours * 60 * 60 * 1000);
-      const bitcoinDataArray: BitcoinData[] = [];
+      const filteredData = bitcoinDataArray.filter(data => 
+        data.timestamp.getTime() >= cutoffTime
+      );
+      
+      // Override source for all data points
+      filteredData.forEach(data => {
+        data.source = 'mock-data';
+        data.id = `bitcoin-recent-${data.timestamp.getTime()}`;
+      });
 
-      for (let i = 0; i < prices.length; i++) {
-        const [timestamp, price] = prices[i];
-        
-        // Skip data points older than the requested hours
-        if (timestamp < cutoffTime) continue;
-
-        const [, marketCap] = market_caps[i] || [timestamp, 0];
-        const [, volume] = total_volumes[i] || [timestamp, 0];
-
-        // Calculate changes
-        const previousPrice = prices[Math.max(0, i - 1)]?.[1] || price;
-        const change24h = price - previousPrice;
-        const changePercentage24h = previousPrice > 0 ? (change24h / previousPrice) * 100 : 0;
-
-        const bitcoinData: BitcoinData = {
-          id: `bitcoin-recent-${timestamp}`,
-          timestamp: new Date(timestamp),
-          price,
-          volume,
-          marketCap,
-          change24h,
-          changePercentage24h,
-          high24h: price, // For recent data, we'll update these in real-time
-          low24h: price,
-          source: 'coingecko',
-          volatility: Math.abs(changePercentage24h)
-        };
-
+      console.log(`⏰ Generated ${filteredData.length} mock recent data points`);
+      
+      // Validate all data points
+      const validatedData: BitcoinData[] = [];
+      for (const data of filteredData) {
         try {
-          bitcoinDataArray.push(ValidationUtils.validateBitcoinData(bitcoinData));
+          validatedData.push(ValidationUtils.validateBitcoinData(data));
         } catch (validationError) {
-          console.warn(`Skipping invalid recent data point at ${timestamp}:`, validationError);
+          console.warn(`Skipping invalid mock recent data point at ${data.timestamp}:`, validationError);
         }
       }
 
-      return bitcoinDataArray.sort((a, b) => a.timestamp.getTime() - b.timestamp.getTime());
+      return validatedData.sort((a, b) => a.timestamp.getTime() - b.timestamp.getTime());
     } catch (error) {
-      console.error('Error fetching recent Bitcoin data:', error);
-      throw new Error(`Failed to fetch recent Bitcoin data: ${error instanceof Error ? error.message : 'Unknown error'}`);
+      console.error('Error generating mock recent Bitcoin data:', error);
+      throw new Error(`Failed to generate mock recent Bitcoin data: ${error instanceof Error ? error.message : 'Unknown error'}`);
     }
   }
 
   /**
-   * Health check for the API service
+   * Health check for the API service (MOCK IMPLEMENTATION)
    */
   async healthCheck(): Promise<boolean> {
     try {
-      const response = await this.api.get('/ping');
-      return response.status === 200;
+      console.log('🔍 Running mock API health check...');
+      
+      // Simulate network delay
+      await this.sleep(100 + Math.random() * 200);
+      
+      // Mock implementation always returns healthy
+      console.log('✅ Mock API health check passed');
+      return true;
     } catch (error) {
-      console.error('Bitcoin API health check failed:', error);
+      console.error('Mock Bitcoin API health check failed:', error);
       return false;
     }
   }
 
   /**
-   * Get API status and rate limit info
+   * Get API status and rate limit info (MOCK IMPLEMENTATION)
    */
   async getAPIStatus(): Promise<{ healthy: boolean; rateLimitInfo?: any }> {
     try {
@@ -287,12 +212,22 @@ export class BitcoinAPIService {
       return {
         healthy,
         rateLimitInfo: {
+          source: 'mock-data',
           lastRequestTime: this.lastRequestTime,
-          rateLimitDelay: this.rateLimitDelay
+          rateLimitDelay: this.rateLimitDelay,
+          mockMode: true,
+          basePrice: mockBitcoinData.BASE_PRICE
         }
       };
     } catch (error) {
-      return { healthy: false };
+      return { 
+        healthy: false,
+        rateLimitInfo: {
+          source: 'mock-data',
+          mockMode: true,
+          error: error instanceof Error ? error.message : 'Unknown error'
+        }
+      };
     }
   }
 }

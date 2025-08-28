@@ -1,0 +1,41 @@
+# Page snapshot
+
+```yaml
+- generic [ref=e2]:
+  - navigation [ref=e3]:
+    - generic [ref=e5]:
+      - link "₿ Bitcoin Game" [ref=e6] [cursor=pointer]:
+        - /url: /
+        - generic [ref=e8] [cursor=pointer]: ₿
+        - generic [ref=e9] [cursor=pointer]: Bitcoin Game
+      - generic [ref=e10]:
+        - link "홈" [ref=e11] [cursor=pointer]:
+          - /url: /
+          - img [ref=e12] [cursor=pointer]
+          - text: 홈
+        - link "대시보드" [ref=e15] [cursor=pointer]:
+          - /url: /dashboard
+          - img [ref=e16] [cursor=pointer]
+          - text: 대시보드
+        - link "뉴스" [ref=e18] [cursor=pointer]:
+          - /url: /news
+          - img [ref=e19] [cursor=pointer]
+          - text: 뉴스
+        - link "기술지표" [ref=e22] [cursor=pointer]:
+          - /url: /technical-indicators
+          - img [ref=e23] [cursor=pointer]
+          - text: 기술지표
+        - link "리포트" [ref=e26] [cursor=pointer]:
+          - /url: /reports
+          - img [ref=e27] [cursor=pointer]
+          - text: 리포트
+        - link "에이전트" [ref=e30] [cursor=pointer]:
+          - /url: /agents
+          - img [ref=e31] [cursor=pointer]
+          - text: 에이전트
+        - link "채팅" [ref=e34] [cursor=pointer]:
+          - /url: /chat
+          - img [ref=e35] [cursor=pointer]
+          - text: 채팅
+  - paragraph [ref=e40]: AI 에이전트를 불러오는 중...
+```

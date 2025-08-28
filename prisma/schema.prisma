@@ -268,3 +268,96 @@ model NewsReport {
   @@index([date])
   @@map("news_reports")
 }
+
+// Technical Indicators model
+model TechnicalIndicator {
+  id               String   @id @default(cuid())
+  timestamp        DateTime @default(now())
+  symbol           String   @default("BTC")
+  timeframe        String   @default("1d") // '1h', '4h', '1d', '1w'
+  
+  // Price data
+  price            Float
+  high             Float
+  low              Float
+  volume           Float?
+  
+  // Moving averages
+  sma5             Float?   // 5-day Simple Moving Average
+  sma10            Float?   // 10-day Simple Moving Average
+  sma20            Float?   // 20-day Simple Moving Average
+  sma50            Float?   // 50-day Simple Moving Average
+  ema12            Float?   // 12-day Exponential Moving Average
+  ema26            Float?   // 26-day Exponential Moving Average
+  
+  // Oscillators
+  rsi              Float?   // Relative Strength Index (0-100)
+  stochK           Float?   // Stochastic %K (0-100)
+  stochD           Float?   // Stochastic %D (0-100)
+  
+  // MACD
+  macd             Float?   // MACD Line
+  macdSignal       Float?   // MACD Signal Line
+  macdHistogram    Float?   // MACD Histogram
+  
+  // Bollinger Bands
+  bbUpper          Float?   // Upper Bollinger Band
+  bbMiddle         Float?   // Middle Bollinger Band (SMA20)
+  bbLower          Float?   // Lower Bollinger Band
+  bbWidth          Float?   // Bollinger Band Width
+  
+  // Support and Resistance
+  support          Float?   // Dynamic Support Level
+  resistance       Float?   // Dynamic Resistance Level
+  
+  createdAt        DateTime @default(now())
+  updatedAt        DateTime @updatedAt
+  
+  @@index([timestamp])
+  @@index([symbol])
+  @@index([timeframe])
+  @@map("technical_indicators")
+}
+
+// Technical Analysis Reports model
+model TechnicalReport {
+  id                   String   @id @default(cuid())
+  timestamp            DateTime @default(now())
+  symbol               String   @default("BTC")
+  timeframe            String   @default("1d")
+  
+  // Overall assessment
+  overallTrend         String   // 'bullish', 'bearish', 'neutral', 'sideways'
+  trendStrength        Float    @default(0.0) // 0-100
+  confidence           Float    @default(0.0) // 0-100
+  
+  // Signal analysis
+  buySignals           Int      @default(0)
+  sellSignals          Int      @default(0)
+  neutralSignals       Int      @default(0)
+  recommendation       String   // 'strong_buy', 'buy', 'hold', 'sell', 'strong_sell'
+  
+  // Key levels
+  keySupport           Float?   // Most important support level
+  keyResistance        Float?   // Most important resistance level
+  nextTarget           Float?   // Next price target
+  stopLoss             Float?   // Recommended stop loss
+  
+  // AI Analysis
+  summary              String   // Human-readable summary
+  aiInsights           String   // AI-generated insights
+  riskAssessment       String   // Risk level and assessment
+  
+  // Analysis metadata
+  signalStrength       Float    @default(0.0) // 0-100
+  volatilityLevel      String   @default("medium") // 'low', 'medium', 'high', 'extreme'
+  
+  createdAt            DateTime @default(now())
+  updatedAt            DateTime @updatedAt
+  
+  @@index([timestamp])
+  @@index([symbol])
+  @@index([overallTrend])
+  @@index([recommendation])
+  @@map("technical_reports")
+}
