@@ -1,6 +1,7 @@
 'use client';
 
-import React, { useState, useEffect, useCallback } from 'react';
+import React, { useState, useEffect, useCallback, useMemo } from 'react';
+import { generatePrompt, generatePromptSummary } from '@/lib/prompts/prompt-templates';
 import { useParams } from 'next/navigation';
 import Link from 'next/link';
 import { 
@@ -19,8 +20,18 @@ import {
   MessageCircle,
   Brain,
   Sparkles,
-  Shield
+  Shield,
+  FileText,
+  Copy,
+  Code,
+  LineChart,
+  History
 } from 'lucide-react';
+import TradingHistory from '@/components/trading/TradingHistory';
+import PerformanceMetricsComponent from '@/components/trading/PerformanceMetrics';
+import EnhancedPromptsViewer from '@/components/trading/EnhancedPromptsViewer';
+import { generateMockTradingHistory, generateMockPerformanceMetrics, generateMockAgentPrompts } from '@/lib/utils/mock-trading-data';
+import { TradingHistoryItem, PerformanceMetrics, AgentPrompt } from '@/types/trading';
 
 interface Pattern {
   id: string;
@@ -138,7 +149,13 @@ export default function AgentProfilePage() {
   const [agent, setAgent] = useState<Agent | null>(null);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState('');
-  const [activeTab, setActiveTab] = useState<'overview' | 'patterns' | 'watchlist'>('overview');
+  const [activeTab, setActiveTab] = useState<'overview' | 'trading' | 'performance' | 'patterns' | 'watchlist' | 'prompt' | 'enhanced-prompts'>('overview');
+  const [copiedPrompt, setCopiedPrompt] = useState(false);
+  
+  // Generate mock data for new features
+  const tradingHistory = useMemo(() => generateMockTradingHistory(100), []);
+  const performanceMetrics = useMemo(() => generateMockPerformanceMetrics(tradingHistory), [tradingHistory]);
+  const agentPrompts = useMemo(() => generateMockAgentPrompts(agentId), [agentId]);
 
   const fetchAgent = useCallback(async () => {
     try {
@@ -276,15 +293,19 @@ export default function AgentProfilePage() {
       {/* Navigation Tabs */}
       <div className="bg-white shadow-sm sticky top-0 z-10">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-          <nav className="flex space-x-8">
+          <nav className="flex space-x-8 overflow-x-auto">
             {[
               { id: 'overview', name: '개요', icon: Activity },
+              { id: 'trading', name: '거래 내역', icon: History },
+              { id: 'performance', name: '성과 분석', icon: LineChart },
               { id: 'patterns', name: `패턴 (${agent.patterns.length})`, icon: TrendingUp },
-              { id: 'watchlist', name: `관심종목 (${agent.watchlistItems.length})`, icon: Eye }
+              { id: 'watchlist', name: `관심종목 (${agent.watchlistItems.length})`, icon: Eye },
+              { id: 'enhanced-prompts', name: '프롬프트 상세', icon: Code },
+              { id: 'prompt', name: '프롬프트 미리보기', icon: FileText }
             ].map((tab) => (
               <button
                 key={tab.id}
-                onClick={() => setActiveTab(tab.id as 'overview' | 'patterns' | 'watchlist')}
+                onClick={() => setActiveTab(tab.id as any)}
                 className={`py-4 px-2 border-b-2 font-semibold text-sm flex items-center space-x-2 transition-all ${
                   activeTab === tab.id
                     ? `border-blue-500 text-blue-600`
@@ -512,7 +533,241 @@ export default function AgentProfilePage() {
             </div>
           </div>
         )}
+
+        {/* Prompt Tab */}
+        {activeTab === 'prompt' && (
+          <div className="space-y-8">
+            <div className="flex justify-between items-center">
+              <h2 className="text-3xl font-bold text-gray-900">프롬프트 미리보기</h2>
+              <div className="flex items-center space-x-4">
+                <button
+                  onClick={() => {
+                    const fullPrompt = generatePrompt(agent);
+                    navigator.clipboard.writeText(fullPrompt);
+                    setCopiedPrompt(true);
+                    setTimeout(() => setCopiedPrompt(false), 2000);
+                  }}
+                  className={`flex items-center space-x-2 px-4 py-2 rounded-xl font-semibold transition-all ${
+                    copiedPrompt 
+                      ? 'bg-green-500 text-white' 
+                      : 'bg-gray-100 hover:bg-gray-200 text-gray-700'
+                  }`}
+                >
+                  <Copy className="w-4 h-4" />
+                  <span>{copiedPrompt ? '복사됨!' : '전체 복사'}</span>
+                </button>
+              </div>
+            </div>
+
+            {/* Summary Card */}
+            <div className="bg-gradient-to-r from-blue-50 to-indigo-50 rounded-2xl p-8 border border-blue-200">
+              <div className="flex items-start space-x-4 mb-6">
+                <div className="p-3 bg-blue-500 rounded-xl">
+                  <Code className="w-8 h-8 text-white" />
+                </div>
+                <div className="flex-1">
+                  <h3 className="text-xl font-bold text-gray-900 mb-2">프롬프트 요약</h3>
+                  <p className="text-gray-600">이 에이전트가 AI 모델에게 전달되는 핵심 지시사항입니다.</p>
+                </div>
+              </div>
+              
+              <div className="bg-white rounded-xl p-6 shadow-sm">
+                <div className="whitespace-pre-line text-gray-800 leading-relaxed">
+                  {generatePromptSummary(agent)}
+                </div>
+              </div>
+            </div>
+
+            {/* Full Prompt Preview */}
+            <div className="bg-white rounded-2xl shadow-lg overflow-hidden">
+              <div className="bg-gray-50 px-6 py-4 border-b border-gray-200">
+                <div className="flex items-center justify-between">
+                  <h3 className="text-lg font-semibold text-gray-900">전체 프롬프트 템플릿</h3>
+                  <div className="flex items-center space-x-2 text-sm text-gray-500">
+                    <FileText className="w-4 h-4" />
+                    <span>AI 모델에게 전달되는 완전한 지시사항</span>
+                  </div>
+                </div>
+              </div>
+              
+              <div className="p-6">
+                <div className="bg-gray-900 rounded-xl p-6 overflow-auto max-h-96">
+                  <pre className="text-green-400 text-sm font-mono whitespace-pre-wrap leading-relaxed">
+                    {generatePrompt(agent)}
+                  </pre>
+                </div>
+              </div>
+            </div>
+
+            {/* Template Structure Explanation */}
+            <div className="grid grid-cols-1 lg:grid-cols-2 gap-6">
+              <div className="bg-white rounded-2xl shadow-lg p-6">
+                <h3 className="text-lg font-bold text-gray-900 mb-4 flex items-center">
+                  <Sparkles className="w-5 h-5 text-yellow-500 mr-2" />
+                  동적 변수
+                </h3>
+                <div className="space-y-3">
+                  <div className="flex items-center justify-between p-3 bg-gray-50 rounded-lg">
+                    <code className="text-sm font-mono text-blue-600">{'{{agentName}}'}</code>
+                    <span className="text-sm text-gray-600">{agent.name}</span>
+                  </div>
+                  <div className="flex items-center justify-between p-3 bg-gray-50 rounded-lg">
+                    <code className="text-sm font-mono text-blue-600">{'{{personality}}'}</code>
+                    <span className="text-sm text-gray-600">{getPersonalityLabel(agent.personality)}</span>
+                  </div>
+                  <div className="flex items-center justify-between p-3 bg-gray-50 rounded-lg">
+                    <code className="text-sm font-mono text-blue-600">{'{{strategies}}'}</code>
+                    <span className="text-sm text-gray-600">{agent.strategy.length}개 전략</span>
+                  </div>
+                  <div className="flex items-center justify-between p-3 bg-gray-50 rounded-lg">
+                    <code className="text-sm font-mono text-blue-600">{'{{patterns}}'}</code>
+                    <span className="text-sm text-gray-600">{agent.patterns.length}개 패턴</span>
+                  </div>
+                </div>
+              </div>
+
+              <div className="bg-white rounded-2xl shadow-lg p-6">
+                <h3 className="text-lg font-bold text-gray-900 mb-4 flex items-center">
+                  <Shield className="w-5 h-5 text-green-500 mr-2" />
+                  프롬프트 특징
+                </h3>
+                <div className="space-y-4">
+                  <div className="flex items-start space-x-3">
+                    <div className="w-2 h-2 bg-blue-500 rounded-full mt-2 flex-shrink-0"></div>
+                    <div>
+                      <div className="font-semibold text-gray-900">성향 기반 분석</div>
+                      <div className="text-sm text-gray-600">에이전트의 투자 성향에 맞는 분석 방식 적용</div>
+                    </div>
+                  </div>
+                  <div className="flex items-start space-x-3">
+                    <div className="w-2 h-2 bg-green-500 rounded-full mt-2 flex-shrink-0"></div>
+                    <div>
+                      <div className="font-semibold text-gray-900">전략 맞춤화</div>
+                      <div className="text-sm text-gray-600">선택된 투자 전략을 프롬프트에 자동 반영</div>
+                    </div>
+                  </div>
+                  <div className="flex items-start space-x-3">
+                    <div className="w-2 h-2 bg-purple-500 rounded-full mt-2 flex-shrink-0"></div>
+                    <div>
+                      <div className="font-semibold text-gray-900">패턴 활용</div>
+                      <div className="text-sm text-gray-600">학습된 분석 패턴을 기반으로 일관성 있는 분석</div>
+                    </div>
+                  </div>
+                  <div className="flex items-start space-x-3">
+                    <div className="w-2 h-2 bg-orange-500 rounded-full mt-2 flex-shrink-0"></div>
+                    <div>
+                      <div className="font-semibold text-gray-900">실시간 컨텍스트</div>
+                      <div className="text-sm text-gray-600">현재 시장 상황을 반영한 동적 분석</div>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+
+            {/* Usage Examples */}
+            <div className="bg-white rounded-2xl shadow-lg p-6">
+              <h3 className="text-lg font-bold text-gray-900 mb-4">활용 예시</h3>
+              <div className="grid grid-cols-1 md:grid-cols-3 gap-4">
+                <div className="p-4 bg-blue-50 rounded-xl border border-blue-200">
+                  <div className="font-semibold text-blue-900 mb-2">채팅에서 활용</div>
+                  <div className="text-sm text-blue-800">사용자와의 대화에서 이 프롬프트가 기본 성격으로 작용합니다.</div>
+                </div>
+                <div className="p-4 bg-green-50 rounded-xl border border-green-200">
+                  <div className="font-semibold text-green-900 mb-2">분석 리포트</div>
+                  <div className="text-sm text-green-800">시장 분석 리포트 생성 시 이 가이드라인을 따릅니다.</div>
+                </div>
+                <div className="p-4 bg-purple-50 rounded-xl border border-purple-200">
+                  <div className="font-semibold text-purple-900 mb-2">API 통합</div>
+                  <div className="text-sm text-purple-800">외부 AI 서비스 연동 시 이 프롬프트를 사용합니다.</div>
+                </div>
+              </div>
+            </div>
+          </div>
+        )}
+
+        {/* Trading History Tab */}
+        {activeTab === 'trading' && (
+          <div className="space-y-6">
+            <div className="flex justify-between items-center">
+              <h2 className="text-3xl font-bold text-gray-900">거래 내역</h2>
+            </div>
+            
+            <TradingHistory 
+              trades={tradingHistory}
+              onExport={(format) => {
+                // Export functionality
+                const dataStr = format === 'json' 
+                  ? JSON.stringify(tradingHistory, null, 2)
+                  : convertToCSV(tradingHistory);
+                const dataUri = `data:application/${format === 'json' ? 'json' : 'csv'};charset=utf-8,${encodeURIComponent(dataStr)}`;
+                const exportFileDefaultName = `trading-history-${agentId}.${format}`;
+                const linkElement = document.createElement('a');
+                linkElement.setAttribute('href', dataUri);
+                linkElement.setAttribute('download', exportFileDefaultName);
+                linkElement.click();
+              }}
+            />
+          </div>
+        )}
+
+        {/* Performance Metrics Tab */}
+        {activeTab === 'performance' && (
+          <div className="space-y-6">
+            <div className="flex justify-between items-center">
+              <h2 className="text-3xl font-bold text-gray-900">성과 분석</h2>
+            </div>
+            
+            <PerformanceMetricsComponent 
+              metrics={performanceMetrics}
+              onBenchmarkCompare={() => {
+                // Benchmark comparison functionality
+                console.log('Benchmark comparison requested');
+              }}
+            />
+          </div>
+        )}
+
+        {/* Enhanced Prompts Tab */}
+        {activeTab === 'enhanced-prompts' && (
+          <div className="space-y-6">
+            <div className="flex justify-between items-center">
+              <h2 className="text-3xl font-bold text-gray-900">프롬프트 상세 관리</h2>
+            </div>
+            
+            <EnhancedPromptsViewer 
+              prompts={agentPrompts}
+              canEdit={true}
+              onSuggestImprovement={(promptId, suggestion) => {
+                console.log(`Improvement suggestion for ${promptId}: ${suggestion}`);
+                // Handle improvement suggestion
+              }}
+            />
+          </div>
+        )}
       </div>
     </div>
   );
+}
+
+// Helper function to convert JSON to CSV
+function convertToCSV(data: TradingHistoryItem[]): string {
+  if (data.length === 0) return '';
+  
+  const headers = ['Date', 'Symbol', 'Action', 'Quantity', 'Price', 'Total', 'P&L', 'Return %', 'Strategy'];
+  const rows = data.map(trade => [
+    new Date(trade.timestamp).toISOString(),
+    trade.symbol,
+    trade.action,
+    trade.quantity,
+    trade.price,
+    trade.total,
+    trade.result?.profitLoss || '',
+    trade.result?.percentReturn || '',
+    trade.strategyUsed
+  ]);
+  
+  return [
+    headers.join(','),
+    ...rows.map(row => row.join(','))
+  ].join('\n');
 }

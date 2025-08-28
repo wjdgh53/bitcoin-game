@@ -173,7 +173,7 @@ export default function ReportsPage() {
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-8">
         {/* AI Agents & Generate Buttons */}
         <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-6 mb-8">
-          {agents.map((agent) => {
+          {agents && agents.map((agent) => {
             const color = getPersonalityColor(agent.personality);
             return (
               <div key={agent.id} className="bg-white rounded-lg shadow p-6">
@@ -216,7 +216,7 @@ export default function ReportsPage() {
               className="px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-purple-500 focus:border-transparent text-gray-900"
             >
               <option value="all">전체 에이전트</option>
-              {agents.map((agent) => (
+              {agents && agents.map((agent) => (
                 <option key={agent.id} value={agent.type}>
                   {getPersonalityIcon(agent.personality)} {agent.name}
                 </option>
@@ -241,7 +241,7 @@ export default function ReportsPage() {
             </div>
           ) : (
             reports.map((report) => {
-              const agent = agents.find(a => a.type === report.agentType);
+              const agent = agents?.find(a => a.type === report.agentType);
               return (
                 <div key={report.id} className="bg-white rounded-lg shadow overflow-hidden">
                   <div className="p-6">
