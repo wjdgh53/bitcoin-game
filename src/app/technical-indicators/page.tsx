@@ -1,7 +1,7 @@
 'use client';
 
 import { useState, useEffect } from 'react';
-import { TrendingUp, TrendingDown, BarChart3, Target, Shield, AlertTriangle, Brain, RefreshCw, Activity } from 'lucide-react';
+import { TrendingUp, TrendingDown, BarChart3, Target, Shield, AlertTriangle, Brain, RefreshCw, Activity, Zap, Clock, DollarSign } from 'lucide-react';
 import Navbar from '@/components/Navbar';
 
 interface TechnicalIndicator {
@@ -56,11 +56,36 @@ interface TechnicalReport {
   volatilityLevel: 'low' | 'medium' | 'high' | 'extreme';
 }
 
+interface BinanceData {
+  symbol: string;
+  currentPrice: number;
+  priceChange: number;
+  priceChangePercent: number;
+  volume24h: number;
+  high24h: number;
+  low24h: number;
+  technicalIndicators: {
+    sma20: number | null;
+    rsi14: number | null;
+    macd: number | null;
+    macdSignal: number | null;
+    macdHistogram: number | null;
+    bollingerUpper: number | null;
+    bollingerMiddle: number | null;
+    bollingerLower: number | null;
+  };
+  tradingSignal: 'buy' | 'sell' | 'neutral';
+  lastUpdate: string;
+}
+
 export default function TechnicalIndicatorsPage() {
   const [indicators, setIndicators] = useState<TechnicalIndicator | null>(null);
   const [report, setReport] = useState<TechnicalReport | null>(null);
+  const [binanceData, setBinanceData] = useState<BinanceData | null>(null);
   const [loading, setLoading] = useState(true);
+  const [binanceLoading, setBinanceLoading] = useState(false);
   const [error, setError] = useState<string | null>(null);
+  const [binanceError, setBinanceError] = useState<string | null>(null);
   const [timeframe, setTimeframe] = useState<string>('1d');
   const [lastUpdate, setLastUpdate] = useState<Date | null>(null);
 
@@ -117,6 +142,27 @@ export default function TechnicalIndicatorsPage() {
     fetchData();
   };
 
+  const fetchBinanceData = async () => {
+    try {
+      setBinanceLoading(true);
+      setBinanceError(null);
+      
+      const response = await fetch('/api/binance/indicators');
+      const result = await response.json();
+      
+      if (result.success) {
+        setBinanceData(result.data);
+      } else {
+        setBinanceError(result.error || '바이낸스 데이터를 가져오는데 실패했습니다');
+      }
+    } catch (err) {
+      console.error('Error fetching Binance data:', err);
+      setBinanceError('바이낸스 연결에 실패했습니다');
+    } finally {
+      setBinanceLoading(false);
+    }
+  };
+
   const getTrendColor = (trend: string) => {
     switch (trend) {
       case 'bullish': return 'text-green-600 bg-green-100';
@@ -153,6 +199,22 @@ export default function TechnicalIndicatorsPage() {
     if (rsi >= 70) return { text: '과매수', color: 'text-red-600' };
     if (rsi <= 30) return { text: '과매도', color: 'text-green-600' };
     return { text: '중립', color: 'text-blue-600' };
+  };
+
+  const getSignalColor = (signal: 'buy' | 'sell' | 'neutral') => {
+    switch (signal) {
+      case 'buy': return 'text-green-700 bg-green-100 border-green-300';
+      case 'sell': return 'text-red-700 bg-red-100 border-red-300';
+      default: return 'text-yellow-700 bg-yellow-100 border-yellow-300';
+    }
+  };
+
+  const getSignalText = (signal: 'buy' | 'sell' | 'neutral') => {
+    switch (signal) {
+      case 'buy': return '매수';
+      case 'sell': return '매도';
+      default: return '중립';
+    }
   };
 
   if (loading) {
@@ -241,6 +303,19 @@ export default function TechnicalIndicatorsPage() {
             </select>
             
             <button 
+              onClick={fetchBinanceData}
+              disabled={binanceLoading}
+              className="px-4 py-2 bg-orange-500 text-white rounded-lg hover:bg-orange-600 disabled:opacity-50 transition-colors flex items-center gap-2"
+            >
+              {binanceLoading ? (
+                <RefreshCw className="h-4 w-4 animate-spin" />
+              ) : (
+                <Zap className="h-4 w-4" />
+              )}
+              바이낸스 데이터 가져오기
+            </button>
+            
+            <button 
               onClick={handleRefresh}
               disabled={loading}
               className="p-2 text-gray-800 hover:text-orange-600 hover:bg-orange-50 rounded-lg transition-colors"
@@ -250,6 +325,172 @@ export default function TechnicalIndicatorsPage() {
             </button>
           </div>
         </div>
+
+        {/* Binance Live Data */}
+        {binanceData && (
+          <div className="bg-gradient-to-r from-orange-50 to-yellow-50 rounded-lg shadow p-6 mb-8 border border-orange-200">
+            <div className="flex items-center justify-between mb-4">
+              <h2 className="text-xl font-bold flex items-center">
+                <Zap className="h-5 w-5 text-orange-600 mr-2" />
+                바이낸스 실시간 데이터
+              </h2>
+              <div className="flex items-center text-sm text-orange-700">
+                <Clock className="h-4 w-4 mr-1" />
+                {new Date(binanceData.lastUpdate).toLocaleTimeString()}
+              </div>
+            </div>
+            
+            {/* Current Price */}
+            <div className="bg-white rounded-lg p-4 mb-6 shadow-sm">
+              <div className="text-center">
+                <div className="text-3xl font-bold text-gray-900 mb-2">
+                  ${binanceData.currentPrice.toLocaleString(undefined, { minimumFractionDigits: 2, maximumFractionDigits: 2 })}
+                </div>
+                <div className="flex items-center justify-center gap-4">
+                  <div className={`flex items-center ${binanceData.priceChange >= 0 ? 'text-green-600' : 'text-red-600'}`}>
+                    {binanceData.priceChange >= 0 ? <TrendingUp className="h-4 w-4 mr-1" /> : <TrendingDown className="h-4 w-4 mr-1" />}
+                    <span className="font-semibold">
+                      ${Math.abs(binanceData.priceChange).toLocaleString(undefined, { minimumFractionDigits: 2, maximumFractionDigits: 2 })}
+                    </span>
+                    <span className="ml-1">({binanceData.priceChangePercent.toFixed(2)}%)</span>
+                  </div>
+                </div>
+              </div>
+            </div>
+            
+            {/* Technical Indicators Grid */}
+            <div className="grid grid-cols-1 md:grid-cols-3 gap-4 mb-6">
+              {/* SMA 20 */}
+              <div className="bg-white rounded-lg p-4 shadow-sm">
+                <div className="flex items-center justify-between">
+                  <span className="text-sm font-medium text-gray-700">SMA 20일</span>
+                  {binanceData.technicalIndicators.sma20 && (
+                    <span className={`font-bold ${
+                      binanceData.currentPrice > binanceData.technicalIndicators.sma20 ? 'text-green-600' : 'text-red-600'
+                    }`}>
+                      ${binanceData.technicalIndicators.sma20.toLocaleString()}
+                    </span>
+                  )}
+                </div>
+              </div>
+              
+              {/* RSI */}
+              <div className="bg-white rounded-lg p-4 shadow-sm">
+                <div className="flex items-center justify-between mb-2">
+                  <span className="text-sm font-medium text-gray-700">RSI 14일</span>
+                  {binanceData.technicalIndicators.rsi14 && (
+                    <span className={`font-bold ${
+                      binanceData.technicalIndicators.rsi14 >= 70 ? 'text-red-600' :
+                      binanceData.technicalIndicators.rsi14 <= 30 ? 'text-green-600' : 'text-blue-600'
+                    }`}>
+                      {binanceData.technicalIndicators.rsi14.toFixed(1)}
+                    </span>
+                  )}
+                </div>
+                {binanceData.technicalIndicators.rsi14 && (
+                  <div className="w-full bg-gray-200 rounded-full h-2">
+                    <div 
+                      className={`h-2 rounded-full transition-all duration-300 ${
+                        binanceData.technicalIndicators.rsi14 >= 70 ? 'bg-red-500' :
+                        binanceData.technicalIndicators.rsi14 <= 30 ? 'bg-green-500' : 'bg-blue-500'
+                      }`}
+                      style={{ width: `${binanceData.technicalIndicators.rsi14}%` }}
+                    ></div>
+                  </div>
+                )}
+              </div>
+              
+              {/* MACD */}
+              <div className="bg-white rounded-lg p-4 shadow-sm">
+                <div className="flex items-center justify-between">
+                  <span className="text-sm font-medium text-gray-700">MACD</span>
+                  {binanceData.technicalIndicators.macd && (
+                    <span className={`font-bold ${
+                      binanceData.technicalIndicators.macd > 0 ? 'text-green-600' : 'text-red-600'
+                    }`}>
+                      {binanceData.technicalIndicators.macd.toFixed(2)}
+                    </span>
+                  )}
+                </div>
+              </div>
+            </div>
+            
+            {/* Bollinger Bands */}
+            <div className="grid grid-cols-1 md:grid-cols-2 gap-4 mb-6">
+              <div className="bg-white rounded-lg p-4 shadow-sm">
+                <h4 className="text-sm font-medium text-gray-700 mb-3">볼린저 밴드</h4>
+                <div className="space-y-2">
+                  {binanceData.technicalIndicators.bollingerUpper && (
+                    <div className="flex justify-between">
+                      <span className="text-xs text-gray-600">상단</span>
+                      <span className="text-sm font-bold text-red-600">
+                        ${binanceData.technicalIndicators.bollingerUpper.toLocaleString()}
+                      </span>
+                    </div>
+                  )}
+                  {binanceData.technicalIndicators.bollingerLower && (
+                    <div className="flex justify-between">
+                      <span className="text-xs text-gray-600">하단</span>
+                      <span className="text-sm font-bold text-green-600">
+                        ${binanceData.technicalIndicators.bollingerLower.toLocaleString()}
+                      </span>
+                    </div>
+                  )}
+                </div>
+              </div>
+              
+              <div className="bg-white rounded-lg p-4 shadow-sm">
+                <h4 className="text-sm font-medium text-gray-700 mb-3">24시간 통계</h4>
+                <div className="space-y-2">
+                  <div className="flex justify-between">
+                    <span className="text-xs text-gray-600">거래량</span>
+                    <span className="text-sm font-bold">
+                      {(binanceData.volume24h / 1000).toFixed(1)}K BTC
+                    </span>
+                  </div>
+                  <div className="flex justify-between">
+                    <span className="text-xs text-gray-600">최고가</span>
+                    <span className="text-sm font-bold text-green-600">
+                      ${binanceData.high24h.toLocaleString()}
+                    </span>
+                  </div>
+                  <div className="flex justify-between">
+                    <span className="text-xs text-gray-600">최저가</span>
+                    <span className="text-sm font-bold text-red-600">
+                      ${binanceData.low24h.toLocaleString()}
+                    </span>
+                  </div>
+                </div>
+              </div>
+            </div>
+            
+            {/* Trading Signal */}
+            <div className="bg-white rounded-lg p-4 shadow-sm text-center">
+              <div className="flex items-center justify-center gap-2 mb-2">
+                <Target className="h-5 w-5 text-orange-600" />
+                <span className="text-sm font-medium text-gray-700">거래 신호</span>
+              </div>
+              <div className={`inline-flex items-center px-4 py-2 rounded-full text-sm font-bold border ${
+                getSignalColor(binanceData.tradingSignal)
+              }`}>
+                {binanceData.tradingSignal === 'buy' && <TrendingUp className="h-4 w-4 mr-1" />}
+                {binanceData.tradingSignal === 'sell' && <TrendingDown className="h-4 w-4 mr-1" />}
+                {binanceData.tradingSignal === 'neutral' && <Activity className="h-4 w-4 mr-1" />}
+                {getSignalText(binanceData.tradingSignal)}
+              </div>
+            </div>
+          </div>
+        )}
+        
+        {/* Binance Error */}
+        {binanceError && (
+          <div className="bg-red-50 border border-red-200 rounded-lg p-4 mb-8">
+            <div className="flex items-center">
+              <AlertTriangle className="h-5 w-5 text-red-500 mr-2" />
+              <span className="text-red-700">{binanceError}</span>
+            </div>
+          </div>
+        )}
 
         {/* Overall Analysis */}
         <div className="bg-white rounded-lg shadow p-6 mb-8">
