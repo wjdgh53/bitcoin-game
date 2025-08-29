@@ -75,7 +75,7 @@ export async function POST(request: NextRequest) {
         name,
         type,
         personality,
-        strategy,
+        strategy: JSON.stringify(strategy),
         description
       }
     });

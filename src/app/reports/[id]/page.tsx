@@ -80,7 +80,7 @@ export default function ReportDetailPage() {
       <div className="min-h-screen bg-gray-50 flex items-center justify-center">
         <div className="text-center">
           <FileText className="h-12 w-12 text-purple-500 animate-pulse mx-auto mb-4" />
-          <p className="text-gray-600">리포트를 불러오는 중...</p>
+          <p className="text-gray-800">리포트를 불러오는 중...</p>
         </div>
       </div>
     );
@@ -90,7 +90,7 @@ export default function ReportDetailPage() {
     return (
       <div className="min-h-screen bg-gray-50 flex items-center justify-center">
         <div className="text-center">
-          <FileText className="h-12 w-12 text-gray-400 mx-auto mb-4" />
+          <FileText className="h-12 w-12 text-gray-700 mx-auto mb-4" />
           <h2 className="text-xl font-bold text-gray-900 mb-2">리포트를 찾을 수 없습니다</h2>
           <Link href="/reports" className="text-purple-600 hover:text-purple-700">
             리포트 목록으로 돌아가기
@@ -106,7 +106,7 @@ export default function ReportDetailPage() {
     switch (recommendation) {
       case 'buy': return 'text-green-600 bg-green-100 border-green-200';
       case 'sell': return 'text-red-600 bg-red-100 border-red-200';
-      default: return 'text-gray-600 bg-gray-100 border-gray-200';
+      default: return 'text-gray-800 bg-gray-100 border-gray-200';
     }
   };
 
@@ -116,14 +116,14 @@ export default function ReportDetailPage() {
       <div className="bg-white shadow-sm">
         <div className="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8">
           <div className="flex items-center py-6">
-            <Link href="/reports" className="flex items-center text-gray-500 hover:text-gray-700 mr-4">
+            <Link href="/reports" className="flex items-center text-gray-800 hover:text-gray-700 mr-4">
               <ArrowLeft className="h-5 w-5 mr-1" />
               리포트 목록
             </Link>
             <div className="flex items-center">
               <div>
                 <h1 className="text-xl font-bold text-gray-900">{report.title}</h1>
-                <p className="text-sm text-gray-500">{report.agentName}</p>
+                <p className="text-sm text-gray-800">{report.agentName}</p>
               </div>
             </div>
           </div>
@@ -135,7 +135,7 @@ export default function ReportDetailPage() {
         <div className="bg-gray-50 border rounded-lg p-6 mb-8">
           <div className="flex justify-between items-start mb-4">
             <div className="flex items-center">
-              <User className="h-5 w-5 text-gray-600 mr-2" />
+              <User className="h-5 w-5 text-gray-800 mr-2" />
               <span className="font-bold text-lg">{report.agentName}</span>
             </div>
             <div className="flex items-center gap-4">
@@ -147,34 +147,34 @@ export default function ReportDetailPage() {
                  report.recommendation === 'sell' ? '매도 추천' : '홀드 추천'}
               </div>
               <div className="flex items-center gap-2 text-lg">
-                <Target className="h-5 w-5 text-gray-600" />
+                <Target className="h-5 w-5 text-gray-800" />
                 <span className="font-bold">{report.confidence}%</span>
-                <span className="text-sm text-gray-500">신뢰도</span>
+                <span className="text-sm text-gray-800">신뢰도</span>
               </div>
             </div>
           </div>
 
           <div className="grid grid-cols-2 md:grid-cols-5 gap-4 mt-6">
             <div className="text-center">
-              <p className="text-sm text-gray-600">분석 시점</p>
+              <p className="text-sm text-gray-800">분석 시점</p>
               <p className="font-bold">{new Date(report.timestamp).toLocaleString('ko-KR')}</p>
             </div>
             <div className="text-center">
-              <p className="text-sm text-gray-600">BTC 가격</p>
+              <p className="text-sm text-gray-800">BTC 가격</p>
               <p className="font-bold">${report.currentPrice.toLocaleString()}</p>
             </div>
             <div className="text-center">
-              <p className="text-sm text-gray-600">24h 변동률</p>
+              <p className="text-sm text-gray-800">24h 변동률</p>
               <p className={`font-bold ${report.priceChange24h >= 0 ? 'text-green-600' : 'text-red-600'}`}>
                 {report.priceChange24h >= 0 ? '+' : ''}{report.priceChange24h.toFixed(2)}%
               </p>
             </div>
             <div className="text-center">
-              <p className="text-sm text-gray-600">지지선</p>
+              <p className="text-sm text-gray-800">지지선</p>
               <p className="font-bold">${report.support.toLocaleString()}</p>
             </div>
             <div className="text-center">
-              <p className="text-sm text-gray-600">저항선</p>
+              <p className="text-sm text-gray-800">저항선</p>
               <p className="font-bold">${report.resistance.toLocaleString()}</p>
             </div>
           </div>

@@ -245,7 +245,7 @@ export default function WatchlistPage() {
               <div className="w-16 h-16 bg-orange-500 rounded-full flex items-center justify-center mx-auto mb-4">
                 <Bitcoin className="h-8 w-8 text-white animate-pulse" />
               </div>
-              <p className="text-gray-600">관심 종목 로딩 중...</p>
+              <p className="text-gray-800">관심 종목 로딩 중...</p>
             </div>
           </div>
         </div>
@@ -276,7 +276,7 @@ export default function WatchlistPage() {
             </div>
             <div>
               <h1 className="text-3xl font-bold text-gray-900">관심 종목</h1>
-              <p className="text-gray-600">암호화폐 시장을 추적하고 알림을 설정하세요</p>
+              <p className="text-gray-800">암호화폐 시장을 추적하고 알림을 설정하세요</p>
             </div>
           </div>
           
@@ -320,7 +320,7 @@ export default function WatchlistPage() {
                   <BarChart3 className="h-6 w-6 text-blue-600" />
                 </div>
                 <div className="ml-4">
-                  <p className="text-sm text-gray-500">총 관심 종목</p>
+                  <p className="text-sm text-gray-800">총 관심 종목</p>
                   <p className="text-2xl font-bold text-gray-900">{analytics.totalItems}</p>
                 </div>
               </div>
@@ -332,7 +332,7 @@ export default function WatchlistPage() {
                   <Bell className="h-6 w-6 text-red-600" />
                 </div>
                 <div className="ml-4">
-                  <p className="text-sm text-gray-500">알림 발생</p>
+                  <p className="text-sm text-gray-800">알림 발생</p>
                   <p className="text-2xl font-bold text-gray-900">{analytics.triggeredAlerts}</p>
                 </div>
               </div>
@@ -348,7 +348,7 @@ export default function WatchlistPage() {
                   )}
                 </div>
                 <div className="ml-4">
-                  <p className="text-sm text-gray-500">평균 수익률</p>
+                  <p className="text-sm text-gray-800">평균 수익률</p>
                   <p className={`text-2xl font-bold ${analytics.averageGain >= 0 ? 'text-green-600' : 'text-red-600'}`}>
                     {analytics.averageGain >= 0 ? '+' : ''}{analytics.averageGain.toFixed(2)}%
                   </p>
@@ -362,7 +362,7 @@ export default function WatchlistPage() {
                   <Activity className="h-6 w-6 text-purple-600" />
                 </div>
                 <div className="ml-4">
-                  <p className="text-sm text-gray-500">상위 수익</p>
+                  <p className="text-sm text-gray-800">상위 수익</p>
                   <p className="text-xl font-bold text-gray-900">
                     {analytics.topPerformers[0]?.symbol || 'N/A'}
                   </p>
@@ -382,7 +382,7 @@ export default function WatchlistPage() {
           <div className="flex flex-col lg:flex-row gap-4">
             {/* Search */}
             <div className="flex-1 relative">
-              <Search className="absolute left-3 top-1/2 transform -translate-y-1/2 h-4 w-4 text-gray-400" />
+              <Search className="absolute left-3 top-1/2 transform -translate-y-1/2 h-4 w-4 text-gray-700" />
               <input
                 type="text"
                 placeholder="종목명, 심볼, 태그로 검색..."
@@ -392,7 +392,7 @@ export default function WatchlistPage() {
               />
               {searchLoading && (
                 <div className="absolute right-3 top-1/2 transform -translate-y-1/2">
-                  <RefreshCw className="h-4 w-4 text-gray-400 animate-spin" />
+                  <RefreshCw className="h-4 w-4 text-gray-700 animate-spin" />
                 </div>
               )}
             </div>
@@ -430,10 +430,10 @@ export default function WatchlistPage() {
             <div className="col-span-full">
               <div className="bg-white rounded-lg shadow-sm p-12 text-center">
                 <div className="w-16 h-16 bg-gray-100 rounded-full flex items-center justify-center mx-auto mb-4">
-                  <Star className="h-8 w-8 text-gray-400" />
+                  <Star className="h-8 w-8 text-gray-700" />
                 </div>
-                <h3 className="text-lg font-semibold text-gray-900 mb-2">관심 종목이 없습니다</h3>
-                <p className="text-gray-600 mb-6">
+                <h3 className="text-lg font-bold text-gray-900 mb-2">관심 종목이 없습니다</h3>
+                <p className="text-gray-800 mb-6">
                   {searchQuery ? '검색 결과가 없습니다.' : '첫 번째 관심 종목을 추가해보세요.'}
                 </p>
                 {!searchQuery && (
@@ -460,8 +460,8 @@ export default function WatchlistPage() {
                         </span>
                       </div>
                       <div>
-                        <h3 className="font-semibold text-gray-900">{item.symbol}</h3>
-                        <p className="text-sm text-gray-600">{item.name}</p>
+                        <h3 className="font-bold text-gray-900">{item.symbol}</h3>
+                        <p className="text-sm text-gray-800">{item.name}</p>
                       </div>
                     </div>
                     
@@ -473,13 +473,13 @@ export default function WatchlistPage() {
                       <div className="flex gap-1">
                         <button
                           onClick={() => handleEdit(item)}
-                          className="p-1.5 text-gray-400 hover:text-blue-600 hover:bg-blue-50 rounded"
+                          className="p-1.5 text-gray-700 hover:text-blue-600 hover:bg-blue-50 rounded"
                         >
                           <Edit className="h-4 w-4" />
                         </button>
                         <button
                           onClick={() => handleDelete(item.id)}
-                          className="p-1.5 text-gray-400 hover:text-red-600 hover:bg-red-50 rounded"
+                          className="p-1.5 text-gray-700 hover:text-red-600 hover:bg-red-50 rounded"
                         >
                           <Trash2 className="h-4 w-4" />
                         </button>
@@ -511,7 +511,7 @@ export default function WatchlistPage() {
 
                     {item.alertPrice && (
                       <div className="text-right">
-                        <div className="flex items-center text-sm text-gray-500 mb-1">
+                        <div className="flex items-center text-sm text-gray-800 mb-1">
                           {item.alertType === 'above' ? (
                             <TrendingUp className="h-3 w-3 mr-1" />
                           ) : item.alertType === 'below' ? (
@@ -521,7 +521,7 @@ export default function WatchlistPage() {
                           )}
                           목표가
                         </div>
-                        <p className="font-semibold text-gray-900">
+                        <p className="font-bold text-gray-900">
                           ${item.alertPrice.toLocaleString()}
                         </p>
                       </div>
@@ -568,13 +568,13 @@ export default function WatchlistPage() {
 
                   {/* Notes */}
                   {item.notes && (
-                    <div className="text-sm text-gray-600 mb-3">
+                    <div className="text-sm text-gray-800 mb-3">
                       <p className="line-clamp-2">{item.notes}</p>
                     </div>
                   )}
 
                   {/* Created Date */}
-                  <div className="flex items-center text-xs text-gray-500 pt-3 border-t border-gray-100">
+                  <div className="flex items-center text-xs text-gray-800 pt-3 border-t border-gray-100">
                     <Calendar className="h-3 w-3 mr-1" />
                     {new Date(item.createdAt).toLocaleDateString('ko-KR')} 추가
                   </div>
@@ -600,12 +600,12 @@ export default function WatchlistPage() {
           <div className="bg-white rounded-lg max-w-2xl w-full max-h-[90vh] overflow-y-auto">
             <div className="p-6 border-b border-gray-200">
               <div className="flex items-center justify-between">
-                <h2 className="text-xl font-semibold">
+                <h2 className="text-xl font-bold">
                   {showEditForm ? '관심 종목 수정' : '관심 종목 추가'}
                 </h2>
                 <button
                   onClick={closeAllForms}
-                  className="p-2 text-gray-400 hover:text-gray-600"
+                  className="p-2 text-gray-700 hover:text-gray-800"
                 >
                   <X className="h-5 w-5" />
                 </button>
@@ -633,8 +633,8 @@ export default function WatchlistPage() {
                           }`}
                         >
                           <div className="text-lg font-bold mb-1">{crypto.icon}</div>
-                          <div className="text-xs font-semibold">{crypto.symbol}</div>
-                          <div className="text-xs text-gray-600">{crypto.name}</div>
+                          <div className="text-xs font-bold">{crypto.symbol}</div>
+                          <div className="text-xs text-gray-800">{crypto.name}</div>
                         </button>
                       ))}
                     </div>
@@ -712,7 +712,7 @@ export default function WatchlistPage() {
                     ))}
                   </select>
                   {formData.alertType && (
-                    <p className="text-xs text-gray-500 mt-1">
+                    <p className="text-xs text-gray-800 mt-1">
                       {ALERT_TYPES.find(t => t.value === formData.alertType)?.desc}
                     </p>
                   )}

@@ -186,7 +186,7 @@ export default function AgentProfilePage() {
         <div className="flex items-center justify-center min-h-screen">
           <div className="text-center bg-white rounded-3xl p-12 shadow-xl">
             <div className="animate-spin rounded-full h-16 w-16 border-4 border-blue-500 border-t-transparent mx-auto mb-4"></div>
-            <p className="text-gray-600 text-lg">에이전트 정보를 불러오는 중...</p>
+            <p className="text-gray-800 text-lg">에이전트 정보를 불러오는 중...</p>
           </div>
         </div>
       </div>
@@ -200,10 +200,10 @@ export default function AgentProfilePage() {
           <div className="text-center bg-white rounded-3xl p-12 shadow-xl max-w-md">
             <AlertTriangle className="h-16 w-16 text-red-500 mx-auto mb-6" />
             <h2 className="text-2xl font-bold text-gray-900 mb-4">에이전트를 찾을 수 없습니다</h2>
-            <p className="text-gray-600 mb-8">{error}</p>
+            <p className="text-gray-800 mb-8">{error}</p>
             <Link 
               href="/agents" 
-              className="inline-flex items-center px-6 py-3 bg-gradient-to-r from-blue-500 to-indigo-500 text-white rounded-xl font-semibold hover:from-blue-600 hover:to-indigo-600 transition-all shadow-lg hover:shadow-xl"
+              className="inline-flex items-center px-6 py-3 bg-gradient-to-r from-blue-500 to-indigo-500 text-white rounded-xl font-bold hover:from-blue-600 hover:to-indigo-600 transition-all shadow-lg hover:shadow-xl"
             >
               <ArrowLeft className="w-5 h-5 mr-2" />
               에이전트 목록으로 돌아가기
@@ -240,7 +240,7 @@ export default function AgentProfilePage() {
             <div className="flex items-center space-x-4">
               <Link
                 href="/chat"
-                className="px-6 py-3 bg-white/20 hover:bg-white/30 rounded-xl text-white font-semibold transition-all backdrop-blur-sm flex items-center space-x-2"
+                className="px-6 py-3 bg-white/20 hover:bg-white/30 rounded-xl text-white font-bold transition-all backdrop-blur-sm flex items-center space-x-2"
               >
                 <MessageCircle className="w-5 h-5" />
                 <span>채팅하기</span>
@@ -261,7 +261,7 @@ export default function AgentProfilePage() {
             <div className="flex-1 min-w-0">
               <div className="flex items-center space-x-4 mb-4">
                 <h1 className="text-4xl font-bold text-white">{agent.name}</h1>
-                <div className={`px-4 py-2 rounded-full text-sm font-semibold ${
+                <div className={`px-4 py-2 rounded-full text-sm font-bold ${
                   agent.isActive 
                     ? 'bg-green-400 text-green-900 shadow-lg' 
                     : 'bg-white/20 text-white/80'
@@ -306,10 +306,10 @@ export default function AgentProfilePage() {
               <button
                 key={tab.id}
                 onClick={() => setActiveTab(tab.id as any)}
-                className={`py-4 px-2 border-b-2 font-semibold text-sm flex items-center space-x-2 transition-all ${
+                className={`py-4 px-2 border-b-2 font-bold text-sm flex items-center space-x-2 transition-all ${
                   activeTab === tab.id
                     ? `border-blue-500 text-blue-600`
-                    : 'border-transparent text-gray-500 hover:text-gray-700 hover:border-gray-300'
+                    : 'border-transparent text-gray-800 hover:text-gray-700 hover:border-gray-300'
                 }`}
               >
                 <tab.icon className="w-5 h-5" />
@@ -331,12 +331,12 @@ export default function AgentProfilePage() {
                   <div className="p-3 bg-blue-100 rounded-xl">
                     <TrendingUp className="w-8 h-8 text-blue-600" />
                   </div>
-                  <Sparkles className="w-5 h-5 text-gray-400" />
+                  <Sparkles className="w-5 h-5 text-gray-700" />
                 </div>
                 <div className="text-3xl font-bold text-gray-900 mb-1">
                   {agent.patterns.filter(p => p.isActive).length}
                 </div>
-                <p className="text-gray-600">활성 패턴</p>
+                <p className="text-gray-800">활성 패턴</p>
               </div>
 
               <div className="bg-white rounded-2xl shadow-lg p-6 hover:shadow-xl transition-shadow">
@@ -344,12 +344,12 @@ export default function AgentProfilePage() {
                   <div className="p-3 bg-green-100 rounded-xl">
                     <Eye className="w-8 h-8 text-green-600" />
                   </div>
-                  <Sparkles className="w-5 h-5 text-gray-400" />
+                  <Sparkles className="w-5 h-5 text-gray-700" />
                 </div>
                 <div className="text-3xl font-bold text-gray-900 mb-1">
                   {agent.watchlistItems.length}
                 </div>
-                <p className="text-gray-600">관심종목</p>
+                <p className="text-gray-800">관심종목</p>
               </div>
 
               <div className="bg-white rounded-2xl shadow-lg p-6 hover:shadow-xl transition-shadow">
@@ -357,7 +357,7 @@ export default function AgentProfilePage() {
                   <div className="p-3 bg-purple-100 rounded-xl">
                     <BarChart3 className="w-8 h-8 text-purple-600" />
                   </div>
-                  <Sparkles className="w-5 h-5 text-gray-400" />
+                  <Sparkles className="w-5 h-5 text-gray-700" />
                 </div>
                 <div className="text-3xl font-bold text-gray-900 mb-1">
                   {agent.patterns.length > 0 
@@ -365,7 +365,7 @@ export default function AgentProfilePage() {
                     : 0
                   }%
                 </div>
-                <p className="text-gray-600">평균 신뢰도</p>
+                <p className="text-gray-800">평균 신뢰도</p>
               </div>
             </div>
 
@@ -391,7 +391,7 @@ export default function AgentProfilePage() {
           <div className="space-y-6">
             <div className="flex justify-between items-center">
               <h2 className="text-3xl font-bold text-gray-900">트레이딩 패턴</h2>
-              <button className="flex items-center space-x-2 px-6 py-3 bg-gradient-to-r from-blue-500 to-indigo-500 text-white rounded-xl font-semibold hover:from-blue-600 hover:to-indigo-600 transition-all shadow-lg hover:shadow-xl">
+              <button className="flex items-center space-x-2 px-6 py-3 bg-gradient-to-r from-blue-500 to-indigo-500 text-white rounded-xl font-bold hover:from-blue-600 hover:to-indigo-600 transition-all shadow-lg hover:shadow-xl">
                 <Plus className="w-5 h-5" />
                 <span>새 패턴 추가</span>
               </button>
@@ -404,17 +404,17 @@ export default function AgentProfilePage() {
                     <div className="flex-1">
                       <div className="flex items-center space-x-4 mb-3">
                         <h3 className="text-xl font-bold text-gray-900">{pattern.name}</h3>
-                        <span className={`px-3 py-1 text-sm font-semibold rounded-full ${getPriorityColor(pattern.priority)}`}>
+                        <span className={`px-3 py-1 text-sm font-bold rounded-full ${getPriorityColor(pattern.priority)}`}>
                           {getPriorityLabel(pattern.priority)} 우선순위
                         </span>
                         {!pattern.isActive && (
-                          <span className="px-3 py-1 text-sm bg-gray-100 text-gray-600 rounded-full">
+                          <span className="px-3 py-1 text-sm bg-gray-100 text-gray-800 rounded-full">
                             비활성
                           </span>
                         )}
                       </div>
                       <p className="text-gray-700 mb-4 leading-relaxed">{pattern.description}</p>
-                      <div className="flex items-center space-x-6 text-sm text-gray-600">
+                      <div className="flex items-center space-x-6 text-sm text-gray-800">
                         <div className="flex items-center space-x-2">
                           <Star className="w-4 h-4 text-yellow-500" />
                           <span>신뢰도: {pattern.confidenceRate}%</span>
@@ -425,14 +425,14 @@ export default function AgentProfilePage() {
                         </div>
                       </div>
                     </div>
-                    <button className="p-2 text-gray-400 hover:text-gray-600 hover:bg-gray-100 rounded-lg transition-colors">
+                    <button className="p-2 text-gray-700 hover:text-gray-800 hover:bg-gray-100 rounded-lg transition-colors">
                       <Edit3 className="w-5 h-5" />
                     </button>
                   </div>
                   
                   {pattern.examples.length > 0 && (
                     <div className="bg-gray-50 rounded-xl p-4">
-                      <h4 className="font-semibold text-gray-900 mb-3">패턴 예시</h4>
+                      <h4 className="font-bold text-gray-900 mb-3">패턴 예시</h4>
                       <ul className="space-y-2">
                         {pattern.examples.map((example, index) => (
                           <li key={index} className="text-gray-700 flex items-start">
@@ -448,10 +448,10 @@ export default function AgentProfilePage() {
               
               {agent.patterns.length === 0 && (
                 <div className="text-center py-20 bg-white rounded-2xl shadow-lg">
-                  <TrendingUp className="w-16 h-16 text-gray-300 mx-auto mb-6" />
-                  <h3 className="text-xl font-semibold text-gray-900 mb-4">패턴이 없습니다</h3>
-                  <p className="text-gray-600 mb-8">이 에이전트의 첫 번째 트레이딩 패턴을 추가해보세요.</p>
-                  <button className="px-6 py-3 bg-gradient-to-r from-blue-500 to-indigo-500 text-white rounded-xl font-semibold hover:from-blue-600 hover:to-indigo-600 transition-all shadow-lg hover:shadow-xl">
+                  <TrendingUp className="w-16 h-16 text-gray-100 mx-auto mb-6" />
+                  <h3 className="text-xl font-bold text-gray-900 mb-4">패턴이 없습니다</h3>
+                  <p className="text-gray-800 mb-8">이 에이전트의 첫 번째 트레이딩 패턴을 추가해보세요.</p>
+                  <button className="px-6 py-3 bg-gradient-to-r from-blue-500 to-indigo-500 text-white rounded-xl font-bold hover:from-blue-600 hover:to-indigo-600 transition-all shadow-lg hover:shadow-xl">
                     패턴 추가하기
                   </button>
                 </div>
@@ -465,7 +465,7 @@ export default function AgentProfilePage() {
           <div className="space-y-6">
             <div className="flex justify-between items-center">
               <h2 className="text-3xl font-bold text-gray-900">관심종목</h2>
-              <button className="flex items-center space-x-2 px-6 py-3 bg-gradient-to-r from-blue-500 to-indigo-500 text-white rounded-xl font-semibold hover:from-blue-600 hover:to-indigo-600 transition-all shadow-lg hover:shadow-xl">
+              <button className="flex items-center space-x-2 px-6 py-3 bg-gradient-to-r from-blue-500 to-indigo-500 text-white rounded-xl font-bold hover:from-blue-600 hover:to-indigo-600 transition-all shadow-lg hover:shadow-xl">
                 <Plus className="w-5 h-5" />
                 <span>종목 추가</span>
               </button>
@@ -480,7 +480,7 @@ export default function AgentProfilePage() {
                         <h3 className="text-xl font-bold text-gray-900">
                           {item.symbol} - {item.name}
                         </h3>
-                        <span className={`px-3 py-1 text-sm font-semibold rounded-full ${
+                        <span className={`px-3 py-1 text-sm font-bold rounded-full ${
                           CategoryColors[item.category as keyof typeof CategoryColors] || 'bg-gray-100 text-gray-800'
                         }`}>
                           {item.category}
@@ -494,15 +494,15 @@ export default function AgentProfilePage() {
                       </div>
                       <div className="space-y-4">
                         <div className="bg-blue-50 rounded-xl p-4">
-                          <h4 className="font-semibold text-blue-900 mb-2">관심 이유</h4>
+                          <h4 className="font-bold text-blue-900 mb-2">관심 이유</h4>
                           <p className="text-blue-800">{item.reason}</p>
                         </div>
                         <div className="bg-green-50 rounded-xl p-4">
-                          <h4 className="font-semibold text-green-900 mb-2">에이전트 견해</h4>
+                          <h4 className="font-bold text-green-900 mb-2">에이전트 견해</h4>
                           <p className="text-green-800">{item.agentView}</p>
                         </div>
                       </div>
-                      <div className="flex items-center space-x-6 mt-6 text-sm text-gray-500">
+                      <div className="flex items-center space-x-6 mt-6 text-sm text-gray-800">
                         <div className="flex items-center space-x-2">
                           <Clock className="w-4 h-4" />
                           <span>추가: {new Date(item.addedAt).toLocaleDateString('ko-KR')}</span>
@@ -513,7 +513,7 @@ export default function AgentProfilePage() {
                         </div>
                       </div>
                     </div>
-                    <button className="p-2 text-gray-400 hover:text-gray-600 hover:bg-gray-100 rounded-lg transition-colors">
+                    <button className="p-2 text-gray-700 hover:text-gray-800 hover:bg-gray-100 rounded-lg transition-colors">
                       <Edit3 className="w-5 h-5" />
                     </button>
                   </div>
@@ -522,10 +522,10 @@ export default function AgentProfilePage() {
               
               {agent.watchlistItems.length === 0 && (
                 <div className="text-center py-20 bg-white rounded-2xl shadow-lg">
-                  <Eye className="w-16 h-16 text-gray-300 mx-auto mb-6" />
-                  <h3 className="text-xl font-semibold text-gray-900 mb-4">관심종목이 없습니다</h3>
-                  <p className="text-gray-600 mb-8">이 에이전트가 모니터링할 첫 번째 종목을 추가해보세요.</p>
-                  <button className="px-6 py-3 bg-gradient-to-r from-blue-500 to-indigo-500 text-white rounded-xl font-semibold hover:from-blue-600 hover:to-indigo-600 transition-all shadow-lg hover:shadow-xl">
+                  <Eye className="w-16 h-16 text-gray-100 mx-auto mb-6" />
+                  <h3 className="text-xl font-bold text-gray-900 mb-4">관심종목이 없습니다</h3>
+                  <p className="text-gray-800 mb-8">이 에이전트가 모니터링할 첫 번째 종목을 추가해보세요.</p>
+                  <button className="px-6 py-3 bg-gradient-to-r from-blue-500 to-indigo-500 text-white rounded-xl font-bold hover:from-blue-600 hover:to-indigo-600 transition-all shadow-lg hover:shadow-xl">
                     종목 추가하기
                   </button>
                 </div>
@@ -547,7 +547,7 @@ export default function AgentProfilePage() {
                     setCopiedPrompt(true);
                     setTimeout(() => setCopiedPrompt(false), 2000);
                   }}
-                  className={`flex items-center space-x-2 px-4 py-2 rounded-xl font-semibold transition-all ${
+                  className={`flex items-center space-x-2 px-4 py-2 rounded-xl font-bold transition-all ${
                     copiedPrompt 
                       ? 'bg-green-500 text-white' 
                       : 'bg-gray-100 hover:bg-gray-200 text-gray-700'
@@ -567,7 +567,7 @@ export default function AgentProfilePage() {
                 </div>
                 <div className="flex-1">
                   <h3 className="text-xl font-bold text-gray-900 mb-2">프롬프트 요약</h3>
-                  <p className="text-gray-600">이 에이전트가 AI 모델에게 전달되는 핵심 지시사항입니다.</p>
+                  <p className="text-gray-800">이 에이전트가 AI 모델에게 전달되는 핵심 지시사항입니다.</p>
                 </div>
               </div>
               
@@ -582,8 +582,8 @@ export default function AgentProfilePage() {
             <div className="bg-white rounded-2xl shadow-lg overflow-hidden">
               <div className="bg-gray-50 px-6 py-4 border-b border-gray-200">
                 <div className="flex items-center justify-between">
-                  <h3 className="text-lg font-semibold text-gray-900">전체 프롬프트 템플릿</h3>
-                  <div className="flex items-center space-x-2 text-sm text-gray-500">
+                  <h3 className="text-lg font-bold text-gray-900">전체 프롬프트 템플릿</h3>
+                  <div className="flex items-center space-x-2 text-sm text-gray-800">
                     <FileText className="w-4 h-4" />
                     <span>AI 모델에게 전달되는 완전한 지시사항</span>
                   </div>
@@ -609,19 +609,19 @@ export default function AgentProfilePage() {
                 <div className="space-y-3">
                   <div className="flex items-center justify-between p-3 bg-gray-50 rounded-lg">
                     <code className="text-sm font-mono text-blue-600">{'{{agentName}}'}</code>
-                    <span className="text-sm text-gray-600">{agent.name}</span>
+                    <span className="text-sm text-gray-800">{agent.name}</span>
                   </div>
                   <div className="flex items-center justify-between p-3 bg-gray-50 rounded-lg">
                     <code className="text-sm font-mono text-blue-600">{'{{personality}}'}</code>
-                    <span className="text-sm text-gray-600">{getPersonalityLabel(agent.personality)}</span>
+                    <span className="text-sm text-gray-800">{getPersonalityLabel(agent.personality)}</span>
                   </div>
                   <div className="flex items-center justify-between p-3 bg-gray-50 rounded-lg">
                     <code className="text-sm font-mono text-blue-600">{'{{strategies}}'}</code>
-                    <span className="text-sm text-gray-600">{agent.strategy.length}개 전략</span>
+                    <span className="text-sm text-gray-800">{agent.strategy.length}개 전략</span>
                   </div>
                   <div className="flex items-center justify-between p-3 bg-gray-50 rounded-lg">
                     <code className="text-sm font-mono text-blue-600">{'{{patterns}}'}</code>
-                    <span className="text-sm text-gray-600">{agent.patterns.length}개 패턴</span>
+                    <span className="text-sm text-gray-800">{agent.patterns.length}개 패턴</span>
                   </div>
                 </div>
               </div>
@@ -635,29 +635,29 @@ export default function AgentProfilePage() {
                   <div className="flex items-start space-x-3">
                     <div className="w-2 h-2 bg-blue-500 rounded-full mt-2 flex-shrink-0"></div>
                     <div>
-                      <div className="font-semibold text-gray-900">성향 기반 분석</div>
-                      <div className="text-sm text-gray-600">에이전트의 투자 성향에 맞는 분석 방식 적용</div>
+                      <div className="font-bold text-gray-900">성향 기반 분석</div>
+                      <div className="text-sm text-gray-800">에이전트의 투자 성향에 맞는 분석 방식 적용</div>
                     </div>
                   </div>
                   <div className="flex items-start space-x-3">
                     <div className="w-2 h-2 bg-green-500 rounded-full mt-2 flex-shrink-0"></div>
                     <div>
-                      <div className="font-semibold text-gray-900">전략 맞춤화</div>
-                      <div className="text-sm text-gray-600">선택된 투자 전략을 프롬프트에 자동 반영</div>
+                      <div className="font-bold text-gray-900">전략 맞춤화</div>
+                      <div className="text-sm text-gray-800">선택된 투자 전략을 프롬프트에 자동 반영</div>
                     </div>
                   </div>
                   <div className="flex items-start space-x-3">
                     <div className="w-2 h-2 bg-purple-500 rounded-full mt-2 flex-shrink-0"></div>
                     <div>
-                      <div className="font-semibold text-gray-900">패턴 활용</div>
-                      <div className="text-sm text-gray-600">학습된 분석 패턴을 기반으로 일관성 있는 분석</div>
+                      <div className="font-bold text-gray-900">패턴 활용</div>
+                      <div className="text-sm text-gray-800">학습된 분석 패턴을 기반으로 일관성 있는 분석</div>
                     </div>
                   </div>
                   <div className="flex items-start space-x-3">
                     <div className="w-2 h-2 bg-orange-500 rounded-full mt-2 flex-shrink-0"></div>
                     <div>
-                      <div className="font-semibold text-gray-900">실시간 컨텍스트</div>
-                      <div className="text-sm text-gray-600">현재 시장 상황을 반영한 동적 분석</div>
+                      <div className="font-bold text-gray-900">실시간 컨텍스트</div>
+                      <div className="text-sm text-gray-800">현재 시장 상황을 반영한 동적 분석</div>
                     </div>
                   </div>
                 </div>
@@ -669,15 +669,15 @@ export default function AgentProfilePage() {
               <h3 className="text-lg font-bold text-gray-900 mb-4">활용 예시</h3>
               <div className="grid grid-cols-1 md:grid-cols-3 gap-4">
                 <div className="p-4 bg-blue-50 rounded-xl border border-blue-200">
-                  <div className="font-semibold text-blue-900 mb-2">채팅에서 활용</div>
+                  <div className="font-bold text-blue-900 mb-2">채팅에서 활용</div>
                   <div className="text-sm text-blue-800">사용자와의 대화에서 이 프롬프트가 기본 성격으로 작용합니다.</div>
                 </div>
                 <div className="p-4 bg-green-50 rounded-xl border border-green-200">
-                  <div className="font-semibold text-green-900 mb-2">분석 리포트</div>
+                  <div className="font-bold text-green-900 mb-2">분석 리포트</div>
                   <div className="text-sm text-green-800">시장 분석 리포트 생성 시 이 가이드라인을 따릅니다.</div>
                 </div>
                 <div className="p-4 bg-purple-50 rounded-xl border border-purple-200">
-                  <div className="font-semibold text-purple-900 mb-2">API 통합</div>
+                  <div className="font-bold text-purple-900 mb-2">API 통합</div>
                   <div className="text-sm text-purple-800">외부 AI 서비스 연동 시 이 프롬프트를 사용합니다.</div>
                 </div>
               </div>

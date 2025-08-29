@@ -109,14 +109,14 @@ export default function NewsPage() {
   const getSentimentColor = (score: number) => {
     if (score > 0.2) return 'text-green-600 bg-green-100';
     if (score < -0.2) return 'text-red-600 bg-red-100';
-    return 'text-gray-600 bg-gray-100';
+    return 'text-gray-800 bg-gray-100';
   };
 
   const getSentimentIcon = (trend: string) => {
     switch (trend) {
       case 'bullish': return <TrendingUp className="h-5 w-5 text-green-500" />;
       case 'bearish': return <TrendingDown className="h-5 w-5 text-red-500" />;
-      default: return <BarChart3 className="h-5 w-5 text-gray-500" />;
+      default: return <BarChart3 className="h-5 w-5 text-gray-700" />;
     }
   };
 
@@ -138,7 +138,7 @@ export default function NewsPage() {
           <div className="flex items-center justify-center h-64">
             <div className="text-center">
               <div className="animate-spin rounded-full h-16 w-16 border-4 border-blue-500 border-t-transparent mx-auto mb-4"></div>
-              <p className="text-gray-500 text-lg">뉴스를 불러오는 중...</p>
+              <p className="text-gray-800 text-lg">뉴스를 불러오는 중...</p>
             </div>
           </div>
         </div>
@@ -155,13 +155,13 @@ export default function NewsPage() {
         <div className="flex justify-between items-center mb-8">
           <div>
             <h1 className="text-4xl font-bold text-gray-900 mb-2">암호화폐 뉴스</h1>
-            <p className="text-gray-600 text-lg">AI가 분석한 최신 시장 동향과 뉴스</p>
+            <p className="text-gray-800 text-lg">AI가 분석한 최신 시장 동향과 뉴스</p>
           </div>
           
           <div className="flex gap-3">
             <button
               onClick={() => fetchData()}
-              className="bg-white border border-gray-300 hover:bg-gray-50 text-gray-700 px-4 py-2 rounded-xl flex items-center gap-2 transition-all"
+              className="bg-white border border-gray-300 hover:bg-gray-50 text-gray-800 px-4 py-2 rounded-xl flex items-center gap-2 transition-all"
             >
               <RefreshCw className="h-4 w-4" />
               새로고침
@@ -190,22 +190,22 @@ export default function NewsPage() {
                 <div className={`text-3xl font-bold mb-2 px-4 py-2 rounded-xl ${getSentimentColor(sentiment.overallSentiment)}`}>
                   {(sentiment.overallSentiment * 100).toFixed(0)}
                 </div>
-                <div className="text-gray-600 text-sm">전체 감정 점수</div>
+                <div className="text-gray-800 text-sm">전체 감정 점수</div>
               </div>
               
               <div className="text-center">
                 <div className="text-3xl font-bold text-blue-500 mb-2">{sentiment.marketTrend}</div>
-                <div className="text-gray-600 text-sm">시장 트렌드</div>
+                <div className="text-gray-800 text-sm">시장 트렌드</div>
               </div>
               
               <div className="text-center">
                 <div className="text-3xl font-bold text-purple-500 mb-2">{sentiment.confidence}%</div>
-                <div className="text-gray-600 text-sm">신뢰도</div>
+                <div className="text-gray-800 text-sm">신뢰도</div>
               </div>
               
               <div className="text-center">
                 <div className="text-3xl font-bold text-orange-500 mb-2">{sentiment.newsCount}</div>
-                <div className="text-gray-600 text-sm">뉴스 개수 (24h)</div>
+                <div className="text-gray-800 text-sm">뉴스 개수 (24h)</div>
               </div>
             </div>
           </div>
@@ -216,7 +216,7 @@ export default function NewsPage() {
           <div className="flex flex-col md:flex-row gap-4">
             <div className="flex-1 flex gap-3">
               <div className="relative flex-1">
-                <Search className="absolute left-3 top-1/2 transform -translate-y-1/2 h-5 w-5 text-gray-400" />
+                <Search className="absolute left-3 top-1/2 transform -translate-y-1/2 h-5 w-5 text-gray-800" />
                 <input
                   type="text"
                   placeholder="뉴스 검색..."
@@ -237,7 +237,7 @@ export default function NewsPage() {
             
             <button
               onClick={() => setShowFilters(!showFilters)}
-              className="flex items-center gap-2 bg-gray-100 hover:bg-gray-200 text-gray-700 px-4 py-3 rounded-xl transition-all"
+              className="flex items-center gap-2 bg-gray-100 hover:bg-gray-200 text-gray-800 px-4 py-3 rounded-xl transition-all"
             >
               <Filter className="h-5 w-5" />
               필터
@@ -248,7 +248,7 @@ export default function NewsPage() {
             <div className="mt-6 pt-6 border-t border-gray-200">
               <div className="grid grid-cols-1 md:grid-cols-3 gap-4">
                 <div>
-                  <label className="block text-sm font-medium text-gray-700 mb-2">카테고리</label>
+                  <label className="block text-sm font-medium text-gray-900 mb-2">카테고리</label>
                   <select
                     value={filters.category || ''}
                     onChange={(e) => setFilters(prev => ({ ...prev, category: e.target.value as any || undefined }))}
@@ -263,7 +263,7 @@ export default function NewsPage() {
                 </div>
                 
                 <div>
-                  <label className="block text-sm font-medium text-gray-700 mb-2">최소 중요도</label>
+                  <label className="block text-sm font-medium text-gray-900 mb-2">최소 중요도</label>
                   <select
                     value={filters.minImportance || ''}
                     onChange={(e) => setFilters(prev => ({ ...prev, minImportance: e.target.value ? parseInt(e.target.value) : undefined }))}
@@ -305,14 +305,14 @@ export default function NewsPage() {
                       <span className="bg-purple-100 text-purple-600 px-3 py-1 rounded-full text-sm font-medium">
                         {report.type === 'daily' ? '일일 리포트' : '주간 리포트'}
                       </span>
-                      <Calendar className="h-5 w-5 text-gray-400" />
+                      <Calendar className="h-5 w-5 text-gray-800" />
                     </div>
                     
                     <h3 className="font-bold text-lg mb-2">
                       {new Date(report.date).toLocaleDateString('ko-KR')}
                     </h3>
                     
-                    <p className="text-gray-600 text-sm mb-4 line-clamp-3">
+                    <p className="text-gray-800 text-sm mb-4 line-clamp-3">
                       {report.summary}
                     </p>
                     
@@ -320,7 +320,7 @@ export default function NewsPage() {
                       <div className={`px-3 py-1 rounded-full text-xs font-medium ${getSentimentColor(report.overallSentiment)}`}>
                         {report.marketTrend}
                       </div>
-                      <span className="text-xs text-gray-500">
+                      <span className="text-xs text-gray-700">
                         주요 이슈 {report.keyEvents.length}개
                       </span>
                     </div>
@@ -335,14 +335,14 @@ export default function NewsPage() {
         <div>
           <div className="flex items-center justify-between mb-6">
             <h2 className="text-2xl font-bold text-gray-900">최신 뉴스</h2>
-            <span className="text-gray-500">총 {articles.length}개</span>
+            <span className="text-gray-700">총 {articles.length}개</span>
           </div>
           
           {articles.length === 0 ? (
             <div className="bg-white rounded-2xl shadow-lg p-12 text-center">
-              <Newspaper className="h-16 w-16 text-gray-300 mx-auto mb-4" />
+              <Newspaper className="h-16 w-16 text-gray-100 mx-auto mb-4" />
               <h3 className="text-xl font-bold text-gray-900 mb-2">뉴스가 없습니다</h3>
-              <p className="text-gray-500 mb-6">
+              <p className="text-gray-800 mb-6">
                 아직 분석된 뉴스가 없습니다. 테스트 데이터를 생성해보세요.
               </p>
               <button
@@ -363,8 +363,8 @@ export default function NewsPage() {
                         <span className="bg-blue-100 text-blue-600 px-3 py-1 rounded-full text-xs font-medium">
                           {getCategoryLabel(article.category)}
                         </span>
-                        <span className="text-gray-500 text-sm">{article.source}</span>
-                        <span className="text-gray-400 text-xs">
+                        <span className="text-gray-700 text-sm">{article.source}</span>
+                        <span className="text-gray-800 text-xs">
                           {new Date(article.publishedAt).toLocaleDateString('ko-KR')}
                         </span>
                       </div>
@@ -379,26 +379,26 @@ export default function NewsPage() {
                       </div>
                       <div className="flex items-center gap-1">
                         <span className="text-orange-500 text-sm font-medium">★</span>
-                        <span className="text-sm text-gray-600">{article.importanceScore}/10</span>
+                        <span className="text-sm text-gray-800">{article.importanceScore}/10</span>
                       </div>
                     </div>
                   </div>
                   
-                  <p className="text-gray-600 mb-4">
+                  <p className="text-gray-800 mb-4">
                     {article.summary || article.content.substring(0, 200)}...
                   </p>
                   
                   {article.aiAnalysis && (
                     <div className="bg-gray-50 rounded-xl p-4 mb-4">
                       <h4 className="font-medium text-gray-900 mb-2">AI 분석</h4>
-                      <p className="text-gray-600 text-sm">{article.aiAnalysis}</p>
+                      <p className="text-gray-800 text-sm">{article.aiAnalysis}</p>
                     </div>
                   )}
                   
                   {article.relatedSymbols.length > 0 && (
                     <div className="flex flex-wrap gap-2">
                       {article.relatedSymbols.map(symbol => (
-                        <span key={symbol} className="bg-gray-100 text-gray-700 px-2 py-1 rounded text-xs">
+                        <span key={symbol} className="bg-gray-100 text-gray-800 px-2 py-1 rounded text-xs">
                           {symbol}
                         </span>
                       ))}

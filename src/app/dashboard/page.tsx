@@ -140,7 +140,7 @@ export default function DashboardPage() {
           <div className="w-16 h-16 bg-orange-500 rounded-full flex items-center justify-center mx-auto mb-4">
             <Bitcoin className="h-8 w-8 text-white animate-pulse" />
           </div>
-          <p className="text-gray-600">Loading Bitcoin data...</p>
+          <p className="text-gray-800">Loading Bitcoin data...</p>
         </div>
       </div>
     );
@@ -183,16 +183,16 @@ export default function DashboardPage() {
                 <div className={`flex items-center mt-1 ${change24h >= 0 ? 'text-green-600' : 'text-red-600'}`}>
                   {change24h >= 0 ? <TrendingUp className="h-4 w-4 mr-1" /> : <TrendingDown className="h-4 w-4 mr-1" />}
                   <span className="font-medium">{Math.abs(change24h).toFixed(2)}%</span>
-                  <span className="text-gray-500 ml-2">24h</span>
+                  <span className="text-gray-800 ml-2">24h</span>
                 </div>
               </div>
             </div>
             <div className="text-right">
-              <div className="text-sm text-gray-500">마지막 업데이트</div>
+              <div className="text-sm text-gray-800">마지막 업데이트</div>
               <div className="font-medium">
                 {priceData ? new Date(priceData.timestamp).toLocaleTimeString() : 'N/A'}
               </div>
-              <div className="text-xs text-gray-400 mt-1">
+              <div className="text-xs text-gray-700 mt-1">
                 Source: {priceData?.source || 'CoinGecko'}
               </div>
             </div>
@@ -208,7 +208,7 @@ export default function DashboardPage() {
                   <DollarSign className="h-6 w-6 text-blue-600" />
                 </div>
                 <div className="ml-4">
-                  <p className="text-sm text-gray-500">포트폴리오 가치</p>
+                  <p className="text-sm text-gray-800">포트폴리오 가치</p>
                   <p className="text-2xl font-bold text-gray-900">
                     ${portfolio.totalValue.toLocaleString()}
                   </p>
@@ -226,7 +226,7 @@ export default function DashboardPage() {
                   )}
                 </div>
                 <div className="ml-4">
-                  <p className="text-sm text-gray-500">총 손익</p>
+                  <p className="text-sm text-gray-800">총 손익</p>
                   <p className={`text-2xl font-bold ${portfolio.profit >= 0 ? 'text-green-600' : 'text-red-600'}`}>
                     {portfolio.profit >= 0 ? '+' : ''}${portfolio.profit.toFixed(2)}
                   </p>
@@ -243,7 +243,7 @@ export default function DashboardPage() {
                   <Bitcoin className="h-6 w-6 text-orange-600" />
                 </div>
                 <div className="ml-4">
-                  <p className="text-sm text-gray-500">BTC 보유량</p>
+                  <p className="text-sm text-gray-800">BTC 보유량</p>
                   <p className="text-2xl font-bold text-gray-900">
                     {portfolio.bitcoinHoldings.toFixed(6)}
                   </p>
@@ -257,7 +257,7 @@ export default function DashboardPage() {
                   <DollarSign className="h-6 w-6 text-green-600" />
                 </div>
                 <div className="ml-4">
-                  <p className="text-sm text-gray-500">현금 잔액</p>
+                  <p className="text-sm text-gray-800">현금 잔액</p>
                   <p className="text-2xl font-bold text-gray-900">
                     ${portfolio.balance.toFixed(2)}
                   </p>
@@ -274,12 +274,12 @@ export default function DashboardPage() {
 
           {/* AI Analysis */}
           <div className="bg-white rounded-lg shadow p-6">
-            <h3 className="text-lg font-semibold mb-4 flex items-center">
+            <h3 className="text-lg font-bold mb-4 flex items-center">
               <Brain className="h-5 w-5 mr-2 text-purple-600" />
               AI 분석 에이전트
             </h3>
             
-            <p className="text-gray-600 mb-6">
+            <p className="text-gray-800 mb-6">
               3명의 AI 전문가가 각자의 관점과 전략으로 시장을 분석하고 상세한 리포트를 작성합니다.
             </p>
 
@@ -290,7 +290,7 @@ export default function DashboardPage() {
                     <div className="flex items-center">
                       <span className="text-2xl mr-3">🛡️</span>
                       <div>
-                        <h4 className="font-semibold text-blue-900">워렌 김</h4>
+                        <h4 className="font-bold text-blue-900">워렌 김</h4>
                         <p className="text-sm text-blue-700">보수적 가치투자자</p>
                       </div>
                     </div>
@@ -302,7 +302,7 @@ export default function DashboardPage() {
                     <div className="flex items-center">
                       <span className="text-2xl mr-3">⚡</span>
                       <div>
-                        <h4 className="font-semibold text-purple-900">제시카 박</h4>
+                        <h4 className="font-bold text-purple-900">제시카 박</h4>
                         <p className="text-sm text-purple-700">공격적 모멘텀 트레이더</p>
                       </div>
                     </div>
@@ -314,7 +314,7 @@ export default function DashboardPage() {
                     <div className="flex items-center">
                       <span className="text-2xl mr-3">📊</span>
                       <div>
-                        <h4 className="font-semibold text-green-900">알렉스 최</h4>
+                        <h4 className="font-bold text-green-900">알렉스 최</h4>
                         <p className="text-sm text-green-700">데이터 기반 퀀트 분석가</p>
                       </div>
                     </div>
@@ -325,7 +325,7 @@ export default function DashboardPage() {
               <div className="pt-4 border-t">
                 <Link 
                   href="/reports"
-                  className="w-full flex items-center justify-center gap-2 px-4 py-3 bg-purple-600 hover:bg-purple-700 text-white font-semibold rounded-lg transition-colors"
+                  className="w-full flex items-center justify-center gap-2 px-4 py-3 bg-purple-600 hover:bg-purple-700 text-white font-bold rounded-lg transition-colors"
                 >
                   <Brain className="h-5 w-5" />
                   AI 분석 리포트 보기
@@ -337,8 +337,8 @@ export default function DashboardPage() {
 
         {/* Trade History */}
         <div className="bg-white rounded-lg shadow p-6 mb-8">
-          <h3 className="text-lg font-semibold mb-4 flex items-center">
-            <Trophy className="h-5 w-5 text-gray-500 mr-2" />
+          <h3 className="text-lg font-bold mb-4 flex items-center">
+            <Trophy className="h-5 w-5 text-gray-800 mr-2" />
             거래 기록
           </h3>
           
@@ -357,7 +357,7 @@ export default function DashboardPage() {
               <tbody>
                 {trades.length === 0 ? (
                   <tr>
-                    <td colSpan={6} className="px-4 py-8 text-center text-gray-500">
+                    <td colSpan={6} className="px-4 py-8 text-center text-gray-800">
                       거래 기록이 없습니다
                     </td>
                   </tr>
@@ -385,7 +385,7 @@ export default function DashboardPage() {
                         {trade.amount.toFixed(6)} BTC
                       </td>
                       <td className="px-4 py-3">
-                        <span className="font-semibold text-gray-800">
+                        <span className="font-bold text-gray-800">
                           ${trade.price.toLocaleString()}
                         </span>
                       </td>
@@ -416,8 +416,8 @@ export default function DashboardPage() {
                             // 매도: 이미 실현된 손익 (거래 완료)
                             return (
                               <div className="text-right">
-                                <div className="font-bold text-gray-500">-</div>
-                                <div className="text-xs text-gray-400">(완료)</div>
+                                <div className="font-bold text-gray-800">-</div>
+                                <div className="text-xs text-gray-700">(완료)</div>
                               </div>
                             );
                           }

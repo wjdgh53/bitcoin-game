@@ -81,8 +81,8 @@ export function ErrorFallback({
     <div className="flex min-h-[400px] flex-col items-center justify-center p-8">
       <div className="text-center">
         <AlertTriangle className="mx-auto h-12 w-12 text-red-500" />
-        <h2 className="mt-4 text-xl font-semibold text-gray-900">{title}</h2>
-        <p className="mt-2 text-sm text-gray-600">
+        <h2 className="mt-4 text-xl font-bold text-gray-900">{title}</h2>
+        <p className="mt-2 text-sm text-gray-800">
           {description || error?.message || 'An unexpected error occurred'}
         </p>
         

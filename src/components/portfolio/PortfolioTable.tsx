@@ -96,8 +96,8 @@ export default function PortfolioTable({
     return (
       <div className={`bg-white rounded-lg shadow p-6 ${className}`}>
         <div className="flex items-center justify-between mb-6">
-          <h3 className="text-lg font-semibold flex items-center">
-            <Wallet className="h-5 w-5 text-gray-500 mr-2" />
+          <h3 className="text-lg font-bold flex items-center">
+            <Wallet className="h-5 w-5 text-gray-800 mr-2" />
             Portfolio Overview
           </h3>
         </div>
@@ -116,8 +116,8 @@ export default function PortfolioTable({
     return (
       <div className={`bg-white rounded-lg shadow p-6 ${className}`}>
         <div className="flex items-center justify-between mb-6">
-          <h3 className="text-lg font-semibold flex items-center">
-            <Wallet className="h-5 w-5 text-gray-500 mr-2" />
+          <h3 className="text-lg font-bold flex items-center">
+            <Wallet className="h-5 w-5 text-gray-800 mr-2" />
             Portfolio Overview
           </h3>
         </div>
@@ -125,7 +125,7 @@ export default function PortfolioTable({
           <div className="text-center">
             <AlertTriangle className="h-12 w-12 text-red-500 mx-auto mb-2" />
             <p className="text-red-600 mb-4">Failed to load portfolio data</p>
-            <p className="text-sm text-gray-500 mb-4">{error}</p>
+            <p className="text-sm text-gray-800 mb-4">{error}</p>
             <button 
               onClick={handleRefresh}
               className="px-4 py-2 bg-orange-500 text-white rounded hover:bg-orange-600 transition-colors"
@@ -142,12 +142,12 @@ export default function PortfolioTable({
     return (
       <div className={`bg-white rounded-lg shadow p-6 ${className}`}>
         <div className="flex items-center justify-between mb-6">
-          <h3 className="text-lg font-semibold flex items-center">
-            <Wallet className="h-5 w-5 text-gray-500 mr-2" />
+          <h3 className="text-lg font-bold flex items-center">
+            <Wallet className="h-5 w-5 text-gray-800 mr-2" />
             Portfolio Overview
           </h3>
         </div>
-        <div className="text-center py-8 text-gray-500">
+        <div className="text-center py-8 text-gray-800">
           No portfolio data available
         </div>
       </div>
@@ -162,12 +162,12 @@ export default function PortfolioTable({
   return (
     <div className={`bg-white rounded-lg shadow p-6 ${className}`}>
       <div className="flex items-center justify-between mb-6">
-        <h3 className="text-lg font-semibold flex items-center">
-          <Wallet className="h-5 w-5 text-gray-500 mr-2" />
+        <h3 className="text-lg font-bold flex items-center">
+          <Wallet className="h-5 w-5 text-gray-800 mr-2" />
           Portfolio Overview
         </h3>
         <div className="flex items-center gap-3">
-          <div className="text-xs text-gray-500">
+          <div className="text-xs text-gray-800">
             {lastRefresh && (
               <>Updated: {lastRefresh.toLocaleTimeString()}</>
             )}
@@ -175,7 +175,7 @@ export default function PortfolioTable({
           <button 
             onClick={handleRefresh}
             disabled={loading}
-            className="p-2 text-gray-500 hover:text-orange-600 hover:bg-orange-50 rounded-lg transition-colors"
+            className="p-2 text-gray-800 hover:text-orange-600 hover:bg-orange-50 rounded-lg transition-colors"
             title="Refresh portfolio"
           >
             <RefreshCw className={`h-4 w-4 ${loading ? 'animate-spin' : ''}`} />
@@ -272,7 +272,7 @@ export default function PortfolioTable({
 
       {/* Asset Allocation */}
       <div className="border-t pt-6">
-        <h4 className="text-base font-semibold mb-4 text-gray-900">Asset Allocation</h4>
+        <h4 className="text-base font-bold mb-4 text-gray-900">Asset Allocation</h4>
         <div className="space-y-4">
           {/* Cash Allocation */}
           <div className="flex items-center justify-between">
@@ -287,10 +287,10 @@ export default function PortfolioTable({
                   style={{ width: `${cashPercentage}%` }}
                 ></div>
               </div>
-              <div className="text-sm text-gray-600 min-w-[60px] text-right">
+              <div className="text-sm text-gray-800 min-w-[60px] text-right">
                 {cashPercentage.toFixed(1)}%
               </div>
-              <div className="text-sm font-semibold text-gray-900 min-w-[80px] text-right">
+              <div className="text-sm font-bold text-gray-900 min-w-[80px] text-right">
                 ${portfolio.balance.toFixed(2)}
               </div>
             </div>
@@ -309,10 +309,10 @@ export default function PortfolioTable({
                   style={{ width: `${bitcoinPercentage}%` }}
                 ></div>
               </div>
-              <div className="text-sm text-gray-600 min-w-[60px] text-right">
+              <div className="text-sm text-gray-800 min-w-[60px] text-right">
                 {bitcoinPercentage.toFixed(1)}%
               </div>
-              <div className="text-sm font-semibold text-gray-900 min-w-[80px] text-right">
+              <div className="text-sm font-bold text-gray-900 min-w-[80px] text-right">
                 ${bitcoinValue.toFixed(2)}
               </div>
             </div>
@@ -322,18 +322,18 @@ export default function PortfolioTable({
 
       {/* Portfolio Performance */}
       <div className="border-t pt-6 mt-6">
-        <h4 className="text-base font-semibold mb-4 text-gray-900">Performance Metrics</h4>
+        <h4 className="text-base font-bold mb-4 text-gray-900">Performance Metrics</h4>
         <div className="grid grid-cols-1 md:grid-cols-3 gap-4 text-center">
           <div className="bg-gray-50 rounded-lg p-4">
-            <p className="text-xs text-gray-500 uppercase tracking-wider">Initial Investment</p>
+            <p className="text-xs text-gray-800 uppercase tracking-wider">Initial Investment</p>
             <p className="text-lg font-bold text-gray-900">$10,000.00</p>
           </div>
           <div className="bg-gray-50 rounded-lg p-4">
-            <p className="text-xs text-gray-500 uppercase tracking-wider">Current BTC Price</p>
+            <p className="text-xs text-gray-800 uppercase tracking-wider">Current BTC Price</p>
             <p className="text-lg font-bold text-gray-900">${currentBTCPrice.toLocaleString()}</p>
           </div>
           <div className="bg-gray-50 rounded-lg p-4">
-            <p className="text-xs text-gray-500 uppercase tracking-wider">Last Updated</p>
+            <p className="text-xs text-gray-800 uppercase tracking-wider">Last Updated</p>
             <p className="text-lg font-bold text-gray-900">
               {new Date(portfolio.lastUpdated).toLocaleTimeString()}
             </p>
@@ -343,7 +343,7 @@ export default function PortfolioTable({
 
       {/* Footer Info */}
       <div className="border-t pt-4 mt-6">
-        <div className="flex items-center justify-between text-xs text-gray-500">
+        <div className="flex items-center justify-between text-xs text-gray-800">
           <span>Portfolio updates every {refreshInterval} minutes</span>
           <span>Demo trading simulation</span>
         </div>

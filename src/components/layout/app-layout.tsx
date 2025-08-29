@@ -81,7 +81,7 @@ export function AppLayout({ children }: AppLayoutProps) {
       <div className="flex h-screen items-center justify-center">
         <div className="text-center">
           <h1 className="text-2xl font-bold text-gray-900">Authentication Required</h1>
-          <p className="mt-2 text-gray-600">Please log in to access the trading game.</p>
+          <p className="mt-2 text-gray-800">Please log in to access the trading game.</p>
           <Link
             href="/login"
             className="mt-4 inline-block rounded-md bg-blue-600 px-4 py-2 text-white hover:bg-blue-700"
@@ -130,7 +130,7 @@ export function AppLayout({ children }: AppLayoutProps) {
         <div className="md:hidden pl-1 pt-1 sm:pl-3 sm:pt-3">
           <button
             type="button"
-            className="-ml-0.5 -mt-0.5 h-12 w-12 inline-flex items-center justify-center rounded-md text-gray-500 hover:text-gray-900 focus:outline-none focus:ring-2 focus:ring-inset focus:ring-indigo-500"
+            className="-ml-0.5 -mt-0.5 h-12 w-12 inline-flex items-center justify-center rounded-md text-gray-800 hover:text-gray-900 focus:outline-none focus:ring-2 focus:ring-inset focus:ring-indigo-500"
             onClick={() => setSidebarOpen(true)}
           >
             <Menu className="h-6 w-6" />
@@ -162,7 +162,7 @@ function MobileSidebar({ navigation, user, onLogout }: {
             <TrendingUp className="h-5 w-5 text-white" />
           </div>
           <div className="ml-3">
-            <h1 className="text-lg font-semibold text-gray-900">Bitcoin Game</h1>
+            <h1 className="text-lg font-bold text-gray-900">Bitcoin Game</h1>
           </div>
         </div>
       </div>
@@ -175,13 +175,13 @@ function MobileSidebar({ navigation, user, onLogout }: {
             className={cn(
               item.current
                 ? 'bg-gray-100 text-gray-900'
-                : 'text-gray-600 hover:bg-gray-50 hover:text-gray-900',
+                : 'text-gray-800 hover:bg-gray-50 hover:text-gray-900',
               'group flex items-center px-2 py-2 text-sm font-medium rounded-md'
             )}
           >
             <item.icon
               className={cn(
-                item.current ? 'text-gray-500' : 'text-gray-400 group-hover:text-gray-500',
+                item.current ? 'text-gray-800' : 'text-gray-700 group-hover:text-gray-800',
                 'mr-3 h-5 w-5'
               )}
             />
@@ -210,7 +210,7 @@ function DesktopSidebar({ navigation, user, onLogout }: {
               <TrendingUp className="h-5 w-5 text-white" />
             </div>
             <div className="ml-3">
-              <h1 className="text-lg font-semibold text-gray-900">Bitcoin Game</h1>
+              <h1 className="text-lg font-bold text-gray-900">Bitcoin Game</h1>
             </div>
           </div>
         </div>
@@ -223,13 +223,13 @@ function DesktopSidebar({ navigation, user, onLogout }: {
               className={cn(
                 item.current
                   ? 'bg-gray-100 text-gray-900'
-                  : 'text-gray-600 hover:bg-gray-50 hover:text-gray-900',
+                  : 'text-gray-800 hover:bg-gray-50 hover:text-gray-900',
                 'group flex items-center px-2 py-2 text-sm font-medium rounded-md'
               )}
             >
               <item.icon
                 className={cn(
-                  item.current ? 'text-gray-500' : 'text-gray-400 group-hover:text-gray-500',
+                  item.current ? 'text-gray-800' : 'text-gray-700 group-hover:text-gray-800',
                   'mr-3 h-5 w-5'
                 )}
               />
@@ -257,14 +257,14 @@ function UserProfile({ user, onLogout, isMobile }: {
       <div className="flex items-center w-full">
         <div className="flex-shrink-0">
           <div className="h-8 w-8 bg-gray-300 rounded-full flex items-center justify-center">
-            <User className="h-5 w-5 text-gray-600" />
+            <User className="h-5 w-5 text-gray-800" />
           </div>
         </div>
         <div className="ml-3 flex-1 min-w-0">
           <p className="text-sm font-medium text-gray-900 truncate">
             {user.username}
           </p>
-          <p className="text-xs text-gray-500 truncate">
+          <p className="text-xs text-gray-800 truncate">
             Level {user.gameLevel} • {user.experience} XP
           </p>
         </div>
@@ -272,7 +272,7 @@ function UserProfile({ user, onLogout, isMobile }: {
         <div className="relative">
           <button
             type="button"
-            className="flex-shrink-0 bg-white rounded-full p-1 text-gray-400 hover:text-gray-500 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500"
+            className="flex-shrink-0 bg-white rounded-full p-1 text-gray-700 hover:text-gray-800 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500"
             onClick={() => setShowMenu(!showMenu)}
           >
             <Settings className="h-5 w-5" />

@@ -122,7 +122,7 @@ export default function TechnicalIndicatorsPage() {
       case 'bullish': return 'text-green-600 bg-green-100';
       case 'bearish': return 'text-red-600 bg-red-100';
       case 'sideways': return 'text-yellow-600 bg-yellow-100';
-      default: return 'text-gray-600 bg-gray-100';
+      default: return 'text-gray-800 bg-gray-100';
     }
   };
 
@@ -133,7 +133,7 @@ export default function TechnicalIndicatorsPage() {
       case 'hold': return 'text-yellow-600 bg-yellow-100 border-yellow-200';
       case 'sell': return 'text-red-600 bg-red-100 border-red-200';
       case 'strong_sell': return 'text-red-700 bg-red-200 border-red-300';
-      default: return 'text-gray-600 bg-gray-100 border-gray-200';
+      default: return 'text-gray-800 bg-gray-100 border-gray-200';
     }
   };
 
@@ -149,7 +149,7 @@ export default function TechnicalIndicatorsPage() {
   };
 
   const getRSIStatus = (rsi?: number) => {
-    if (!rsi) return { text: 'N/A', color: 'text-gray-500' };
+    if (!rsi) return { text: 'N/A', color: 'text-gray-800' };
     if (rsi >= 70) return { text: '과매수', color: 'text-red-600' };
     if (rsi <= 30) return { text: '과매도', color: 'text-green-600' };
     return { text: '중립', color: 'text-blue-600' };
@@ -165,7 +165,7 @@ export default function TechnicalIndicatorsPage() {
               <div className="w-16 h-16 bg-orange-500 rounded-full flex items-center justify-center mx-auto mb-4">
                 <BarChart3 className="h-8 w-8 text-white animate-pulse" />
               </div>
-              <p className="text-gray-600">기술지표 데이터 로딩 중...</p>
+              <p className="text-gray-800">기술지표 데이터 로딩 중...</p>
             </div>
           </div>
         </div>
@@ -202,8 +202,8 @@ export default function TechnicalIndicatorsPage() {
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-8">
           <div className="flex items-center justify-center min-h-96">
             <div className="text-center">
-              <BarChart3 className="h-16 w-16 text-gray-400 mx-auto mb-4" />
-              <p className="text-gray-500">기술지표 데이터가 없습니다</p>
+              <BarChart3 className="h-16 w-16 text-gray-700 mx-auto mb-4" />
+              <p className="text-gray-800">기술지표 데이터가 없습니다</p>
             </div>
           </div>
         </div>
@@ -224,7 +224,7 @@ export default function TechnicalIndicatorsPage() {
             <BarChart3 className="h-8 w-8 text-orange-500 mr-3" />
             <div>
               <h1 className="text-3xl font-bold text-gray-900">기술지표 분석</h1>
-              <p className="text-gray-600">AI 기반 비트코인 기술적 분석</p>
+              <p className="text-gray-800">AI 기반 비트코인 기술적 분석</p>
             </div>
           </div>
           <div className="flex items-center gap-4">
@@ -243,7 +243,7 @@ export default function TechnicalIndicatorsPage() {
             <button 
               onClick={handleRefresh}
               disabled={loading}
-              className="p-2 text-gray-500 hover:text-orange-600 hover:bg-orange-50 rounded-lg transition-colors"
+              className="p-2 text-gray-800 hover:text-orange-600 hover:bg-orange-50 rounded-lg transition-colors"
               title="새로고침"
             >
               <RefreshCw className={`h-5 w-5 ${loading ? 'animate-spin' : ''}`} />
@@ -254,11 +254,11 @@ export default function TechnicalIndicatorsPage() {
         {/* Overall Analysis */}
         <div className="bg-white rounded-lg shadow p-6 mb-8">
           <div className="flex items-center justify-between mb-4">
-            <h2 className="text-xl font-semibold flex items-center">
+            <h2 className="text-xl font-bold flex items-center">
               <Brain className="h-5 w-5 text-purple-600 mr-2" />
               AI 종합 분석
             </h2>
-            <div className="text-sm text-gray-500">
+            <div className="text-sm text-gray-800">
               {lastUpdate && `마지막 업데이트: ${lastUpdate.toLocaleTimeString()}`}
             </div>
           </div>
@@ -276,8 +276,8 @@ export default function TechnicalIndicatorsPage() {
                 </div>
               </div>
               <div className="flex items-center justify-between mb-2">
-                <span className="text-xs text-gray-500">추세 강도</span>
-                <span className="text-sm font-semibold">{report.trendStrength.toFixed(1)}%</span>
+                <span className="text-xs text-gray-800">추세 강도</span>
+                <span className="text-sm font-bold">{report.trendStrength.toFixed(1)}%</span>
               </div>
               <div className="w-full bg-gray-200 rounded-full h-2">
                 <div 
@@ -296,8 +296,8 @@ export default function TechnicalIndicatorsPage() {
                 </div>
               </div>
               <div className="flex items-center justify-between mb-2">
-                <span className="text-xs text-gray-500">신뢰도</span>
-                <span className="text-sm font-semibold">{report.confidence.toFixed(1)}%</span>
+                <span className="text-xs text-gray-800">신뢰도</span>
+                <span className="text-sm font-bold">{report.confidence.toFixed(1)}%</span>
               </div>
               <div className="w-full bg-gray-200 rounded-full h-2">
                 <div 
@@ -316,21 +316,21 @@ export default function TechnicalIndicatorsPage() {
                     <TrendingUp className="h-3 w-3 mr-1" />
                     매수
                   </span>
-                  <span className="text-sm font-semibold text-green-600">{report.buySignals}</span>
+                  <span className="text-sm font-bold text-green-600">{report.buySignals}</span>
                 </div>
                 <div className="flex items-center justify-between">
                   <span className="text-xs text-red-600 flex items-center">
                     <TrendingDown className="h-3 w-3 mr-1" />
                     매도
                   </span>
-                  <span className="text-sm font-semibold text-red-600">{report.sellSignals}</span>
+                  <span className="text-sm font-bold text-red-600">{report.sellSignals}</span>
                 </div>
                 <div className="flex items-center justify-between">
-                  <span className="text-xs text-gray-600 flex items-center">
+                  <span className="text-xs text-gray-800 flex items-center">
                     <Activity className="h-3 w-3 mr-1" />
                     중립
                   </span>
-                  <span className="text-sm font-semibold text-gray-600">{report.neutralSignals}</span>
+                  <span className="text-sm font-bold text-gray-800">{report.neutralSignals}</span>
                 </div>
               </div>
             </div>
@@ -338,7 +338,7 @@ export default function TechnicalIndicatorsPage() {
 
           {/* AI Summary */}
           <div className="mt-6 p-4 bg-blue-50 rounded-lg">
-            <h3 className="text-sm font-semibold text-blue-900 mb-2">AI 분석 요약</h3>
+            <h3 className="text-sm font-bold text-blue-900 mb-2">AI 분석 요약</h3>
             <p className="text-sm text-blue-800">{report.summary}</p>
           </div>
         </div>
@@ -347,7 +347,7 @@ export default function TechnicalIndicatorsPage() {
         <div className="grid grid-cols-1 lg:grid-cols-2 gap-8 mb-8">
           {/* Price & Moving Averages */}
           <div className="bg-white rounded-lg shadow p-6">
-            <h3 className="text-lg font-semibold mb-4">가격 & 이동평균선</h3>
+            <h3 className="text-lg font-bold mb-4">가격 & 이동평균선</h3>
             <div className="space-y-4">
               <div className="flex items-center justify-between p-3 bg-gray-50 rounded">
                 <span className="text-sm font-medium">현재가</span>
@@ -356,8 +356,8 @@ export default function TechnicalIndicatorsPage() {
               
               {indicators.sma5 && (
                 <div className="flex items-center justify-between">
-                  <span className="text-sm text-gray-600">SMA 5일</span>
-                  <span className={`font-semibold ${indicators.price > indicators.sma5 ? 'text-green-600' : 'text-red-600'}`}>
+                  <span className="text-sm text-gray-800">SMA 5일</span>
+                  <span className={`font-bold ${indicators.price > indicators.sma5 ? 'text-green-600' : 'text-red-600'}`}>
                     ${indicators.sma5.toLocaleString()}
                   </span>
                 </div>
@@ -365,8 +365,8 @@ export default function TechnicalIndicatorsPage() {
               
               {indicators.sma20 && (
                 <div className="flex items-center justify-between">
-                  <span className="text-sm text-gray-600">SMA 20일</span>
-                  <span className={`font-semibold ${indicators.price > indicators.sma20 ? 'text-green-600' : 'text-red-600'}`}>
+                  <span className="text-sm text-gray-800">SMA 20일</span>
+                  <span className={`font-bold ${indicators.price > indicators.sma20 ? 'text-green-600' : 'text-red-600'}`}>
                     ${indicators.sma20.toLocaleString()}
                   </span>
                 </div>
@@ -374,8 +374,8 @@ export default function TechnicalIndicatorsPage() {
               
               {indicators.sma50 && (
                 <div className="flex items-center justify-between">
-                  <span className="text-sm text-gray-600">SMA 50일</span>
-                  <span className={`font-semibold ${indicators.price > indicators.sma50 ? 'text-green-600' : 'text-red-600'}`}>
+                  <span className="text-sm text-gray-800">SMA 50일</span>
+                  <span className={`font-bold ${indicators.price > indicators.sma50 ? 'text-green-600' : 'text-red-600'}`}>
                     ${indicators.sma50.toLocaleString()}
                   </span>
                 </div>
@@ -385,13 +385,13 @@ export default function TechnicalIndicatorsPage() {
 
           {/* Oscillators */}
           <div className="bg-white rounded-lg shadow p-6">
-            <h3 className="text-lg font-semibold mb-4">오실레이터</h3>
+            <h3 className="text-lg font-bold mb-4">오실레이터</h3>
             <div className="space-y-4">
               {indicators.rsi && (
                 <div className="p-3 bg-gray-50 rounded">
                   <div className="flex items-center justify-between mb-2">
                     <span className="text-sm font-medium">RSI (14)</span>
-                    <span className={`text-sm font-semibold ${rsiStatus.color}`}>
+                    <span className={`text-sm font-bold ${rsiStatus.color}`}>
                       {indicators.rsi.toFixed(1)} ({rsiStatus.text})
                     </span>
                   </div>
@@ -410,12 +410,12 @@ export default function TechnicalIndicatorsPage() {
               {indicators.stochK && indicators.stochD && (
                 <div className="space-y-2">
                   <div className="flex items-center justify-between">
-                    <span className="text-sm text-gray-600">Stochastic %K</span>
-                    <span className="font-semibold">{indicators.stochK.toFixed(1)}</span>
+                    <span className="text-sm text-gray-800">Stochastic %K</span>
+                    <span className="font-bold">{indicators.stochK.toFixed(1)}</span>
                   </div>
                   <div className="flex items-center justify-between">
-                    <span className="text-sm text-gray-600">Stochastic %D</span>
-                    <span className="font-semibold">{indicators.stochD.toFixed(1)}</span>
+                    <span className="text-sm text-gray-800">Stochastic %D</span>
+                    <span className="font-bold">{indicators.stochD.toFixed(1)}</span>
                   </div>
                 </div>
               )}
@@ -423,14 +423,14 @@ export default function TechnicalIndicatorsPage() {
               {indicators.macd && indicators.macdSignal && (
                 <div className="space-y-2">
                   <div className="flex items-center justify-between">
-                    <span className="text-sm text-gray-600">MACD</span>
-                    <span className={`font-semibold ${indicators.macd > 0 ? 'text-green-600' : 'text-red-600'}`}>
+                    <span className="text-sm text-gray-800">MACD</span>
+                    <span className={`font-bold ${indicators.macd > 0 ? 'text-green-600' : 'text-red-600'}`}>
                       {indicators.macd.toFixed(2)}
                     </span>
                   </div>
                   <div className="flex items-center justify-between">
-                    <span className="text-sm text-gray-600">MACD Signal</span>
-                    <span className="font-semibold">{indicators.macdSignal.toFixed(2)}</span>
+                    <span className="text-sm text-gray-800">MACD Signal</span>
+                    <span className="font-bold">{indicators.macdSignal.toFixed(2)}</span>
                   </div>
                 </div>
               )}
@@ -442,7 +442,7 @@ export default function TechnicalIndicatorsPage() {
         <div className="grid grid-cols-1 lg:grid-cols-2 gap-8">
           {/* Key Levels */}
           <div className="bg-white rounded-lg shadow p-6">
-            <h3 className="text-lg font-semibold mb-4 flex items-center">
+            <h3 className="text-lg font-bold mb-4 flex items-center">
               <Target className="h-5 w-5 text-blue-500 mr-2" />
               주요 레벨
             </h3>
@@ -463,15 +463,15 @@ export default function TechnicalIndicatorsPage() {
               
               {report.nextTarget && (
                 <div className="flex items-center justify-between">
-                  <span className="text-sm text-gray-600">목표가</span>
-                  <span className="font-semibold text-blue-600">${report.nextTarget.toLocaleString()}</span>
+                  <span className="text-sm text-gray-800">목표가</span>
+                  <span className="font-bold text-blue-600">${report.nextTarget.toLocaleString()}</span>
                 </div>
               )}
               
               {report.stopLoss && (
                 <div className="flex items-center justify-between">
-                  <span className="text-sm text-gray-600">손절가</span>
-                  <span className="font-semibold text-orange-600">${report.stopLoss.toLocaleString()}</span>
+                  <span className="text-sm text-gray-800">손절가</span>
+                  <span className="font-bold text-orange-600">${report.stopLoss.toLocaleString()}</span>
                 </div>
               )}
             </div>
@@ -479,7 +479,7 @@ export default function TechnicalIndicatorsPage() {
 
           {/* Risk Assessment */}
           <div className="bg-white rounded-lg shadow p-6">
-            <h3 className="text-lg font-semibold mb-4 flex items-center">
+            <h3 className="text-lg font-bold mb-4 flex items-center">
               <Shield className="h-5 w-5 text-yellow-500 mr-2" />
               리스크 평가
             </h3>
@@ -502,7 +502,7 @@ export default function TechnicalIndicatorsPage() {
               
               <div className="flex items-center justify-between mb-2">
                 <span className="text-sm font-medium">신호 강도</span>
-                <span className="font-semibold">{report.signalStrength}%</span>
+                <span className="font-bold">{report.signalStrength}%</span>
               </div>
               <div className="w-full bg-gray-200 rounded-full h-2">
                 <div 
@@ -520,7 +520,7 @@ export default function TechnicalIndicatorsPage() {
 
         {/* AI Insights */}
         <div className="mt-8 bg-white rounded-lg shadow p-6">
-          <h3 className="text-lg font-semibold mb-4 flex items-center">
+          <h3 className="text-lg font-bold mb-4 flex items-center">
             <Brain className="h-5 w-5 text-purple-500 mr-2" />
             AI 상세 분석
           </h3>

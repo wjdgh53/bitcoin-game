@@ -101,8 +101,8 @@ export default function AgentList({ agents, selectedAgentId, onAgentSelect, mess
     return (
       <div className="flex-1 flex items-center justify-center p-4">
         <div className="text-center">
-          <Bot className="h-12 w-12 text-gray-300 mx-auto mb-2" />
-          <p className="text-gray-500 text-sm">사용 가능한 에이전트가 없습니다</p>
+          <Bot className="h-12 w-12 text-gray-100 mx-auto mb-2" />
+          <p className="text-gray-800 text-sm">사용 가능한 에이전트가 없습니다</p>
         </div>
       </div>
     );
@@ -130,7 +130,7 @@ export default function AgentList({ agents, selectedAgentId, onAgentSelect, mess
                   agent.isActive ? 'bg-gradient-to-br from-yellow-100 to-orange-100 shadow-md' : 'bg-gray-100'
                 }`}>
                   <Bot className={`h-6 w-6 ${
-                    agent.isActive ? 'text-yellow-600' : 'text-gray-400'
+                    agent.isActive ? 'text-yellow-600' : 'text-gray-700'
                   }`} />
                 </div>
                 
@@ -145,12 +145,12 @@ export default function AgentList({ agents, selectedAgentId, onAgentSelect, mess
               {/* Agent Info */}
               <div className="flex-1 min-w-0">
                 <div className="flex items-center justify-between mb-1">
-                  <h3 className="font-semibold text-gray-900 truncate">
+                  <h3 className="font-bold text-gray-900 truncate">
                     {agent.name}
                   </h3>
                   <div className="flex items-center gap-1">
                     {lastMessage && (
-                      <span className="text-xs text-gray-500">
+                      <span className="text-xs text-gray-800">
                         {formatTime(lastMessage.createdAt)}
                       </span>
                     )}
@@ -167,7 +167,7 @@ export default function AgentList({ agents, selectedAgentId, onAgentSelect, mess
                     {getPersonalityLabel(agent.personality)}
                   </span>
                   {!agent.isActive && (
-                    <span className="px-2 py-1 bg-gray-100 text-gray-600 rounded-full text-xs font-medium">
+                    <span className="px-2 py-1 bg-gray-100 text-gray-800 rounded-full text-xs font-medium">
                       비활성
                     </span>
                   )}
@@ -175,12 +175,12 @@ export default function AgentList({ agents, selectedAgentId, onAgentSelect, mess
 
                 {/* Last Message Preview */}
                 {lastMessage ? (
-                  <p className="text-sm text-gray-600 truncate">
+                  <p className="text-sm text-gray-800 truncate">
                     {lastMessage.type === 'user' ? '나: ' : ''}
                     {lastMessage.content}
                   </p>
                 ) : (
-                  <p className="text-sm text-gray-400 italic">
+                  <p className="text-sm text-gray-700 italic">
                     대화를 시작해보세요
                   </p>
                 )}

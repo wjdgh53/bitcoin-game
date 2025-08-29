@@ -84,7 +84,7 @@ export default function AgentsPage() {
           <div className="flex items-center justify-center h-64">
             <div className="text-center">
               <div className="animate-spin rounded-full h-16 w-16 border-4 border-blue-500 border-t-transparent mx-auto mb-4"></div>
-              <p className="text-gray-500 text-lg">AI 에이전트를 불러오는 중...</p>
+              <p className="text-gray-800 text-lg">AI 에이전트를 불러오는 중...</p>
             </div>
           </div>
         </div>
@@ -101,7 +101,7 @@ export default function AgentsPage() {
         <div className="flex justify-between items-center mb-12">
           <div>
             <h1 className="text-4xl font-bold text-gray-900 mb-2">AI 투자 에이전트</h1>
-            <p className="text-gray-600 text-lg">다양한 성향의 AI 에이전트들이 투자 분석을 도와드립니다</p>
+            <p className="text-gray-800 text-lg">다양한 성향의 AI 에이전트들이 투자 분석을 도와드립니다</p>
           </div>
           
           <Link
@@ -109,7 +109,7 @@ export default function AgentsPage() {
             className="bg-gradient-to-r from-blue-500 to-indigo-500 hover:from-blue-600 hover:to-indigo-600 text-white px-8 py-4 rounded-2xl flex items-center gap-3 transition-all shadow-lg hover:shadow-xl transform hover:scale-105"
           >
             <Plus className="h-6 w-6" />
-            <span className="font-semibold">새 에이전트 만들기</span>
+            <span className="font-bold">새 에이전트 만들기</span>
           </Link>
         </div>
 
@@ -117,12 +117,12 @@ export default function AgentsPage() {
         {agents.length === 0 ? (
           <div className="text-center py-20">
             <div className="bg-white rounded-3xl shadow-xl p-12 max-w-md mx-auto">
-              <Brain className="h-20 w-20 text-gray-300 mx-auto mb-6" />
+              <Brain className="h-20 w-20 text-gray-100 mx-auto mb-6" />
               <h3 className="text-2xl font-bold text-gray-900 mb-4">첫 번째 에이전트를 만들어보세요!</h3>
-              <p className="text-gray-500 mb-8">AI 투자 파트너가 시장 분석과 투자 결정을 도와드립니다.</p>
+              <p className="text-gray-800 mb-8">AI 투자 파트너가 시장 분석과 투자 결정을 도와드립니다.</p>
               <Link
                 href="/agents/new"
-                className="inline-flex items-center gap-2 bg-gradient-to-r from-blue-500 to-indigo-500 hover:from-blue-600 hover:to-indigo-600 text-white px-6 py-3 rounded-xl font-semibold transition-all shadow-lg hover:shadow-xl"
+                className="inline-flex items-center gap-2 bg-gradient-to-r from-blue-500 to-indigo-500 hover:from-blue-600 hover:to-indigo-600 text-white px-6 py-3 rounded-xl font-bold transition-all shadow-lg hover:shadow-xl"
               >
                 <Plus className="h-5 w-5" />
                 에이전트 만들기
@@ -162,34 +162,34 @@ export default function AgentsPage() {
                   
                   {/* Content */}
                   <div className="p-6">
-                    <p className="text-gray-600 text-sm mb-6 line-clamp-3">{agent.description}</p>
+                    <p className="text-gray-800 text-sm mb-6 line-clamp-3">{agent.description}</p>
                     
                     {/* Stats */}
                     <div className="grid grid-cols-2 gap-4 mb-6">
                       <div className="text-center p-3 bg-gray-50 rounded-xl">
                         <TrendingUp className="h-5 w-5 text-blue-500 mx-auto mb-1" />
                         <div className="text-lg font-bold text-gray-900">{agent.patterns?.length || 0}</div>
-                        <div className="text-xs text-gray-500">패턴</div>
+                        <div className="text-xs text-gray-700">패턴</div>
                       </div>
                       <div className="text-center p-3 bg-gray-50 rounded-xl">
                         <Activity className="h-5 w-5 text-green-500 mx-auto mb-1" />
                         <div className="text-lg font-bold text-gray-900">{agent.watchlistItems?.length || 0}</div>
-                        <div className="text-xs text-gray-500">관심종목</div>
+                        <div className="text-xs text-gray-700">관심종목</div>
                       </div>
                     </div>
                     
                     {/* Strategies */}
                     {Array.isArray(agent.strategy) && agent.strategy.length > 0 && (
                       <div className="mb-4">
-                        <p className="text-xs font-medium text-gray-700 mb-2">주요 전략</p>
+                        <p className="text-xs font-medium text-gray-900 mb-2">주요 전략</p>
                         <div className="flex flex-wrap gap-1">
                           {agent.strategy.slice(0, 3).map((strategy, index) => (
-                            <span key={index} className="px-2 py-1 bg-gray-100 text-gray-700 rounded-lg text-xs">
+                            <span key={index} className="px-2 py-1 bg-gray-100 text-gray-800 rounded-lg text-xs">
                               {strategy}
                             </span>
                           ))}
                           {agent.strategy.length > 3 && (
-                            <span className="px-2 py-1 bg-gray-100 text-gray-700 rounded-lg text-xs">
+                            <span className="px-2 py-1 bg-gray-100 text-gray-800 rounded-lg text-xs">
                               +{agent.strategy.length - 3}
                             </span>
                           )}
@@ -199,7 +199,7 @@ export default function AgentsPage() {
                     
                     {/* Action buttons */}
                     <div className="flex items-center justify-between pt-4 border-t border-gray-100">
-                      <span className="text-xs text-gray-500">
+                      <span className="text-xs text-gray-700">
                         생성일: {new Date(agent.createdAt).toLocaleDateString('ko-KR')}
                       </span>
                       <div className="flex items-center space-x-2">
@@ -221,25 +221,25 @@ export default function AgentsPage() {
             <div className="grid grid-cols-2 md:grid-cols-4 gap-6">
               <div className="text-center">
                 <div className="text-3xl font-bold text-blue-500 mb-2">{agents.length}</div>
-                <div className="text-gray-600">총 에이전트</div>
+                <div className="text-gray-800">총 에이전트</div>
               </div>
               <div className="text-center">
                 <div className="text-3xl font-bold text-green-500 mb-2">
                   {agents.filter(a => a.isActive).length}
                 </div>
-                <div className="text-gray-600">활성 에이전트</div>
+                <div className="text-gray-800">활성 에이전트</div>
               </div>
               <div className="text-center">
                 <div className="text-3xl font-bold text-purple-500 mb-2">
                   {agents.reduce((sum, a) => sum + (a.patterns?.length || 0), 0)}
                 </div>
-                <div className="text-gray-600">총 패턴</div>
+                <div className="text-gray-800">총 패턴</div>
               </div>
               <div className="text-center">
                 <div className="text-3xl font-bold text-orange-500 mb-2">
                   {agents.reduce((sum, a) => sum + (a.watchlistItems?.length || 0), 0)}
                 </div>
-                <div className="text-gray-600">관심종목</div>
+                <div className="text-gray-800">관심종목</div>
               </div>
             </div>
           </div>

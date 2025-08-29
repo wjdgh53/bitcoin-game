@@ -139,7 +139,7 @@ export default function PerformanceMetricsComponent({
       value: metrics.sharpeRatio.toFixed(2),
       amount: metrics.sharpeRatio >= 1 ? '우수' : '보통',
       icon: BarChart3,
-      color: metrics.sharpeRatio >= 1 ? 'text-purple-600' : 'text-gray-600',
+      color: metrics.sharpeRatio >= 1 ? 'text-purple-600' : 'text-gray-800',
       bgColor: metrics.sharpeRatio >= 1 ? 'bg-purple-100' : 'bg-gray-100',
     },
     {
@@ -163,11 +163,11 @@ export default function PerformanceMetricsComponent({
                 <card.icon className={`w-6 h-6 ${card.color}`} />
               </div>
             </div>
-            <h3 className="text-sm font-medium text-gray-600 mb-2">{card.title}</h3>
+            <h3 className="text-sm font-medium text-gray-800 mb-2">{card.title}</h3>
             <div className={`text-2xl font-bold ${card.color} mb-1`}>
               {card.value}
             </div>
-            <div className="text-sm text-gray-500">
+            <div className="text-sm text-gray-800">
               {card.amount}
             </div>
           </div>
@@ -180,36 +180,36 @@ export default function PerformanceMetricsComponent({
           <h3 className="text-lg font-bold text-gray-900 mb-4">거래 통계</h3>
           <div className="space-y-4">
             <div className="flex justify-between items-center py-3 border-b border-gray-100">
-              <span className="text-gray-600">총 거래 횟수</span>
-              <span className="font-semibold text-gray-900">{metrics.totalTrades}</span>
+              <span className="text-gray-800">총 거래 횟수</span>
+              <span className="font-bold text-gray-900">{metrics.totalTrades}</span>
             </div>
             <div className="flex justify-between items-center py-3 border-b border-gray-100">
-              <span className="text-gray-600">평균 수익</span>
-              <span className={`font-semibold ${metrics.averageReturn >= 0 ? 'text-green-600' : 'text-red-600'}`}>
+              <span className="text-gray-800">평균 수익</span>
+              <span className={`font-bold ${metrics.averageReturn >= 0 ? 'text-green-600' : 'text-red-600'}`}>
                 {formatPercent(metrics.averageReturn)}
               </span>
             </div>
             <div className="flex justify-between items-center py-3 border-b border-gray-100">
-              <span className="text-gray-600">평균 수익 (승리)</span>
-              <span className="font-semibold text-green-600">
+              <span className="text-gray-800">평균 수익 (승리)</span>
+              <span className="font-bold text-green-600">
                 {formatPercent(metrics.averageWin)}
               </span>
             </div>
             <div className="flex justify-between items-center py-3 border-b border-gray-100">
-              <span className="text-gray-600">평균 손실 (패배)</span>
-              <span className="font-semibold text-red-600">
+              <span className="text-gray-800">평균 손실 (패배)</span>
+              <span className="font-bold text-red-600">
                 {formatPercent(Math.abs(metrics.averageLoss))}
               </span>
             </div>
             <div className="flex justify-between items-center py-3 border-b border-gray-100">
-              <span className="text-gray-600">평균 보유 기간</span>
-              <span className="font-semibold text-gray-900">
+              <span className="text-gray-800">평균 보유 기간</span>
+              <span className="font-bold text-gray-900">
                 {metrics.averageHoldingPeriod.toFixed(1)} 시간
               </span>
             </div>
             <div className="flex justify-between items-center py-3">
-              <span className="text-gray-600">변동성</span>
-              <span className="font-semibold text-gray-900">
+              <span className="text-gray-800">변동성</span>
+              <span className="font-bold text-gray-900">
                 {metrics.volatility.toFixed(2)}%
               </span>
             </div>
@@ -222,7 +222,7 @@ export default function PerformanceMetricsComponent({
             <div className="bg-green-50 rounded-xl p-4">
               <div className="flex items-center mb-2">
                 <Award className="w-5 h-5 text-green-600 mr-2" />
-                <span className="font-semibold text-green-900">최고 수익 거래</span>
+                <span className="font-bold text-green-900">최고 수익 거래</span>
               </div>
               <div className="text-2xl font-bold text-green-600 mb-1">
                 +{metrics.bestTrade.return.toFixed(2)}%
@@ -235,7 +235,7 @@ export default function PerformanceMetricsComponent({
             <div className="bg-red-50 rounded-xl p-4">
               <div className="flex items-center mb-2">
                 <AlertTriangle className="w-5 h-5 text-red-600 mr-2" />
-                <span className="font-semibold text-red-900">최대 손실 거래</span>
+                <span className="font-bold text-red-900">최대 손실 거래</span>
               </div>
               <div className="text-2xl font-bold text-red-600 mb-1">
                 {metrics.worstTrade.return.toFixed(2)}%
@@ -255,7 +255,7 @@ export default function PerformanceMetricsComponent({
           <div className="flex gap-2">
             <button
               onClick={() => setSelectedChart('equity')}
-              className={`px-4 py-2 rounded-xl font-semibold transition-all ${
+              className={`px-4 py-2 rounded-xl font-bold transition-all ${
                 selectedChart === 'equity'
                   ? 'bg-blue-500 text-white'
                   : 'bg-gray-100 text-gray-700 hover:bg-gray-200'
@@ -265,7 +265,7 @@ export default function PerformanceMetricsComponent({
             </button>
             <button
               onClick={() => setSelectedChart('returns')}
-              className={`px-4 py-2 rounded-xl font-semibold transition-all ${
+              className={`px-4 py-2 rounded-xl font-bold transition-all ${
                 selectedChart === 'returns'
                   ? 'bg-blue-500 text-white'
                   : 'bg-gray-100 text-gray-700 hover:bg-gray-200'
@@ -275,7 +275,7 @@ export default function PerformanceMetricsComponent({
             </button>
             <button
               onClick={() => setSelectedChart('drawdown')}
-              className={`px-4 py-2 rounded-xl font-semibold transition-all ${
+              className={`px-4 py-2 rounded-xl font-bold transition-all ${
                 selectedChart === 'drawdown'
                   ? 'bg-blue-500 text-white'
                   : 'bg-gray-100 text-gray-700 hover:bg-gray-200'
@@ -294,7 +294,7 @@ export default function PerformanceMetricsComponent({
                 className={`px-3 py-1 rounded-md font-medium text-sm transition-all ${
                   timeframe === tf
                     ? 'bg-white text-blue-600 shadow-sm'
-                    : 'text-gray-600 hover:text-gray-900'
+                    : 'text-gray-800 hover:text-gray-900'
                 }`}
               >
                 {tf}
@@ -421,9 +421,9 @@ export default function PerformanceMetricsComponent({
         <div className="overflow-x-auto">
           <div className="grid grid-cols-13 gap-2 min-w-[600px]">
             {/* Header row */}
-            <div className="font-semibold text-sm text-gray-600 text-center">연도</div>
+            <div className="font-bold text-sm text-gray-800 text-center">연도</div>
             {['1월', '2월', '3월', '4월', '5월', '6월', '7월', '8월', '9월', '10월', '11월', '12월'].map((month) => (
-              <div key={month} className="font-semibold text-xs text-gray-600 text-center">
+              <div key={month} className="font-bold text-xs text-gray-800 text-center">
                 {month}
               </div>
             ))}
@@ -431,7 +431,7 @@ export default function PerformanceMetricsComponent({
             {/* Data rows */}
             {Array.from(new Set(heatmapData.map(d => d.year))).sort((a, b) => b - a).map((year) => (
               <React.Fragment key={year}>
-                <div className="font-semibold text-sm text-gray-900 text-center">
+                <div className="font-bold text-sm text-gray-900 text-center">
                   {year}
                 </div>
                 {Array.from({ length: 12 }, (_, monthIndex) => {
@@ -443,7 +443,7 @@ export default function PerformanceMetricsComponent({
                   return (
                     <div
                       key={`${year}-${monthIndex}`}
-                      className="relative h-10 rounded-md flex items-center justify-center text-xs font-semibold transition-all hover:scale-110 hover:shadow-lg cursor-pointer"
+                      className="relative h-10 rounded-md flex items-center justify-center text-xs font-bold transition-all hover:scale-110 hover:shadow-lg cursor-pointer"
                       style={{ backgroundColor: getHeatmapColor(returnValue) }}
                       title={`${year}년 ${monthIndex + 1}월: ${formatPercent(returnValue)}`}
                     >
@@ -462,7 +462,7 @@ export default function PerformanceMetricsComponent({
 
         <div className="mt-6 flex items-center justify-center">
           <div className="flex items-center gap-4 text-xs">
-            <span className="text-gray-600">손실</span>
+            <span className="text-gray-800">손실</span>
             <div className="flex gap-1">
               {[-15, -10, -5, -2, 0, 2, 5, 10, 15].map((val) => (
                 <div
@@ -472,7 +472,7 @@ export default function PerformanceMetricsComponent({
                 />
               ))}
             </div>
-            <span className="text-gray-600">수익</span>
+            <span className="text-gray-800">수익</span>
           </div>
         </div>
       </div>
@@ -483,11 +483,11 @@ export default function PerformanceMetricsComponent({
           <div className="flex items-center justify-between">
             <div>
               <h3 className="text-lg font-bold text-gray-900 mb-2">벤치마크 비교</h3>
-              <p className="text-gray-600">BTC, S&P 500 등 주요 지수와 성과를 비교해보세요.</p>
+              <p className="text-gray-800">BTC, S&P 500 등 주요 지수와 성과를 비교해보세요.</p>
             </div>
             <button
               onClick={onBenchmarkCompare}
-              className="px-6 py-3 bg-gradient-to-r from-blue-500 to-indigo-500 text-white rounded-xl font-semibold hover:from-blue-600 hover:to-indigo-600 transition-all shadow-lg hover:shadow-xl"
+              className="px-6 py-3 bg-gradient-to-r from-blue-500 to-indigo-500 text-white rounded-xl font-bold hover:from-blue-600 hover:to-indigo-600 transition-all shadow-lg hover:shadow-xl"
             >
               비교하기
             </button>

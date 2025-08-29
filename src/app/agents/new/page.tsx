@@ -129,16 +129,16 @@ export default function NewAgentPage() {
                 href="/agents" 
                 className="p-2 hover:bg-gray-100 rounded-lg transition-colors"
               >
-                <ArrowLeft className="h-5 w-5 text-gray-600" />
+                <ArrowLeft className="h-5 w-5 text-gray-800" />
               </Link>
               <div>
                 <h1 className="text-xl font-bold text-gray-900">새 AI 에이전트 만들기</h1>
-                <p className="text-sm text-gray-500">당신만의 투자 파트너를 디자인하세요</p>
+                <p className="text-sm text-gray-800">당신만의 투자 파트너를 디자인하세요</p>
               </div>
             </div>
             <div className="flex items-center space-x-2">
               <Sparkles className="h-5 w-5 text-yellow-500" />
-              <span className="text-sm text-gray-600">AI 에이전트 생성</span>
+              <span className="text-sm text-gray-800">AI 에이전트 생성</span>
             </div>
           </div>
         </div>
@@ -151,7 +151,7 @@ export default function NewAgentPage() {
           <div className="lg:col-span-2 space-y-6">
             {/* Name Input */}
             <div className="bg-white rounded-2xl shadow-lg p-6">
-              <label className="block text-lg font-semibold text-gray-900 mb-4">
+              <label className="block text-lg font-bold text-gray-900 mb-4">
                 에이전트 이름
               </label>
               <input
@@ -166,7 +166,7 @@ export default function NewAgentPage() {
 
             {/* Personality Selection */}
             <div className="bg-white rounded-2xl shadow-lg p-6">
-              <h2 className="text-lg font-semibold text-gray-900 mb-4">투자 성향 선택</h2>
+              <h2 className="text-lg font-bold text-gray-900 mb-4">투자 성향 선택</h2>
               <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4">
                 {PERSONALITY_OPTIONS.map((option) => {
                   const Icon = option.icon;
@@ -184,8 +184,8 @@ export default function NewAgentPage() {
                       <div className={`w-12 h-12 rounded-full bg-gradient-to-br ${option.color} flex items-center justify-center mb-3`}>
                         <Icon className="h-6 w-6 text-white" />
                       </div>
-                      <h3 className="font-semibold text-gray-900 mb-1">{option.label}</h3>
-                      <p className="text-xs text-gray-600">{option.description}</p>
+                      <h3 className="font-bold text-gray-900 mb-1">{option.label}</h3>
+                      <p className="text-xs text-gray-800">{option.description}</p>
                       {selectedPersonality === option.value && (
                         <div className="absolute top-2 right-2 w-6 h-6 bg-blue-500 rounded-full flex items-center justify-center">
                           <svg className="w-4 h-4 text-white" fill="currentColor" viewBox="0 0 20 20">
@@ -201,9 +201,9 @@ export default function NewAgentPage() {
 
             {/* Strategy Selection */}
             <div className="bg-white rounded-2xl shadow-lg p-6">
-              <h2 className="text-lg font-semibold text-gray-900 mb-4">
+              <h2 className="text-lg font-bold text-gray-900 mb-4">
                 투자 전략 선택
-                <span className="ml-2 text-sm font-normal text-gray-500">
+                <span className="ml-2 text-sm font-normal text-gray-800">
                   ({selectedStrategies.length}개 선택됨)
                 </span>
               </h2>
@@ -234,7 +234,7 @@ export default function NewAgentPage() {
 
             {/* Description */}
             <div className="bg-white rounded-2xl shadow-lg p-6">
-              <label className="block text-lg font-semibold text-gray-900 mb-4">
+              <label className="block text-lg font-bold text-gray-900 mb-4">
                 에이전트 설명
               </label>
               <textarea
@@ -252,7 +252,7 @@ export default function NewAgentPage() {
           <div className="lg:col-span-1">
             <div className="sticky top-24">
               <div className="bg-white rounded-2xl shadow-lg p-6">
-                <h3 className="text-lg font-semibold text-gray-900 mb-4">미리보기</h3>
+                <h3 className="text-lg font-bold text-gray-900 mb-4">미리보기</h3>
                 
                 {/* Preview Card */}
                 <div className="border-2 border-gray-200 rounded-xl p-4">
@@ -269,14 +269,14 @@ export default function NewAgentPage() {
                       <span className={`inline-block px-2 py-1 rounded-full text-xs font-medium mt-1 ${
                         selectedPersonalityOption
                           ? `bg-gradient-to-r ${selectedPersonalityOption.color} text-white`
-                          : 'bg-gray-200 text-gray-600'
+                          : 'bg-gray-200 text-gray-800'
                       }`}>
                         {selectedPersonalityOption?.label || '성향 선택'}
                       </span>
                     </div>
                   </div>
 
-                  <p className="text-sm text-gray-600 mb-4">
+                  <p className="text-sm text-gray-800 mb-4">
                     {formData.description || '에이전트 설명이 여기에 표시됩니다...'}
                   </p>
 
@@ -304,9 +304,9 @@ export default function NewAgentPage() {
                   <button
                     type="submit"
                     disabled={loading || !formData.name || !formData.description || selectedStrategies.length === 0}
-                    className={`w-full py-3 px-6 rounded-xl font-semibold transition-all ${
+                    className={`w-full py-3 px-6 rounded-xl font-bold transition-all ${
                       loading || !formData.name || !formData.description || selectedStrategies.length === 0
-                        ? 'bg-gray-200 text-gray-400 cursor-not-allowed'
+                        ? 'bg-gray-200 text-gray-700 cursor-not-allowed'
                         : 'bg-gradient-to-r from-blue-500 to-indigo-500 text-white hover:from-blue-600 hover:to-indigo-600 shadow-lg hover:shadow-xl'
                     }`}
                   >
@@ -315,7 +315,7 @@ export default function NewAgentPage() {
                   
                   <Link 
                     href="/agents"
-                    className="block w-full py-3 px-6 border-2 border-gray-200 rounded-xl text-center font-semibold text-gray-700 hover:bg-gray-50 transition-colors"
+                    className="block w-full py-3 px-6 border-2 border-gray-200 rounded-xl text-center font-bold text-gray-700 hover:bg-gray-50 transition-colors"
                   >
                     취소
                   </Link>

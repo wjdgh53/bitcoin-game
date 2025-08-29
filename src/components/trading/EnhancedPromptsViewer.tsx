@@ -108,9 +108,9 @@ export default function EnhancedPromptsViewer({
   const formatPromptContent = (content: string) => {
     // Add syntax highlighting for variables
     return content
-      .replace(/{{(\w+)}}/g, '<span class="text-blue-600 font-semibold">{{$1}}</span>')
+      .replace(/{{(\w+)}}/g, '<span class="text-blue-600 font-bold">{{$1}}</span>')
       .replace(/\[([^\]]+)\]/g, '<span class="text-green-600">[</span><span class="text-green-700">$1</span><span class="text-green-600">]</span>')
-      .replace(/\*([^*]+)\*/g, '<span class="font-semibold">$1</span>');
+      .replace(/\*([^*]+)\*/g, '<span class="font-bold">$1</span>');
   };
 
   return (
@@ -128,10 +128,10 @@ export default function EnhancedPromptsViewer({
               onClick={() => toggleCategory(category as PromptCategory)}
             >
               <Icon className={`w-8 h-8 ${colors.text} mx-auto mb-2`} />
-              <div className={`text-sm font-semibold ${colors.text}`}>
+              <div className={`text-sm font-bold ${colors.text}`}>
                 {categoryLabels[category as PromptCategory]}
               </div>
-              <div className="text-xs text-gray-600 mt-1">
+              <div className="text-xs text-gray-800 mt-1">
                 {categoryPrompts.length}개 프롬프트
               </div>
             </div>
@@ -158,14 +158,14 @@ export default function EnhancedPromptsViewer({
                   <h3 className={`text-lg font-bold ${colors.text}`}>
                     {categoryLabels[category as PromptCategory]}
                   </h3>
-                  <span className={`px-2 py-1 text-xs font-semibold rounded-full ${colors.bg} ${colors.text} border ${colors.border}`}>
+                  <span className={`px-2 py-1 text-xs font-bold rounded-full ${colors.bg} ${colors.text} border ${colors.border}`}>
                     {categoryPrompts.filter(p => p.isActive).length} / {categoryPrompts.length}
                   </span>
                 </div>
                 {isExpanded ? (
-                  <ChevronDown className="w-5 h-5 text-gray-600" />
+                  <ChevronDown className="w-5 h-5 text-gray-800" />
                 ) : (
-                  <ChevronRight className="w-5 h-5 text-gray-600" />
+                  <ChevronRight className="w-5 h-5 text-gray-800" />
                 )}
               </button>
 
@@ -183,14 +183,14 @@ export default function EnhancedPromptsViewer({
                       <div className="flex items-start justify-between mb-4">
                         <div className="flex-1">
                           <div className="flex items-center gap-3 mb-2">
-                            <span className={`px-3 py-1 text-xs font-semibold rounded-full ${
+                            <span className={`px-3 py-1 text-xs font-bold rounded-full ${
                               prompt.isActive 
                                 ? 'bg-green-100 text-green-700' 
-                                : 'bg-gray-100 text-gray-600'
+                                : 'bg-gray-100 text-gray-800'
                             }`}>
                               {prompt.isActive ? '활성' : '비활성'}
                             </span>
-                            <span className="text-sm text-gray-500">
+                            <span className="text-sm text-gray-800">
                               버전 {prompt.version}
                             </span>
                             {prompt.previousVersions.length > 0 && (
@@ -203,7 +203,7 @@ export default function EnhancedPromptsViewer({
                               </button>
                             )}
                           </div>
-                          <div className="flex items-center gap-4 text-xs text-gray-500">
+                          <div className="flex items-center gap-4 text-xs text-gray-800">
                             <span className="flex items-center gap-1">
                               <Clock className="w-3 h-3" />
                               생성: {new Date(prompt.createdAt).toLocaleDateString('ko-KR')}
@@ -222,7 +222,7 @@ export default function EnhancedPromptsViewer({
                             className={`p-2 rounded-lg transition-colors ${
                               copiedPrompt === prompt.id
                                 ? 'bg-green-100 text-green-600'
-                                : 'hover:bg-gray-100 text-gray-600'
+                                : 'hover:bg-gray-100 text-gray-800'
                             }`}
                             title="프롬프트 복사"
                           >
@@ -239,7 +239,7 @@ export default function EnhancedPromptsViewer({
                                 setSelectedPrompt(prompt.id);
                                 setShowSuggestionModal(true);
                               }}
-                              className="p-2 hover:bg-gray-100 rounded-lg text-gray-600 transition-colors"
+                              className="p-2 hover:bg-gray-100 rounded-lg text-gray-800 transition-colors"
                               title="개선 제안"
                             >
                               <Sparkles className="w-4 h-4" />
@@ -258,7 +258,7 @@ export default function EnhancedPromptsViewer({
                       {/* Version History */}
                       {showHistory === prompt.id && prompt.previousVersions.length > 0 && (
                         <div className="mt-4 space-y-2">
-                          <h4 className="text-sm font-semibold text-gray-700 mb-2">버전 히스토리</h4>
+                          <h4 className="text-sm font-bold text-gray-700 mb-2">버전 히스토리</h4>
                           <div className="space-y-2 max-h-48 overflow-y-auto">
                             {prompt.previousVersions.map((version, index) => (
                               <div
@@ -266,15 +266,15 @@ export default function EnhancedPromptsViewer({
                                 className="p-3 bg-gray-50 rounded-lg border border-gray-200"
                               >
                                 <div className="flex items-center justify-between mb-2">
-                                  <span className="text-xs font-semibold text-gray-600">
+                                  <span className="text-xs font-bold text-gray-800">
                                     버전 {version.version}
                                   </span>
-                                  <span className="text-xs text-gray-500">
+                                  <span className="text-xs text-gray-800">
                                     {new Date(version.timestamp).toLocaleDateString('ko-KR')}
                                   </span>
                                 </div>
                                 {version.changeReason && (
-                                  <p className="text-xs text-gray-600 mb-2">
+                                  <p className="text-xs text-gray-800 mb-2">
                                     변경 사유: {version.changeReason}
                                   </p>
                                 )}
@@ -311,7 +311,7 @@ export default function EnhancedPromptsViewer({
                 }}
                 className="p-2 hover:bg-gray-100 rounded-lg transition-colors"
               >
-                <X className="w-5 h-5 text-gray-600" />
+                <X className="w-5 h-5 text-gray-800" />
               </button>
             </div>
 
@@ -334,14 +334,14 @@ export default function EnhancedPromptsViewer({
                   setSuggestionText('');
                   setSelectedPrompt(null);
                 }}
-                className="px-4 py-2 bg-gray-100 text-gray-700 rounded-xl font-semibold hover:bg-gray-200 transition-colors"
+                className="px-4 py-2 bg-gray-100 text-gray-700 rounded-xl font-bold hover:bg-gray-200 transition-colors"
               >
                 취소
               </button>
               <button
                 onClick={handleSuggestImprovement}
                 disabled={!suggestionText.trim()}
-                className="px-4 py-2 bg-gradient-to-r from-blue-500 to-indigo-500 text-white rounded-xl font-semibold hover:from-blue-600 hover:to-indigo-600 transition-all shadow-lg hover:shadow-xl disabled:opacity-50 disabled:cursor-not-allowed"
+                className="px-4 py-2 bg-gradient-to-r from-blue-500 to-indigo-500 text-white rounded-xl font-bold hover:from-blue-600 hover:to-indigo-600 transition-all shadow-lg hover:shadow-xl disabled:opacity-50 disabled:cursor-not-allowed"
               >
                 제안 제출
               </button>

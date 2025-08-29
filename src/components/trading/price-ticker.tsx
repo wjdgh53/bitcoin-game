@@ -75,7 +75,7 @@ export function PriceTicker({
     return (
       <div className={cn('flex items-center justify-center p-4', className)}>
         <LoadingSpinner />
-        <span className="ml-2 text-sm text-gray-600">Loading price data...</span>
+        <span className="ml-2 text-sm text-gray-800">Loading price data...</span>
       </div>
     );
   }
@@ -130,8 +130,8 @@ export function PriceTicker({
               <span className="text-white text-sm font-bold">₿</span>
             </div>
             <div>
-              <h2 className="text-lg font-semibold text-gray-900">Bitcoin</h2>
-              <span className="text-sm text-gray-500">BTC/USD</span>
+              <h2 className="text-lg font-bold text-gray-900">Bitcoin</h2>
+              <span className="text-sm text-gray-800">BTC/USD</span>
             </div>
           </div>
           
@@ -144,7 +144,7 @@ export function PriceTicker({
         </div>
 
         <div className="text-right">
-          <div className="text-xs text-gray-500 mb-1">
+          <div className="text-xs text-gray-800 mb-1">
             Last updated: {priceData.timestamp.toLocaleTimeString()}
           </div>
           <div className={cn(
@@ -161,7 +161,7 @@ export function PriceTicker({
 
       <div className="grid grid-cols-2 md:grid-cols-4 gap-4">
         <div className="space-y-1">
-          <div className="text-xs text-gray-500 uppercase tracking-wider">Current Price</div>
+          <div className="text-xs text-gray-800 uppercase tracking-wider">Current Price</div>
           <div className={cn(
             'text-2xl font-bold transition-all duration-500',
             priceAnimation === 'up' && 'text-green-600 scale-105',
@@ -173,23 +173,23 @@ export function PriceTicker({
         </div>
 
         <div className="space-y-1">
-          <div className="text-xs text-gray-500 uppercase tracking-wider">24h High</div>
-          <div className="text-lg font-semibold text-gray-900">
+          <div className="text-xs text-gray-800 uppercase tracking-wider">24h High</div>
+          <div className="text-lg font-bold text-gray-900">
             {formatCurrency(priceData.high24h)}
           </div>
         </div>
 
         <div className="space-y-1">
-          <div className="text-xs text-gray-500 uppercase tracking-wider">24h Low</div>
-          <div className="text-lg font-semibold text-gray-900">
+          <div className="text-xs text-gray-800 uppercase tracking-wider">24h Low</div>
+          <div className="text-lg font-bold text-gray-900">
             {formatCurrency(priceData.low24h)}
           </div>
         </div>
 
         {showVolume && (
           <div className="space-y-1">
-            <div className="text-xs text-gray-500 uppercase tracking-wider">24h Volume</div>
-            <div className="text-lg font-semibold text-gray-900">
+            <div className="text-xs text-gray-800 uppercase tracking-wider">24h Volume</div>
+            <div className="text-lg font-bold text-gray-900">
               ${(priceData.volume / 1e9).toFixed(2)}B
             </div>
           </div>
@@ -199,8 +199,8 @@ export function PriceTicker({
       {showMarketCap && priceData.marketCap > 0 && (
         <div className="mt-4 pt-4 border-t border-gray-200">
           <div className="flex justify-between items-center">
-            <span className="text-sm text-gray-500">Market Cap</span>
-            <span className="text-sm font-semibold text-gray-900">
+            <span className="text-sm text-gray-800">Market Cap</span>
+            <span className="text-sm font-bold text-gray-900">
               ${(priceData.marketCap / 1e12).toFixed(2)}T
             </span>
           </div>
@@ -251,7 +251,7 @@ export function PriceAlert({ targetPrice, currentPrice, onAlert }: PriceAlertPro
       'p-3 rounded-md border',
       alerted 
         ? 'bg-green-50 border-green-200 text-green-800'
-        : 'bg-gray-50 border-gray-200 text-gray-600'
+        : 'bg-gray-50 border-gray-200 text-gray-800'
     )}>
       <div className="flex items-center justify-between">
         <div>

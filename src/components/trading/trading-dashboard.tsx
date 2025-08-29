@@ -178,8 +178,8 @@ export function TradingDashboard({ className }: TradingDashboardProps) {
                 <Activity className="h-8 w-8 text-blue-600" />
               </div>
               <div className="ml-3">
-                <div className="text-sm font-medium text-gray-500">Portfolio Value</div>
-                <div className="text-lg font-semibold text-gray-900">
+                <div className="text-sm font-medium text-gray-800">Portfolio Value</div>
+                <div className="text-lg font-bold text-gray-900">
                   {formatCurrency(portfolio.totalValue)}
                 </div>
               </div>
@@ -195,9 +195,9 @@ export function TradingDashboard({ className }: TradingDashboardProps) {
                 )} />
               </div>
               <div className="ml-3">
-                <div className="text-sm font-medium text-gray-500">Total P&L</div>
+                <div className="text-sm font-medium text-gray-800">Total P&L</div>
                 <div className={cn(
-                  'text-lg font-semibold',
+                  'text-lg font-bold',
                   portfolio.profitPercentage >= 0 ? 'text-green-600' : 'text-red-600'
                 )}>
                   {formatCurrency(portfolio.profit)} ({formatPercentage(portfolio.profitPercentage)})
@@ -214,8 +214,8 @@ export function TradingDashboard({ className }: TradingDashboardProps) {
                 </div>
               </div>
               <div className="ml-3">
-                <div className="text-sm font-medium text-gray-500">Bitcoin Holdings</div>
-                <div className="text-lg font-semibold text-gray-900">
+                <div className="text-sm font-medium text-gray-800">Bitcoin Holdings</div>
+                <div className="text-lg font-bold text-gray-900">
                   {portfolio.bitcoinHoldings.toFixed(6)} BTC
                 </div>
               </div>
@@ -230,8 +230,8 @@ export function TradingDashboard({ className }: TradingDashboardProps) {
                 </div>
               </div>
               <div className="ml-3">
-                <div className="text-sm font-medium text-gray-500">Cash Balance</div>
-                <div className="text-lg font-semibold text-gray-900">
+                <div className="text-sm font-medium text-gray-800">Cash Balance</div>
+                <div className="text-lg font-bold text-gray-900">
                   {formatCurrency(portfolio.balance)}
                 </div>
               </div>
@@ -245,7 +245,7 @@ export function TradingDashboard({ className }: TradingDashboardProps) {
         {/* Chart */}
         <div className="lg:col-span-2 bg-white rounded-lg p-6 border border-gray-200">
           <div className="flex items-center justify-between mb-4">
-            <h3 className="text-lg font-semibold text-gray-900">Price Chart</h3>
+            <h3 className="text-lg font-bold text-gray-900">Price Chart</h3>
             
             <div className="flex gap-2">
               {['1h', '4h', '1d', '1w'].map((range) => (
@@ -276,7 +276,7 @@ export function TradingDashboard({ className }: TradingDashboardProps) {
 
         {/* Trading Panel */}
         <div className="bg-white rounded-lg p-6 border border-gray-200">
-          <h3 className="text-lg font-semibold text-gray-900 mb-4">Quick Trade</h3>
+          <h3 className="text-lg font-bold text-gray-900 mb-4">Quick Trade</h3>
           
           <div className="space-y-4">
             {/* Amount Input */}
@@ -310,8 +310,8 @@ export function TradingDashboard({ className }: TradingDashboardProps) {
 
             {/* Trade Value */}
             <div className="bg-gray-50 p-3 rounded-md">
-              <div className="text-sm text-gray-600">Trade Value</div>
-              <div className="text-lg font-semibold">
+              <div className="text-sm text-gray-800">Trade Value</div>
+              <div className="text-lg font-bold">
                 {formatCurrency(tradeAmount * currentPrice)}
               </div>
             </div>

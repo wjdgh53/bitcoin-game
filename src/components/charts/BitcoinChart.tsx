@@ -195,11 +195,11 @@ export default function BitcoinChart({
     return (
       <div className={`bg-white rounded-lg shadow p-6 ${className}`}>
         <div className="flex items-center mb-4">
-          <BarChart3 className="h-5 w-5 text-gray-500 mr-2" />
-          <h3 className="text-lg font-semibold">BTC/USD Live Chart</h3>
+          <BarChart3 className="h-5 w-5 text-gray-800 mr-2" />
+          <h3 className="text-lg font-bold">BTC/USD Live Chart</h3>
         </div>
         <div className="flex items-center justify-center" style={{ height }}>
-          <div className="text-center text-gray-500">
+          <div className="text-center text-gray-800">
             <Loader2 className="h-8 w-8 mx-auto mb-2 animate-spin" />
             <p>Loading chart data...</p>
           </div>
@@ -212,8 +212,8 @@ export default function BitcoinChart({
     return (
       <div className={`bg-white rounded-lg shadow p-6 ${className}`}>
         <div className="flex items-center mb-4">
-          <BarChart3 className="h-5 w-5 text-gray-500 mr-2" />
-          <h3 className="text-lg font-semibold">BTC/USD Live Chart</h3>
+          <BarChart3 className="h-5 w-5 text-gray-800 mr-2" />
+          <h3 className="text-lg font-bold">BTC/USD Live Chart</h3>
         </div>
         <div className="flex items-center justify-center" style={{ height }}>
           <div className="text-center text-red-500">
@@ -234,11 +234,11 @@ export default function BitcoinChart({
     return (
       <div className={`bg-white rounded-lg shadow p-6 ${className}`}>
         <div className="flex items-center mb-4">
-          <BarChart3 className="h-5 w-5 text-gray-500 mr-2" />
-          <h3 className="text-lg font-semibold">BTC/USD Live Chart</h3>
+          <BarChart3 className="h-5 w-5 text-gray-800 mr-2" />
+          <h3 className="text-lg font-bold">BTC/USD Live Chart</h3>
         </div>
         <div className="flex items-center justify-center" style={{ height }}>
-          <div className="text-center text-gray-500">
+          <div className="text-center text-gray-800">
             <BarChart3 className="h-12 w-12 mx-auto mb-2 opacity-50" />
             <p>No price data available</p>
             <p className="text-sm mt-1">Price updates every 10 minutes</p>
@@ -252,12 +252,12 @@ export default function BitcoinChart({
     <div className={`bg-white rounded-lg shadow p-6 ${className}`}>
       <div className="flex items-center justify-between mb-4">
         <div className="flex items-center">
-          <BarChart3 className="h-5 w-5 text-gray-500 mr-2" />
-          <h3 className="text-lg font-semibold">BTC/USD Live Chart</h3>
+          <BarChart3 className="h-5 w-5 text-gray-800 mr-2" />
+          <h3 className="text-lg font-bold">BTC/USD Live Chart</h3>
         </div>
         <div className="text-right text-sm">
-          <div className="text-gray-500">Last {timeRange}h</div>
-          <div className={`font-semibold ${priceChange >= 0 ? 'text-green-600' : 'text-red-600'}`}>
+          <div className="text-gray-800">Last {timeRange}h</div>
+          <div className={`font-bold ${priceChange >= 0 ? 'text-green-600' : 'text-red-600'}`}>
             {priceChange >= 0 ? '+' : ''}${priceChange.toFixed(2)} ({priceChangePercent >= 0 ? '+' : ''}{priceChangePercent.toFixed(2)}%)
           </div>
         </div>
@@ -266,16 +266,16 @@ export default function BitcoinChart({
       {/* Price Stats */}
       <div className="grid grid-cols-3 gap-4 mb-4 p-3 bg-gray-50 rounded-lg">
         <div className="text-center">
-          <div className="text-xs text-gray-500">Current</div>
-          <div className="font-semibold text-gray-900">${currentPrice.toLocaleString()}</div>
+          <div className="text-xs text-gray-800">Current</div>
+          <div className="font-bold text-gray-900">${currentPrice.toLocaleString()}</div>
         </div>
         <div className="text-center">
-          <div className="text-xs text-gray-500">High</div>
-          <div className="font-semibold text-green-600">${high.toLocaleString()}</div>
+          <div className="text-xs text-gray-800">High</div>
+          <div className="font-bold text-green-600">${high.toLocaleString()}</div>
         </div>
         <div className="text-center">
-          <div className="text-xs text-gray-500">Low</div>
-          <div className="font-semibold text-red-600">${low.toLocaleString()}</div>
+          <div className="text-xs text-gray-800">Low</div>
+          <div className="font-bold text-red-600">${low.toLocaleString()}</div>
         </div>
       </div>
 
@@ -285,7 +285,7 @@ export default function BitcoinChart({
       </div>
 
       {/* Chart Info */}
-      <div className="mt-3 text-xs text-gray-500 text-center">
+      <div className="mt-3 text-xs text-gray-800 text-center">
         Updates every 10 minutes • {priceHistory.length} data points • Source: {priceHistory[priceHistory.length - 1]?.source || 'Simulation'}
       </div>
     </div>

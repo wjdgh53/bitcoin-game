@@ -58,7 +58,7 @@ export default function RegisterPage() {
           <h2 className="text-3xl font-bold text-white mb-2">
             Bitcoin Trading Game
           </h2>
-          <p className="text-gray-300">
+          <p className="text-gray-100">
             새 계정을 만들어보세요
           </p>
         </div>
@@ -73,12 +73,12 @@ export default function RegisterPage() {
             )}
 
             <div>
-              <label htmlFor="name" className="block text-sm font-medium text-gray-300 mb-2">
+              <label htmlFor="name" className="block text-sm font-medium text-gray-100 mb-2">
                 이름
               </label>
               <div className="relative">
                 <div className="absolute inset-y-0 left-0 pl-3 flex items-center pointer-events-none">
-                  <User className="h-5 w-5 text-gray-400" />
+                  <User className="h-5 w-5 text-gray-700" />
                 </div>
                 <input
                   id="name"
@@ -93,12 +93,12 @@ export default function RegisterPage() {
             </div>
 
             <div>
-              <label htmlFor="email" className="block text-sm font-medium text-gray-300 mb-2">
+              <label htmlFor="email" className="block text-sm font-medium text-gray-100 mb-2">
                 이메일
               </label>
               <div className="relative">
                 <div className="absolute inset-y-0 left-0 pl-3 flex items-center pointer-events-none">
-                  <Mail className="h-5 w-5 text-gray-400" />
+                  <Mail className="h-5 w-5 text-gray-700" />
                 </div>
                 <input
                   id="email"
@@ -113,12 +113,12 @@ export default function RegisterPage() {
             </div>
 
             <div>
-              <label htmlFor="password" className="block text-sm font-medium text-gray-300 mb-2">
+              <label htmlFor="password" className="block text-sm font-medium text-gray-100 mb-2">
                 비밀번호
               </label>
               <div className="relative">
                 <div className="absolute inset-y-0 left-0 pl-3 flex items-center pointer-events-none">
-                  <Lock className="h-5 w-5 text-gray-400" />
+                  <Lock className="h-5 w-5 text-gray-700" />
                 </div>
                 <input
                   id="password"
@@ -133,12 +133,12 @@ export default function RegisterPage() {
             </div>
 
             <div>
-              <label htmlFor="confirmPassword" className="block text-sm font-medium text-gray-300 mb-2">
+              <label htmlFor="confirmPassword" className="block text-sm font-medium text-gray-100 mb-2">
                 비밀번호 확인
               </label>
               <div className="relative">
                 <div className="absolute inset-y-0 left-0 pl-3 flex items-center pointer-events-none">
-                  <Lock className="h-5 w-5 text-gray-400" />
+                  <Lock className="h-5 w-5 text-gray-700" />
                 </div>
                 <input
                   id="confirmPassword"
@@ -155,7 +155,7 @@ export default function RegisterPage() {
             <button
               type="submit"
               disabled={isLoading}
-              className="w-full bg-orange-500 hover:bg-orange-600 disabled:opacity-50 text-white font-semibold py-3 px-4 rounded-lg transition-colors flex items-center justify-center gap-2"
+              className="w-full bg-orange-500 hover:bg-orange-600 disabled:opacity-50 text-white font-bold py-3 px-4 rounded-lg transition-colors flex items-center justify-center gap-2"
             >
               {isLoading ? (
                 <div className="w-5 h-5 border-2 border-white/30 border-t-white rounded-full animate-spin"></div>
@@ -169,7 +169,7 @@ export default function RegisterPage() {
           </form>
 
           <div className="mt-6 text-center">
-            <p className="text-gray-300">
+            <p className="text-gray-100">
               이미 계정이 있으신가요?{' '}
               <Link href="/login" className="text-orange-400 hover:text-orange-300 font-medium">
                 로그인
@@ -190,7 +190,7 @@ export default function RegisterPage() {
         <div className="text-center">
           <Link 
             href="/" 
-            className="text-gray-400 hover:text-white transition-colors"
+            className="text-gray-700 hover:text-white transition-colors"
           >
             홈으로 돌아가기
           </Link>

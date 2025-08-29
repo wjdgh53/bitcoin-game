@@ -43,7 +43,7 @@ export function PageLoader() {
     <div className="flex h-screen items-center justify-center">
       <div className="text-center">
         <LoadingSpinner size="lg" />
-        <p className="mt-2 text-sm text-gray-600">Loading...</p>
+        <p className="mt-2 text-sm text-gray-800">Loading...</p>
       </div>
     </div>
   );
@@ -59,7 +59,7 @@ export function InlineLoader({ text = 'Loading...', size = 'sm' }: InlineLoaderP
   return (
     <div className="flex items-center gap-2">
       <LoadingSpinner size={size} />
-      <span className="text-sm text-gray-600">{text}</span>
+      <span className="text-sm text-gray-800">{text}</span>
     </div>
   );
 }

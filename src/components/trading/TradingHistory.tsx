@@ -167,7 +167,7 @@ export default function TradingHistory({ trades, onExport }: TradingHistoryProps
       <div className="flex flex-col sm:flex-row justify-between items-start sm:items-center gap-4">
         <div className="flex items-center gap-4">
           <div className="relative">
-            <Search className="absolute left-3 top-1/2 -translate-y-1/2 w-5 h-5 text-gray-400" />
+            <Search className="absolute left-3 top-1/2 -translate-y-1/2 w-5 h-5 text-gray-700" />
             <input
               type="text"
               placeholder="검색 (심볼, 전략, 이유)"
@@ -179,7 +179,7 @@ export default function TradingHistory({ trades, onExport }: TradingHistoryProps
           
           <button
             onClick={() => setShowFilters(!showFilters)}
-            className={`flex items-center gap-2 px-4 py-2 rounded-xl font-semibold transition-all ${
+            className={`flex items-center gap-2 px-4 py-2 rounded-xl font-bold transition-all ${
               showFilters
                 ? 'bg-blue-500 text-white'
                 : 'bg-gray-100 text-gray-700 hover:bg-gray-200'
@@ -193,14 +193,14 @@ export default function TradingHistory({ trades, onExport }: TradingHistoryProps
         <div className="flex items-center gap-2">
           <button
             onClick={() => onExport?.('csv')}
-            className="flex items-center gap-2 px-4 py-2 bg-gray-100 text-gray-700 rounded-xl font-semibold hover:bg-gray-200 transition-all"
+            className="flex items-center gap-2 px-4 py-2 bg-gray-100 text-gray-700 rounded-xl font-bold hover:bg-gray-200 transition-all"
           >
             <Download className="w-4 h-4" />
             CSV
           </button>
           <button
             onClick={() => onExport?.('json')}
-            className="flex items-center gap-2 px-4 py-2 bg-gray-100 text-gray-700 rounded-xl font-semibold hover:bg-gray-200 transition-all"
+            className="flex items-center gap-2 px-4 py-2 bg-gray-100 text-gray-700 rounded-xl font-bold hover:bg-gray-200 transition-all"
           >
             <Download className="w-4 h-4" />
             JSON
@@ -212,7 +212,7 @@ export default function TradingHistory({ trades, onExport }: TradingHistoryProps
       {showFilters && (
         <div className="bg-gray-50 rounded-xl p-6 space-y-4">
           <div className="flex justify-between items-center mb-4">
-            <h3 className="text-lg font-semibold text-gray-900">필터 옵션</h3>
+            <h3 className="text-lg font-bold text-gray-900">필터 옵션</h3>
             <button
               onClick={clearFilters}
               className="text-sm text-blue-600 hover:text-blue-700 font-medium"
@@ -327,44 +327,44 @@ export default function TradingHistory({ trades, onExport }: TradingHistoryProps
               <tr>
                 <th 
                   onClick={() => handleSort('timestamp')}
-                  className="px-6 py-4 text-left text-xs font-semibold text-gray-600 uppercase tracking-wider cursor-pointer hover:bg-gray-100"
+                  className="px-6 py-4 text-left text-xs font-bold text-gray-800 uppercase tracking-wider cursor-pointer hover:bg-gray-100"
                 >
                   날짜
                 </th>
                 <th 
                   onClick={() => handleSort('symbol')}
-                  className="px-6 py-4 text-left text-xs font-semibold text-gray-600 uppercase tracking-wider cursor-pointer hover:bg-gray-100"
+                  className="px-6 py-4 text-left text-xs font-bold text-gray-800 uppercase tracking-wider cursor-pointer hover:bg-gray-100"
                 >
                   심볼
                 </th>
-                <th className="px-6 py-4 text-left text-xs font-semibold text-gray-600 uppercase tracking-wider">
+                <th className="px-6 py-4 text-left text-xs font-bold text-gray-800 uppercase tracking-wider">
                   유형
                 </th>
                 <th 
                   onClick={() => handleSort('quantity')}
-                  className="px-6 py-4 text-right text-xs font-semibold text-gray-600 uppercase tracking-wider cursor-pointer hover:bg-gray-100"
+                  className="px-6 py-4 text-right text-xs font-bold text-gray-800 uppercase tracking-wider cursor-pointer hover:bg-gray-100"
                 >
                   수량
                 </th>
                 <th 
                   onClick={() => handleSort('price')}
-                  className="px-6 py-4 text-right text-xs font-semibold text-gray-600 uppercase tracking-wider cursor-pointer hover:bg-gray-100"
+                  className="px-6 py-4 text-right text-xs font-bold text-gray-800 uppercase tracking-wider cursor-pointer hover:bg-gray-100"
                 >
                   가격
                 </th>
                 <th 
                   onClick={() => handleSort('total')}
-                  className="px-6 py-4 text-right text-xs font-semibold text-gray-600 uppercase tracking-wider cursor-pointer hover:bg-gray-100"
+                  className="px-6 py-4 text-right text-xs font-bold text-gray-800 uppercase tracking-wider cursor-pointer hover:bg-gray-100"
                 >
                   총액
                 </th>
                 <th 
                   onClick={() => handleSort('profitLoss')}
-                  className="px-6 py-4 text-right text-xs font-semibold text-gray-600 uppercase tracking-wider cursor-pointer hover:bg-gray-100"
+                  className="px-6 py-4 text-right text-xs font-bold text-gray-800 uppercase tracking-wider cursor-pointer hover:bg-gray-100"
                 >
                   손익
                 </th>
-                <th className="px-6 py-4 text-left text-xs font-semibold text-gray-600 uppercase tracking-wider">
+                <th className="px-6 py-4 text-left text-xs font-bold text-gray-800 uppercase tracking-wider">
                   전략
                 </th>
               </tr>
@@ -376,12 +376,12 @@ export default function TradingHistory({ trades, onExport }: TradingHistoryProps
                     {new Date(trade.timestamp).toLocaleDateString('ko-KR')}
                   </td>
                   <td className="px-6 py-4 whitespace-nowrap">
-                    <span className="text-sm font-semibold text-gray-900">
+                    <span className="text-sm font-bold text-gray-900">
                       {trade.symbol}
                     </span>
                   </td>
                   <td className="px-6 py-4 whitespace-nowrap">
-                    <span className={`inline-flex items-center gap-1 px-3 py-1 rounded-full text-xs font-semibold ${
+                    <span className={`inline-flex items-center gap-1 px-3 py-1 rounded-full text-xs font-bold ${
                       trade.action === 'BUY' 
                         ? 'bg-green-100 text-green-800' 
                         : 'bg-red-100 text-red-800'
@@ -400,13 +400,13 @@ export default function TradingHistory({ trades, onExport }: TradingHistoryProps
                   <td className="px-6 py-4 whitespace-nowrap text-sm text-gray-900 text-right">
                     {formatCurrency(trade.price)}
                   </td>
-                  <td className="px-6 py-4 whitespace-nowrap text-sm font-semibold text-gray-900 text-right">
+                  <td className="px-6 py-4 whitespace-nowrap text-sm font-bold text-gray-900 text-right">
                     {formatCurrency(trade.total)}
                   </td>
                   <td className="px-6 py-4 whitespace-nowrap text-right">
                     {trade.result && (
                       <div className="flex flex-col items-end">
-                        <span className={`text-sm font-semibold ${
+                        <span className={`text-sm font-bold ${
                           trade.result.profitLoss >= 0 ? 'text-green-600' : 'text-red-600'
                         }`}>
                           {trade.result.profitLoss >= 0 ? (
@@ -424,7 +424,7 @@ export default function TradingHistory({ trades, onExport }: TradingHistoryProps
                       </div>
                     )}
                   </td>
-                  <td className="px-6 py-4 whitespace-nowrap text-sm text-gray-600">
+                  <td className="px-6 py-4 whitespace-nowrap text-sm text-gray-800">
                     {trade.strategyUsed}
                   </td>
                 </tr>

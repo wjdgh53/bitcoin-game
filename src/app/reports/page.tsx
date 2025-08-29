@@ -143,7 +143,7 @@ export default function ReportsPage() {
     switch (recommendation) {
       case 'buy': return 'text-green-600 bg-green-100';
       case 'sell': return 'text-red-600 bg-red-100';
-      default: return 'text-gray-600 bg-gray-100';
+      default: return 'text-gray-800 bg-gray-100';
     }
   };
 
@@ -160,7 +160,7 @@ export default function ReportsPage() {
       <div className="min-h-screen bg-gray-50 flex items-center justify-center">
         <div className="text-center">
           <Brain className="h-12 w-12 text-purple-500 animate-pulse mx-auto mb-4" />
-          <p className="text-gray-600">AI 분석 리포트를 불러오는 중...</p>
+          <p className="text-gray-800">AI 분석 리포트를 불러오는 중...</p>
         </div>
       </div>
     );
@@ -183,7 +183,7 @@ export default function ReportsPage() {
                   </div>
                   <div>
                     <h3 className="font-bold text-gray-900">{agent.name}</h3>
-                    <p className="text-sm text-gray-500">{agent.description}</p>
+                    <p className="text-sm text-gray-700">{agent.description}</p>
                   </div>
                 </div>
                 <button
@@ -209,7 +209,7 @@ export default function ReportsPage() {
         {/* Filter Dropdown */}
         <div className="bg-white rounded-lg shadow mb-6 p-6">
           <div className="flex items-center gap-4">
-            <label className="text-sm font-medium text-gray-700">에이전트 필터:</label>
+            <label className="text-sm font-medium text-gray-900">에이전트 필터:</label>
             <select
               value={selectedAgent}
               onChange={(e) => setSelectedAgent(e.target.value)}
@@ -222,7 +222,7 @@ export default function ReportsPage() {
                 </option>
               ))}
             </select>
-            <div className="text-sm text-gray-500">
+            <div className="text-sm text-gray-700">
               {selectedAgent === 'all' 
                 ? `전체 ${reports.length}개 리포트` 
                 : `${agents.find(a => a.type === selectedAgent)?.name || ''} ${reports.length}개 리포트`
@@ -235,9 +235,9 @@ export default function ReportsPage() {
         <div className="space-y-6">
           {reports.length === 0 ? (
             <div className="bg-white rounded-lg shadow p-8 text-center">
-              <AlertCircle className="h-12 w-12 text-gray-400 mx-auto mb-4" />
+              <AlertCircle className="h-12 w-12 text-gray-700 mx-auto mb-4" />
               <h3 className="text-lg font-medium text-gray-900 mb-2">분석 리포트가 없습니다</h3>
-              <p className="text-gray-500">위의 AI 에이전트 버튼을 눌러 새로운 분석을 시작하세요.</p>
+              <p className="text-gray-800">위의 AI 에이전트 버튼을 눌러 새로운 분석을 시작하세요.</p>
             </div>
           ) : (
             reports.map((report) => {
@@ -254,7 +254,7 @@ export default function ReportsPage() {
                         )}
                         <div>
                           <h3 className="text-lg font-bold text-gray-900">{report.title}</h3>
-                          <div className="flex items-center text-sm text-gray-500 mt-1">
+                          <div className="flex items-center text-sm text-gray-700 mt-1">
                             <User className="h-4 w-4 mr-1" />
                             {report.agentName} {agent && `(${agent.description})`}
                             <Calendar className="h-4 w-4 ml-3 mr-1" />
@@ -268,7 +268,7 @@ export default function ReportsPage() {
                           {report.recommendation === 'buy' ? '매수' : report.recommendation === 'sell' ? '매도' : '홀드'}
                         </div>
                         <div className="flex items-center gap-1 text-sm">
-                          <Target className="h-4 w-4 text-gray-500" />
+                          <Target className="h-4 w-4 text-gray-700" />
                           <span className="font-medium">{report.confidence}%</span>
                         </div>
                       </div>
@@ -276,17 +276,17 @@ export default function ReportsPage() {
 
                     <div className="grid grid-cols-2 md:grid-cols-4 gap-4 mb-4 p-4 bg-gray-50 rounded-lg">
                       <div>
-                        <p className="text-xs text-gray-500">분석 시점 가격</p>
+                        <p className="text-xs text-gray-700">분석 시점 가격</p>
                         <p className="font-bold">${report.currentPrice.toLocaleString()}</p>
                       </div>
                       <div>
-                        <p className="text-xs text-gray-500">24h 변동률</p>
+                        <p className="text-xs text-gray-700">24h 변동률</p>
                         <p className={`font-bold ${report.priceChange24h >= 0 ? 'text-green-600' : 'text-red-600'}`}>
                           {report.priceChange24h >= 0 ? '+' : ''}{report.priceChange24h.toFixed(2)}%
                         </p>
                       </div>
                       <div>
-                        <p className="text-xs text-gray-500">트렌드</p>
+                        <p className="text-xs text-gray-700">트렌드</p>
                         <p className="font-bold capitalize">{report.trend}</p>
                       </div>
                       <div className="flex justify-end">

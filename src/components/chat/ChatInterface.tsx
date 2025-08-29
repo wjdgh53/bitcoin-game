@@ -123,8 +123,8 @@ export default function ChatInterface({ agent, messages, onSendMessage }: ChatIn
               <Bot className="h-5 w-5 text-white" />
             </div>
             <div>
-              <h2 className="font-semibold text-gray-900">{agent.name}</h2>
-              <div className="flex items-center gap-2 text-sm text-gray-500">
+              <h2 className="font-bold text-gray-900">{agent.name}</h2>
+              <div className="flex items-center gap-2 text-sm text-gray-800">
                 <span>{getPersonalityLabel(agent.personality)} 에이전트</span>
                 {agent.isActive ? (
                   <div className="flex items-center gap-1">
@@ -147,13 +147,13 @@ export default function ChatInterface({ agent, messages, onSendMessage }: ChatIn
               className="p-2 hover:bg-gray-100 rounded-lg transition-colors"
               title="에이전트 정보"
             >
-              <Info className="h-4 w-4 text-gray-500" />
+              <Info className="h-4 w-4 text-gray-800" />
             </button>
             <button
               className="p-2 hover:bg-gray-100 rounded-lg transition-colors"
               title="설정"
             >
-              <Settings2 className="h-4 w-4 text-gray-500" />
+              <Settings2 className="h-4 w-4 text-gray-800" />
             </button>
           </div>
         </div>
@@ -161,10 +161,10 @@ export default function ChatInterface({ agent, messages, onSendMessage }: ChatIn
         {/* Agent Info Panel */}
         {showInfo && (
           <div className="mt-4 p-3 bg-gray-50 rounded-lg">
-            <div className="text-sm text-gray-600 mb-2">
+            <div className="text-sm text-gray-800 mb-2">
               <strong>설명:</strong> {agent.description}
             </div>
-            <div className="text-sm text-gray-600">
+            <div className="text-sm text-gray-800">
               <strong>타입:</strong> {agent.type}
             </div>
           </div>
@@ -178,14 +178,14 @@ export default function ChatInterface({ agent, messages, onSendMessage }: ChatIn
             <div className={`w-16 h-16 rounded-full flex items-center justify-center ${getPersonalityColor(agent.personality)} mb-4`}>
               <Bot className="h-8 w-8 text-white" />
             </div>
-            <h3 className="text-lg font-semibold text-gray-900 mb-2">
+            <h3 className="text-lg font-bold text-gray-900 mb-2">
               {agent.name}와의 첫 대화
             </h3>
-            <p className="text-gray-600 mb-4 max-w-md">
+            <p className="text-gray-800 mb-4 max-w-md">
               안녕하세요! 저는 {getPersonalityLabel(agent.personality)} 성향의 AI 투자 에이전트입니다. 
               투자 전략, 패턴 분석, 관심종목에 대해 대화해보세요.
             </p>
-            <div className="grid grid-cols-1 md:grid-cols-3 gap-2 text-xs text-gray-500">
+            <div className="grid grid-cols-1 md:grid-cols-3 gap-2 text-xs text-gray-800">
               <button onClick={() => setInputMessage('전략 수정해줘')} className="p-2 bg-white rounded-lg border hover:bg-yellow-50 hover:border-yellow-300 transition-all duration-200 shadow-sm">💡 "전략 수정해줘"</button>
               <button onClick={() => setInputMessage('패턴 추가해줘')} className="p-2 bg-white rounded-lg border hover:bg-yellow-50 hover:border-yellow-300 transition-all duration-200 shadow-sm">📈 "패턴 추가해줘"</button>
               <button onClick={() => setInputMessage('관심종목 관리')} className="p-2 bg-white rounded-lg border hover:bg-yellow-50 hover:border-yellow-300 transition-all duration-200 shadow-sm">⭐ "관심종목 관리"</button>
@@ -243,7 +243,7 @@ export default function ChatInterface({ agent, messages, onSendMessage }: ChatIn
               <div className="absolute right-3 top-1/2 transform -translate-y-1/2">
                 <button
                   onClick={() => setInputMessage('내 전략을 수정해줘')}
-                  className="p-1.5 text-gray-400 hover:text-yellow-600 transition-colors"
+                  className="p-1.5 text-gray-700 hover:text-yellow-600 transition-colors"
                   title="전략 수정"
                 >
                   <Zap className="h-4 w-4" />
@@ -262,7 +262,7 @@ export default function ChatInterface({ agent, messages, onSendMessage }: ChatIn
         </div>
 
         {!agent.isActive && (
-          <p className="text-xs text-gray-500 mt-2 text-center">
+          <p className="text-xs text-gray-800 mt-2 text-center">
             이 에이전트는 현재 비활성 상태입니다
           </p>
         )}

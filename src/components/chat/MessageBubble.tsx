@@ -88,7 +88,7 @@ export default function MessageBubble({ message, agent }: MessageBubbleProps) {
     return (
       <div className="flex justify-end animate-slide-in-right">
         <div className="flex items-end gap-2 max-w-[70%]">
-          <div className="text-xs text-gray-500 mb-1">
+          <div className="text-xs text-gray-800 mb-1">
             {formatTime(message.createdAt)}
           </div>
           
@@ -112,7 +112,7 @@ export default function MessageBubble({ message, agent }: MessageBubbleProps) {
           </div>
           
           <div className="w-8 h-8 bg-gray-300 rounded-full flex items-center justify-center flex-shrink-0">
-            <User className="h-4 w-4 text-gray-600" />
+            <User className="h-4 w-4 text-gray-800" />
           </div>
         </div>
       </div>
@@ -199,7 +199,7 @@ export default function MessageBubble({ message, agent }: MessageBubbleProps) {
           <div className="absolute bottom-0 -left-1 w-0 h-0 border-r-[8px] border-r-white border-b-[8px] border-b-transparent"></div>
         </div>
         
-        <div className="text-xs text-gray-500 mb-1">
+        <div className="text-xs text-gray-800 mb-1">
           {formatTime(message.createdAt)}
         </div>
       </div>

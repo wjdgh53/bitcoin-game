@@ -77,7 +77,7 @@ export function debounce<T extends (...args: any[]) => any>(
 export function getColorForTrend(value: number): string {
   if (value > 0) return 'text-green-600';
   if (value < 0) return 'text-red-600';
-  return 'text-gray-600';
+  return 'text-gray-800';
 }
 
 export function getBgColorForTrend(value: number): string {
