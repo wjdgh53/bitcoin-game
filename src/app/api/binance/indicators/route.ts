@@ -1,4 +1,5 @@
 import { NextRequest, NextResponse } from 'next/server';
+import { binanceWebSocketService } from '@/lib/services/binance-websocket-service';
 
 interface BinanceTickerData {
   symbol: string;
@@ -214,9 +215,44 @@ function generateDemoData() {
 
 export async function GET(request: NextRequest) {
   try {
+    // First try to get data from WebSocket service if available
+    const wsStatus = binanceWebSocketService.getStatus();
+    if (wsStatus.connected) {
+      const latestData = binanceWebSocketService.getLatestData();
+      if (latestData && latestData.ticker) {
+        const binanceData = {
+          symbol: 'BTC/USDT',
+          currentPrice: latestData.ticker.price,
+          priceChange: latestData.ticker.priceChange,
+          priceChangePercent: latestData.ticker.priceChangePercent,
+          volume24h: latestData.ticker.volume,
+          high24h: latestData.ticker.high24h,
+          low24h: latestData.ticker.low24h,
+          technicalIndicators: {
+            sma20: latestData.indicators?.sma20 || null,
+            rsi14: latestData.indicators?.rsi14 || null,
+            macd: latestData.indicators?.macd || null,
+            macdSignal: latestData.indicators?.macdSignal || null,
+            macdHistogram: latestData.indicators?.macdHistogram || null,
+            bollingerUpper: latestData.indicators?.bbUpper || null,
+            bollingerMiddle: latestData.indicators?.bbMiddle || null,
+            bollingerLower: latestData.indicators?.bbLower || null
+          },
+          tradingSignal: latestData.signals?.signal || 'neutral',
+          lastUpdate: new Date(latestData.timestamp).toISOString()
+        };
+        
+        return NextResponse.json({
+          success: true,
+          data: binanceData,
+          source: 'websocket-realtime'
+        });
+      }
+    }
+    
     const symbol = 'BTCUSDT';
     
-    // Fetch current ticker data from Binance US
+    // Fallback to REST API if WebSocket is not available
     const tickerResponse = await fetch(`https://api.binance.us/api/v3/ticker/24hr?symbol=${symbol}`, {
       next: { revalidate: 0 } // No cache for real-time data
     });
@@ -280,7 +316,7 @@ export async function GET(request: NextRequest) {
     return NextResponse.json({
       success: true,
       data: binanceData,
-      source: 'binance-us-api'
+      source: 'binance-us-rest-api'
     });
     
   } catch (error) {

@@ -47,6 +47,8 @@ export default function DashboardPage() {
   const [trades, setTrades] = useState<Trade[]>([]);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState<string | null>(null);
+  const [fetching, setFetching] = useState(false);
+  const [fetchStatus, setFetchStatus] = useState<string | null>(null);
 
   // Fetch data from API
   const fetchData = async (forceRefresh = false) => {
@@ -123,14 +125,38 @@ export default function DashboardPage() {
     fetchData();
   }, []);
 
-  // Refresh data every 15 minutes (only price data)
-  useEffect(() => {
-    const interval = setInterval(() => {
-      fetchData(true); // Force refresh
-    }, 15 * 60 * 1000); // 15 minutes
+  // Manual fetch function for CoinGecko data
+  const manualFetch = async (type: 'current' | 'historical' | 'portfolio') => {
+    setFetching(true);
+    setFetchStatus(`Fetching ${type} data from CoinGecko...`);
+    
+    try {
+      const response = await fetch('/api/bitcoin/fetch', {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+        },
+        body: JSON.stringify({ type, days: 7 }),
+      });
 
-    return () => clearInterval(interval);
-  }, []);
+      const result = await response.json();
+      
+      if (result.success) {
+        setFetchStatus(`✅ Successfully fetched ${type} data!`);
+        // Refresh the dashboard data
+        await fetchData(true);
+      } else {
+        setFetchStatus(`❌ Failed to fetch ${type} data: ${result.error}`);
+      }
+    } catch (error) {
+      console.error('Manual fetch error:', error);
+      setFetchStatus(`❌ Error: ${error instanceof Error ? error.message : 'Unknown error'}`);
+    } finally {
+      setFetching(false);
+      // Clear status after 5 seconds
+      setTimeout(() => setFetchStatus(null), 5000);
+    }
+  };
 
   // Loading state
   if (loading) {
@@ -196,6 +222,54 @@ export default function DashboardPage() {
                 Source: {priceData?.source || 'CoinGecko'}
               </div>
             </div>
+          </div>
+        </div>
+
+        {/* Manual Fetch Controls */}
+        <div className="bg-white rounded-lg shadow p-6 mb-8">
+          <div className="flex items-center justify-between mb-4">
+            <h3 className="text-lg font-bold text-gray-900">Manual Data Fetching</h3>
+            {fetchStatus && (
+              <div className="text-sm text-gray-600 bg-gray-100 px-3 py-1 rounded">
+                {fetchStatus}
+              </div>
+            )}
+          </div>
+          
+          <div className="grid grid-cols-1 md:grid-cols-3 gap-4">
+            <button
+              onClick={() => manualFetch('current')}
+              disabled={fetching}
+              className="flex items-center justify-center gap-2 px-4 py-3 bg-orange-500 hover:bg-orange-600 disabled:bg-gray-400 text-white font-medium rounded-lg transition-colors"
+            >
+              <TrendingUp className="h-4 w-4" />
+              {fetching ? 'Fetching...' : 'Fetch Current Price'}
+            </button>
+            
+            <button
+              onClick={() => manualFetch('historical')}
+              disabled={fetching}
+              className="flex items-center justify-center gap-2 px-4 py-3 bg-blue-500 hover:bg-blue-600 disabled:bg-gray-400 text-white font-medium rounded-lg transition-colors"
+            >
+              <BarChart3 className="h-4 w-4" />
+              {fetching ? 'Fetching...' : 'Fetch Historical (7 days)'}
+            </button>
+            
+            <button
+              onClick={() => manualFetch('portfolio')}
+              disabled={fetching}
+              className="flex items-center justify-center gap-2 px-4 py-3 bg-green-500 hover:bg-green-600 disabled:bg-gray-400 text-white font-medium rounded-lg transition-colors"
+            >
+              <DollarSign className="h-4 w-4" />
+              {fetching ? 'Updating...' : 'Update Portfolio'}
+            </button>
+          </div>
+          
+          <div className="mt-4 text-sm text-gray-600">
+            <p>
+              <strong>Manual fetching only:</strong> Click the buttons above to fetch fresh data from CoinGecko API. 
+              No automatic updates are running - all data fetching is manual.
+            </p>
           </div>
         </div>
 
@@ -434,19 +508,19 @@ export default function DashboardPage() {
 
         {/* System Info */}
         <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
-          {/* Price Update Info */}
-          <div className="bg-green-50 border border-green-200 rounded-lg p-4">
+          {/* Manual Fetch Info */}
+          <div className="bg-orange-50 border border-orange-200 rounded-lg p-4">
             <div className="flex items-start">
-              <div className="text-green-600 mr-3">⏰</div>
+              <div className="text-orange-600 mr-3">🔧</div>
               <div>
-                <h4 className="text-green-900 font-medium">실시간 가격 업데이트</h4>
-                <p className="text-green-800 text-sm mt-1">
-                  리얼리스틱 시뮬레이션으로 <strong>10분마다</strong> 비트코인 가격을 자동 업데이트합니다.
+                <h4 className="text-orange-900 font-medium">Manual Data Fetching</h4>
+                <p className="text-orange-800 text-sm mt-1">
+                  All data is fetched <strong>manually</strong> from the CoinGecko API when you click the fetch buttons above.
                   <br />
-                  업데이트 간격: 10분 (실시간 시장 움직임 시뮬레이션)
+                  No automatic updates - full control over when to refresh data.
                 </p>
                 {priceData && (
-                  <p className="text-xs text-green-700 mt-2">
+                  <p className="text-xs text-orange-700 mt-2">
                     마지막 업데이트: {new Date(priceData.timestamp).toLocaleString('ko-KR')}
                   </p>
                 )}
@@ -454,15 +528,15 @@ export default function DashboardPage() {
             </div>
           </div>
 
-          {/* Demo Info */}
+          {/* CoinGecko API Info */}
           <div className="bg-blue-50 border border-blue-200 rounded-lg p-4">
             <div className="flex items-start">
-              <div className="text-blue-600 mr-3">ℹ️</div>
+              <div className="text-blue-600 mr-3">🌐</div>
               <div>
-                <h4 className="text-blue-900 font-medium">시뮬레이션 모드</h4>
+                <h4 className="text-blue-900 font-medium">Real CoinGecko API</h4>
                 <p className="text-blue-800 text-sm mt-1">
-                  이것은 학습용 시뮬레이션입니다. 실제 비트코인 거래는 이루어지지 않으며, 
-                  리얼리스틱한 가격 움직임과 히스토리가 실시간으로 생성됩니다.
+                  This system uses the real CoinGecko API to fetch live Bitcoin prices and historical data.
+                  Trading is simulated with virtual funds for learning purposes.
                 </p>
               </div>
             </div>

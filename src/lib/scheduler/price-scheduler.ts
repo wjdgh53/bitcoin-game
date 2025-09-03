@@ -19,7 +19,7 @@ class PriceScheduler {
       return;
     }
 
-    console.log('🚀 Starting Bitcoin price scheduler (every 10 minutes) - REALISTIC SIMULATION MODE...');
+    console.log('🚀 Starting Bitcoin price scheduler (every 10 minutes) - DISABLED: Using real WebSocket data instead...');
 
     // Schedule task every 10 minutes
     this.job = cron.schedule('0 */10 * * * *', async () => {
@@ -55,10 +55,10 @@ class PriceScheduler {
    */
   private async updatePrice(): Promise<void> {
     try {
-      console.log('📈 Running scheduled Bitcoin price update (REALISTIC SIMULATION)...');
+      console.log('📈 Running scheduled portfolio update with real WebSocket data...');
       const startTime = Date.now();
 
-      // Update Bitcoin price with realistic simulation
+      // Get latest real Bitcoin price from WebSocket data
       const priceData = await bitcoinPriceService.updateCurrentPrice();
       
       // Update portfolio value based on new price
@@ -78,7 +78,7 @@ class PriceScheduler {
       const endTime = Date.now();
       const duration = endTime - startTime;
       
-      console.log(`✅ Realistic price update completed in ${duration}ms`);
+      console.log(`✅ Portfolio update completed in ${duration}ms`);
       console.log(`💰 Bitcoin Price: $${priceData.price.toLocaleString()} (${priceData.source})`);
       console.log(`📊 24h Change: ${priceData.changePercentage24h?.toFixed(2)}%`);
       console.log(`📈 Volume: ${priceData.volume?.toLocaleString()}`);
@@ -88,9 +88,9 @@ class PriceScheduler {
       console.error('❌ Failed to update Bitcoin price:', error);
       console.log('🔄 Will retry update in 10 minutes');
       
-      // In simulation mode, errors are less critical - log but continue
+      // In real mode, log errors but continue
       if (error instanceof Error) {
-        console.warn(`Simulation error details: ${error.message}`);
+        console.warn(`Error details: ${error.message}`);
       }
     }
   }
@@ -99,7 +99,7 @@ class PriceScheduler {
    * Manually trigger a price update (for testing)
    */
   async triggerUpdate(): Promise<void> {
-    console.log('🔄 Manually triggering realistic price update...');
+    console.log('🔄 Manually triggering portfolio update...');
     await this.updatePrice();
   }
 
@@ -117,12 +117,13 @@ class PriceScheduler {
 // Export singleton instance
 export const priceScheduler = new PriceScheduler();
 
-// Auto-start in server environment
-if (typeof window === 'undefined' && process.env.NODE_ENV !== 'test') {
-  // Start scheduler after a short delay to ensure database is ready
-  setTimeout(() => {
-    priceScheduler.start();
-  }, 2000);
-}
+// DISABLED: Auto-start in server environment
+// Mock price generation is disabled - now using real WebSocket data
+// if (typeof window === 'undefined' && process.env.NODE_ENV !== 'test') {
+//   // Start scheduler after a short delay to ensure database is ready
+//   setTimeout(() => {
+//     priceScheduler.start();
+//   }, 2000);
+// }
 
 export default priceScheduler;

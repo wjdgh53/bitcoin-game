@@ -50,3 +50,13 @@ next-env.d.ts
 # chromadb data
 /chroma_data/
 chroma_collections_info.json
+
+# Test files and screenshots
+test-*.html
+test-*.ts
+*.test.html
+.playwright-mcp/
+COMPREHENSIVE_TEST_REPORT.md
+*_TEST_REPORT.md
+THROTTLING_IMPLEMENTATION_SUMMARY.md
+DATA_ARCHITECTURE_FIX.md

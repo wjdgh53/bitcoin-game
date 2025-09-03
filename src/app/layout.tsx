@@ -5,6 +5,9 @@ import "./globals.css";
 // Import price scheduler to auto-start on server boot
 import '@/lib/scheduler/price-scheduler';
 
+// Import WebSocket auto-start service to begin data collection immediately
+import '@/lib/startup/websocket-auto-start';
+
 const geistSans = Geist({
   variable: "--font-geist-sans",
   subsets: ["latin"],

@@ -83,14 +83,13 @@ export const BitcoinDataSchema = z.object({
   id: z.string().min(1, 'ID is required'),
   timestamp: z.date(),
   price: z.number().positive('Price must be positive'),
-  volume: z.number().min(0, 'Volume cannot be negative'),
-  marketCap: z.number().positive('Market cap must be positive'),
-  change24h: z.number(),
-  changePercentage24h: z.number(),
-  high24h: z.number().positive('High must be positive'),
-  low24h: z.number().positive('Low must be positive'),
-  source: z.string().min(1, 'Source is required'),
-  volatility: z.number().min(0, 'Volatility cannot be negative')
+  volume24h: z.number().min(0, 'Volume cannot be negative').optional(),
+  marketCap: z.number().positive('Market cap must be positive').optional(),
+  change24h: z.number().optional(),
+  changePercentage24h: z.number().optional(),
+  high24h: z.number().positive('High must be positive').optional(),
+  low24h: z.number().positive('Low must be positive').optional(),
+  source: z.string().min(1, 'Source is required')
 });
 
 // Technical indicators validation

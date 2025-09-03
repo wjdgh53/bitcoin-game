@@ -13,6 +13,7 @@
     "test-bitcoin": "tsx src/scripts/test-bitcoin-integration.ts",
     "test-binance": "tsx scripts/test-binance-websocket.ts",
     "test-binance-demo": "tsx scripts/test-binance-demo.ts",
+    "test-websocket-persistence": "tsx scripts/test-websocket-persistence.ts",
     "test": "playwright test",
     "test:ui": "playwright test --ui",
     "test:headed": "playwright test --headed",

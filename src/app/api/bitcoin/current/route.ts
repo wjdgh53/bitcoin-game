@@ -8,26 +8,28 @@ export async function GET() {
     const latestPrice = await bitcoinPriceService.getLatestPrice();
     
     if (!latestPrice) {
-      // If no price data exists, trigger an update
-      console.log('No price data found, fetching from API...');
-      const newPrice = await bitcoinPriceService.updateCurrentPrice();
-      
-      return NextResponse.json({
-        success: true,
-        data: newPrice,
-        message: 'Price fetched from API'
-      });
+      return NextResponse.json(
+        {
+          success: false,
+          message: 'No Bitcoin price data available. Use the fetch button to get data from CoinGecko API.'
+        },
+        { status: 404 }
+      );
     }
 
-    // Check if data is stale (older than 20 minutes)
-    const twentyMinutesAgo = new Date(Date.now() - 20 * 60 * 1000);
-    const isStale = latestPrice.timestamp < twentyMinutesAgo;
+    // Check if data is recent (within 1 hour for manual fetching)
+    const oneHourAgo = new Date(Date.now() - 60 * 60 * 1000);
+    const isRecent = latestPrice.timestamp > oneHourAgo;
 
     return NextResponse.json({
       success: true,
       data: latestPrice,
-      isStale,
-      message: isStale ? 'Price data is stale' : 'Current price from database'
+      isRecent,
+      message: latestPrice.source === 'coingecko' 
+        ? 'Price data from CoinGecko API' 
+        : 'Price from database',
+      source: latestPrice.source,
+      lastUpdated: latestPrice.timestamp
     });
   } catch (error) {
     console.error('Error fetching current Bitcoin price:', error);

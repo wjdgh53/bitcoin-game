@@ -1,5 +1,5 @@
 🎯 프로젝트 개요
-바이낸스 웹소켓으로 비트코인(BTC/USDT)만 추적하는 심플한 실시간 기술지표 대시보드
+바이낸스US 웹소켓으로 비트코인(BTC/USDT)만 추적하는 심플한 실시간 기술지표 대시보드
 
 📊 수집할 데이터
 
@@ -16,21 +16,6 @@ Bollinger Bands Upper/Lower - 볼린저 밴드 상/하단
 24h Volume - 24시간 거래량
 
 
-🗄️ 데이터베이스 (단일 테이블)
-btc_data 테이블
-sqlCREATE TABLE btc_data (
-  id SERIAL PRIMARY KEY,
-  ticker VARCHAR(10) DEFAULT 'BTC',
-  timestamp TIMESTAMPTZ NOT NULL,
-  price DECIMAL(12,2) NOT NULL,
-  sma_20 DECIMAL(12,2),
-  rsi_14 DECIMAL(5,2),
-  macd DECIMAL(8,4),
-  bb_upper DECIMAL(12,2),
-  bb_lower DECIMAL(12,2),
-  volume_24h DECIMAL(15,2),
-  created_at TIMESTAMPTZ DEFAULT NOW()
-);
 
 🏗️ 기술 스택
 프론트엔드
@@ -71,33 +56,22 @@ WebSocket (ws 라이브러리)
 기술지표 계산 → 5개 지표 실시간 계산
 데이터베이스 저장 → 1분마다 단일 테이블에 저장
 프론트엔드 전송 → WebSocket으로 실시간 업데이트
-히스토리 조회 → 과거 데이터 REST API로 조회
-
 
 📈 개발 단계
-1단계 (2주)
 
-바이낸스 웹소켓 연결
+바이낸스US 웹소켓 연결
 기본 데이터 수집 및 DB 저장
 5개 기술지표 계산 함수
 
-2단계 (2주)
 
 간단한 대시보드 UI
 실시간 데이터 표시
 기본 차트 연동
 
-3단계 (1주)
 
 히스토리 페이지
 간단한 필터링
 기본 테스팅
-
-
-💰 예상 비용
-
-무료 티어만 사용: $0/월
-확장시: ~$5-10/월
 
 
 🎯 핵심 목표

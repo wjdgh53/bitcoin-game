@@ -1,33 +1,38 @@
-// API route for Bitcoin price history
+// API route for Bitcoin price history (latest 10 records)
 
 import { NextRequest, NextResponse } from 'next/server';
-import { bitcoinPriceService } from '@/lib/services/bitcoin-price-service';
+import { prisma } from '@/lib/database/prisma-client';
 
 export async function GET(request: NextRequest) {
   try {
     const { searchParams } = new URL(request.url);
-    const hoursParam = searchParams.get('hours');
-    const hours = hoursParam ? parseInt(hoursParam) : 24;
+    const limitParam = searchParams.get('limit');
+    const limit = limitParam ? parseInt(limitParam) : 10;
 
-    // Validate hours parameter
-    if (isNaN(hours) || hours < 1 || hours > 168) { // Max 7 days
+    // Validate limit parameter
+    if (isNaN(limit) || limit < 1 || limit > 50) {
       return NextResponse.json(
         {
           success: false,
-          message: 'Invalid hours parameter. Must be between 1 and 168 (7 days)'
+          message: 'Invalid limit parameter. Must be between 1 and 50'
         },
         { status: 400 }
       );
     }
 
-    const history = await bitcoinPriceService.getPriceHistory(hours);
+    // Get latest records from database
+    const history = await prisma.bitcoinPrice.findMany({
+      orderBy: {
+        timestamp: 'desc',
+      },
+      take: limit,
+    });
 
     return NextResponse.json({
       success: true,
       data: history,
       count: history.length,
-      timeRange: `${hours} hours`,
-      message: `Price history for the last ${hours} hours`
+      message: `Latest ${history.length} price records from database`
     });
   } catch (error) {
     console.error('Error fetching Bitcoin price history:', error);
